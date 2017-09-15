@@ -15,6 +15,17 @@
 		8A5C63F31F6C061400271379 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63F11F6C061400271379 /* Main.storyboard */; };
 		8A5C63F51F6C061400271379 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63F41F6C061400271379 /* Assets.xcassets */; };
 		8A5C63F81F6C061400271379 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */; };
+		8A5C64031F6C0AC200271379 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64021F6C0AC200271379 /* Player.swift */; };
+		8A5C64051F6C0ACF00271379 /* Ataque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64041F6C0ACF00271379 /* Ataque.swift */; };
+		8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64061F6C0ADA00271379 /* Inimigo.swift */; };
+		8A5C64091F6C0AED00271379 /* Waves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64081F6C0AED00271379 /* Waves.swift */; };
+		8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640A1F6C0AF800271379 /* Itens.swift */; };
+		8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */; };
+		8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640E1F6C0B0D00271379 /* Mapa.swift */; };
+		8A5C64111F6C0B1800271379 /* Fase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64101F6C0B1800271379 /* Fase.swift */; };
+		8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64121F6C0B2200271379 /* Jogo.swift */; };
+		8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64141F6C0B3E00271379 /* HUD.swift */; };
+		8A5C64171F6C0B5600271379 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64161F6C0B5600271379 /* DAO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +39,17 @@
 		8A5C63F41F6C061400271379 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Odessa/Assets.xcassets; sourceTree = "<group>"; };
 		8A5C63F71F6C061400271379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A5C63F91F6C061400271379 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Odessa/Info.plist; sourceTree = "<group>"; };
+		8A5C64021F6C0AC200271379 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8A5C64041F6C0ACF00271379 /* Ataque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ataque.swift; sourceTree = "<group>"; };
+		8A5C64061F6C0ADA00271379 /* Inimigo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inimigo.swift; sourceTree = "<group>"; };
+		8A5C64081F6C0AED00271379 /* Waves.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waves.swift; sourceTree = "<group>"; };
+		8A5C640A1F6C0AF800271379 /* Itens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itens.swift; sourceTree = "<group>"; };
+		8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuloMapa.swift; sourceTree = "<group>"; };
+		8A5C640E1F6C0B0D00271379 /* Mapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mapa.swift; sourceTree = "<group>"; };
+		8A5C64101F6C0B1800271379 /* Fase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fase.swift; sourceTree = "<group>"; };
+		8A5C64121F6C0B2200271379 /* Jogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jogo.swift; sourceTree = "<group>"; };
+		8A5C64141F6C0B3E00271379 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		8A5C64161F6C0B5600271379 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +87,17 @@
 				8A5C63E71F6C061400271379 /* AppDelegate.swift */,
 				8A5C63F91F6C061400271379 /* Info.plist */,
 				8A5C63F41F6C061400271379 /* Assets.xcassets */,
+				8A5C64021F6C0AC200271379 /* Player.swift */,
+				8A5C64041F6C0ACF00271379 /* Ataque.swift */,
+				8A5C64061F6C0ADA00271379 /* Inimigo.swift */,
+				8A5C64081F6C0AED00271379 /* Waves.swift */,
+				8A5C640A1F6C0AF800271379 /* Itens.swift */,
+				8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */,
+				8A5C640E1F6C0B0D00271379 /* Mapa.swift */,
+				8A5C64101F6C0B1800271379 /* Fase.swift */,
+				8A5C64121F6C0B2200271379 /* Jogo.swift */,
+				8A5C64141F6C0B3E00271379 /* HUD.swift */,
+				8A5C64161F6C0B5600271379 /* DAO.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -164,8 +197,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A5C64171F6C0B5600271379 /* DAO.swift in Sources */,
+				8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */,
+				8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */,
+				8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */,
+				8A5C64111F6C0B1800271379 /* Fase.swift in Sources */,
+				8A5C64031F6C0AC200271379 /* Player.swift in Sources */,
+				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
+				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
+				8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */,
 				8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */,
+				8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */,
 				8A5C63F01F6C061400271379 /* GameViewController.swift in Sources */,
+				8A5C64051F6C0ACF00271379 /* Ataque.swift in Sources */,
 				8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
