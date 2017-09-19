@@ -1,5 +1,5 @@
 //
-//  Itens.swift
+//  Arma.swift
 //  Odessa
 //
 //  Created by Michelle Beadle on 15/09/17.
@@ -8,16 +8,16 @@
 
 import Foundation
 
-class Itens {
+class Arma {
     
     var nome: String
-    var numHPRecuperado: Int?
+    var dano: Int
     
-    init(nome: String, numHPRecuperado: Int){
+    init(nome: String, dano: Int){
         
         self.nome = nome
-        self.numHPRecuperado = numHPRecuperado
+        self.dano = dano
         
     }
-
+    
 }

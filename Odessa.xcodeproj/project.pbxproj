@@ -26,6 +26,15 @@
 		8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64121F6C0B2200271379 /* Jogo.swift */; };
 		8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64141F6C0B3E00271379 /* HUD.swift */; };
 		8A5C64171F6C0B5600271379 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64161F6C0B5600271379 /* DAO.swift */; };
+		8A5C64191F6C12B600271379 /* Arma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64181F6C12B600271379 /* Arma.swift */; };
+		8A5C64231F71766800271379 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64221F71766800271379 /* HomeViewController.swift */; };
+		8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */; };
+		8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */; };
+		8A5C64291F71771600271379 /* PauseGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64281F71771600271379 /* PauseGameViewController.swift */; };
+		8A5C642B1F71772E00271379 /* HomeOptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */; };
+		8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */; };
+		8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642E1F71775700271379 /* PauseGameScene.swift */; };
+		8A5C64311F71784A00271379 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64301F71784A00271379 /* HomeScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +59,15 @@
 		8A5C64121F6C0B2200271379 /* Jogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jogo.swift; sourceTree = "<group>"; };
 		8A5C64141F6C0B3E00271379 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		8A5C64161F6C0B5600271379 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
+		8A5C64181F6C12B600271379 /* Arma.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arma.swift; sourceTree = "<group>"; };
+		8A5C64221F71766800271379 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeOptionsViewController.swift; sourceTree = "<group>"; };
+		8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusViewController.swift; sourceTree = "<group>"; };
+		8A5C64281F71771600271379 /* PauseGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameViewController.swift; sourceTree = "<group>"; };
+		8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeOptionsScene.swift; sourceTree = "<group>"; };
+		8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusScene.swift; sourceTree = "<group>"; };
+		8A5C642E1F71775700271379 /* PauseGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameScene.swift; sourceTree = "<group>"; };
+		8A5C64301F71784A00271379 /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +106,7 @@
 				8A5C63F91F6C061400271379 /* Info.plist */,
 				8A5C63F41F6C061400271379 /* Assets.xcassets */,
 				8A5C64021F6C0AC200271379 /* Player.swift */,
+				8A5C64181F6C12B600271379 /* Arma.swift */,
 				8A5C64041F6C0ACF00271379 /* Ataque.swift */,
 				8A5C64061F6C0ADA00271379 /* Inimigo.swift */,
 				8A5C64081F6C0AED00271379 /* Waves.swift */,
@@ -107,9 +126,13 @@
 			children = (
 				8A5C63F11F6C061400271379 /* Main.storyboard */,
 				8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */,
-				8A5C63ED1F6C061400271379 /* GameScene.swift */,
 				8A5C63E91F6C061400271379 /* GameScene.sks */,
 				8A5C63EB1F6C061400271379 /* Actions.sks */,
+				8A5C64301F71784A00271379 /* HomeScene.swift */,
+				8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */,
+				8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */,
+				8A5C63ED1F6C061400271379 /* GameScene.swift */,
+				8A5C642E1F71775700271379 /* PauseGameScene.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -117,7 +140,11 @@
 		8A5C64011F6C06E500271379 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8A5C64221F71766800271379 /* HomeViewController.swift */,
+				8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */,
+				8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */,
 				8A5C63EF1F6C061400271379 /* GameViewController.swift */,
+				8A5C64281F71771600271379 /* PauseGameViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -197,17 +224,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */,
 				8A5C64171F6C0B5600271379 /* DAO.swift in Sources */,
 				8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */,
 				8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */,
+				8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */,
 				8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */,
 				8A5C64111F6C0B1800271379 /* Fase.swift in Sources */,
 				8A5C64031F6C0AC200271379 /* Player.swift in Sources */,
 				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
+				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
 				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
+				8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */,
 				8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */,
+				8A5C64311F71784A00271379 /* HomeScene.swift in Sources */,
+				8A5C64191F6C12B600271379 /* Arma.swift in Sources */,
 				8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */,
+				8A5C642B1F71772E00271379 /* HomeOptionsScene.swift in Sources */,
+				8A5C64231F71766800271379 /* HomeViewController.swift in Sources */,
 				8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */,
+				8A5C64291F71771600271379 /* PauseGameViewController.swift in Sources */,
 				8A5C63F01F6C061400271379 /* GameViewController.swift in Sources */,
 				8A5C64051F6C0ACF00271379 /* Ataque.swift in Sources */,
 				8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */,
@@ -378,6 +414,7 @@
 				8A5C63FE1F6C061400271379 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

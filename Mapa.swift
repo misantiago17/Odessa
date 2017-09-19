@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+class Mapa {
+    
+    var IDMapa: Int
+    var Modulos: [ModuloMapa]
+    
+    init(IDMapa: Int, Modulos: [ModuloMapa]){
+        
+        self.IDMapa = IDMapa
+        self.Modulos = Modulos
+        
+    }
+
+    
+}

@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+class Fase {
+    
+    var mapa: Mapa
+    var numFase: Int
+    
+    init(mapa: Mapa, numFase: Int){
+        
+        self.mapa = mapa
+        self.numFase = numFase
+        
+    }
+
+    
+}
