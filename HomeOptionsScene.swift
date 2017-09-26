@@ -8,11 +8,78 @@
 
 import UIKit
 import GameplayKit
+import SpriteKit
 
 class HomeOptionsScene: SKScene {
     
+    //Fundo animado
+    
+    //Public - tem que inicializar caso contrário ele pede para por um init que buga a classe
+    let continueButton = SKSpriteNode(imageNamed: "expences-button-png-hi")
+    let newGameButton = SKSpriteNode(imageNamed: "expences-button-png-hi")
+    let settingsButton = SKSpriteNode(imageNamed: "expences-button-png-hi")
+    
     override func sceneDidLoad() {
-        print("Options")
+        
+        print("Home Options")
+        
+        // -- Background --
+        let background = SKSpriteNode(imageNamed: "telainicial")
+        background.position = CGPoint(x: frame.midX, y: frame.midY)
+        background.zPosition = -1
+        
+        addChild(background)
+        
+        // -- Buttons --
+        
+        // A posição dos botão deve ser alterada caso o jogador não tenha nenhum dado salvo
+        // no BD pois não existirá o botão "Continue"
+        
+        //Continue
+        continueButton.position = CGPoint(x: frame.midX ,y: frame.midY + 100)
+        continueButton.zPosition = 1
+        continueButton.size = CGSize(width: 350, height: 50)
+        
+        addChild(continueButton)
+        
+        //New Game
+        newGameButton.position = CGPoint(x: frame.midX ,y: frame.midY)
+        newGameButton.zPosition = 1
+        newGameButton.size = CGSize(width: 350, height: 50)
+        
+        addChild(newGameButton)
+        
+        //Settings
+        settingsButton.position = CGPoint(x: frame.midX ,y: frame.midY - 100)
+        settingsButton.zPosition = 1
+        settingsButton.size = CGSize(width: 350, height: 50)
+        
+        addChild(settingsButton)
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        if let location = touches.first?.location(in: self) {
+            let touchedNode = atPoint(location)
+            
+            switch touchedNode {
+            case continueButton:
+                print("Continue game")
+                
+                let nextScene = HomePlayerStatusScene(size: frame.size)
+                view?.presentScene(nextScene)
+                
+            case newGameButton:
+                print("New game")
+            case settingsButton:
+                print("Settings")
+            default:
+                print("Not an avaliable button")
+            }
+            
+        }
     }
 
 }

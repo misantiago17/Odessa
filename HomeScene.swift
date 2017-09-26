@@ -20,7 +20,6 @@ class HomeScene: SKScene {
         let background = SKSpriteNode(imageNamed: "telainicial")
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         background.zPosition = 1
-        //background.size = CGSize(width: (self.view?.frame.size.width)!, height: (self.view?.frame.size.height)!)
         
         addChild(background)
         
@@ -28,7 +27,9 @@ class HomeScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("AAAAAAAAAA")
+                
+        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)        
+        view?.presentScene(sceneOptions)
     }
 
 }

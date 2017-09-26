@@ -10,26 +10,23 @@ import UIKit
 import GameplayKit
 
 class HomeOptionsViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let scene = GKScene(fileNamed: "HomeOptionsScene") {
+        if let sceneNode = HomeOptionsScene(size: view.frame.size) as HomeOptionsScene? {
             
-            if let sceneNode = scene.rootNode as! HomeOptionsScene? {
-                
-                sceneNode.scaleMode = .aspectFill
-                
-                // Present the scene
-                if let view = self.view as! SKView? {
-                    
-                    view.ignoresSiblingOrder = true
-                    view.showsFPS = true
-                    view.showsNodeCount = true
-                    
-                    view.presentScene(sceneNode)
-                }
-            }
+            sceneNode.scaleMode = .aspectFill
+            
+            // Present the scene
+            let view = self.view as! SKView
+            
+            view.ignoresSiblingOrder = true
+            view.showsFPS = true
+            view.showsNodeCount = true
+            
+            view.presentScene(sceneNode)
+            
         }
 
     }

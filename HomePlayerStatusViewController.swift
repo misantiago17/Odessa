@@ -14,23 +14,21 @@ class HomePlayerStatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let scene = GKScene(fileNamed: "HomePlayerStatusScene") {
+        if let sceneNode = HomePlayerStatusScene(size: view.frame.size) as HomePlayerStatusScene? {
             
-            if let sceneNode = scene.rootNode as! HomePlayerStatusScene? {
+            sceneNode.scaleMode = .aspectFill
+            
+            // Present the scene
+            if let view = self.view as! SKView? {
                 
-                sceneNode.scaleMode = .aspectFill
+                view.ignoresSiblingOrder = true
+                view.showsFPS = true
+                view.showsNodeCount = true
                 
-                // Present the scene
-                if let view = self.view as! SKView? {
-                    
-                    view.ignoresSiblingOrder = true
-                    view.showsFPS = true
-                    view.showsNodeCount = true
-                    
-                    view.presentScene(sceneNode)
-                    
-                }
+                view.presentScene(sceneNode)
+                
             }
+            
         }
 
     }

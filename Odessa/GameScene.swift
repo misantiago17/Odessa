@@ -11,8 +11,25 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    var entities = [GKEntity]()
-    var graphs = [String : GKGraph]()
+    //Oraganização: precisa de coisa pra caralho
+    
+    //Public
+    
+    // - Fundo animado
+    // - Player
+    // - Mapa formado com seus respectivos módulos e cada módulo com seu respectivo set de inimigos
+    // HUD:
+    // - Vida
+    // - Especial
+    // - BtnDeAtaque1
+    // - BtnDeAtaque2
+    // - Joystick
+    // - Moedas
+    
+    let floor1Node = SKSpriteNode(imageNamed: "floor1")
+    let floor2Node = SKSpriteNode(imageNamed: "floor2")
+    let floor3Node = SKSpriteNode(imageNamed: "floor3")
+    let floor4Node = SKSpriteNode(imageNamed: "floor4")
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
@@ -99,11 +116,6 @@ class GameScene: SKScene {
         
         // Calculate time since last update
         let dt = currentTime - self.lastUpdateTime
-        
-        // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
         
         self.lastUpdateTime = currentTime
     }

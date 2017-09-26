@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 class ModuloMapa {
     
-    var imagemCenario: Data
+    var imagemCenario: UIImage
     var IDModulo: Int
     //Waves aparecem por tempo
     var waves: [Waves]?
@@ -19,7 +20,7 @@ class ModuloMapa {
     // numInimigos tem o tipo dos inimigos pipocados pelo módulo e seu número de aparições
     var numInimigos: [String: Int]?
     
-    init(imagemCenario: Data, IDModulo: Int, waves: [Waves], inimigos: [Inimigo], numInimigos: [String: Int]){
+    init(imagemCenario: UIImage, IDModulo: Int, waves: [Waves], inimigos: [Inimigo], numInimigos: [String: Int]){
         
         self.imagemCenario = imagemCenario
         self.IDModulo = IDModulo
@@ -32,5 +33,7 @@ class ModuloMapa {
     // fazer uma função para cuidar da posição de cada set de inimigos no módulo
     // fazer um função cuidar da posição que a wave vai começar a aparecer
 
+    
+    // precisa de um arquivo json com todos os possiveis modulos iniciados e aramazenar esses módulos em algum lugar (provavelmente o Singleton?)
     
 }
