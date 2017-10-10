@@ -17,6 +17,7 @@ class GameScene: SKScene {
     //Public
     // - Fundo animado
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
+    var playerNode = SKSpriteNode()
     // - Inimigos
     var mapa: Mapa?
     // HUD:
@@ -30,7 +31,7 @@ class GameScene: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
-    
+    private let cam = SKCameraNode()
     // Criar uma função responsavel por unir cada bloco de chão com sua largura sem falhas e retorna um único sprite com todo o chão do nível
     
     override func sceneDidLoad() {
@@ -38,10 +39,19 @@ class GameScene: SKScene {
         // Mapa
         mapa = createMap()
         let floor = organizeMap()
+        floor.physicsBody?.isDynamic = false
         addChild(floor)
         
         // Player
-        let playerNode = SKSpriteNode()
+        playerNode = SKSpriteNode(texture: SKTexture(image: UIImage(named: "Odessa-idle-frame1")!))
+        playerNode.position = CGPoint(x: 100, y: 300)
+        playerNode.setScale(0.48)
+        playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
+        
+        addChild(playerNode)
+        
+        // Camera
+        self.camera = cam
         
         
         self.lastUpdateTime = 0
@@ -116,6 +126,9 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
+        // Camera
+        cam.position = playerNode.position
+        
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
             self.lastUpdateTime = currentTime
@@ -182,6 +195,7 @@ class GameScene: SKScene {
             //floorModule.position = CGPoint(x: 200 + offSet, y: 200)
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
+            floorModule.physicsBody?.isDynamic = false
             
             floorSegments.append(floorModule)
             
