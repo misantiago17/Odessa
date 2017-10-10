@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class GameScene: SKScene {
     
+     var spriteArray = [SKTexture]() //Odessa Run
+
     //Oraganização: precisa de coisa pra caralho
     
     //Public
@@ -33,7 +35,33 @@ class GameScene: SKScene {
     
     // Criar uma função responsavel por unir cada bloco de chão com sua largura sem falhas e retorna um único sprite com todo o chão do nível
     
+    var playerNode = SKSpriteNode()
+    
+    //MARK: SETAS
+    let direita = SKSpriteNode(imageNamed: "dir")
+    let esquerda = SKSpriteNode(imageNamed: "esq")
+   
+    //movimento
+    var velocityX:CGFloat = 0.0
+    var velocityY:CGFloat = 0.0
+    
+    
+    
     override func sceneDidLoad() {
+        
+        
+        
+        self.direita.position = CGPoint(x: 150, y: 70) //100
+        self.esquerda.position = CGPoint(x: 50, y: 70) //100
+        direita.setScale(1.6)
+        esquerda.setScale(1.6)
+        self.addChild(direita)
+        self.addChild(esquerda)
+        
+        // MARK: Odessa Run
+        for i in 1...9 {
+            spriteArray.append(SKTexture(imageNamed: "odessaRun\(i)"))
+        }
         
         // Mapa
         mapa = createMap()
@@ -41,7 +69,12 @@ class GameScene: SKScene {
         addChild(floor)
         
         // Player
-        let playerNode = SKSpriteNode()
+        playerNode = SKSpriteNode(texture:spriteArray[0])
+        playerNode.setScale(0.34) //0.68
+        playerNode.position = CGPoint(x: 100, y: 400)
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+        playerNode.zPosition = 1
+        addChild(self.playerNode)
         
         
         self.lastUpdateTime = 0
@@ -97,7 +130,52 @@ class GameScene: SKScene {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        for t in touches { self.touchDown(atPoint: t.location(in: self))
+            
+              let location = t.location(in: self)
+            
+            if (direita.frame.contains(location)){
+                
+                
+                let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+                let repeatAction = SKAction.repeatForever(animateAction)
+                
+                
+                let rightScale = SKAction.scaleX(to: 0.35, duration: 0)
+                let group = SKAction.group([repeatAction, rightScale])
+                
+                self.playerNode.run(group, withKey: "repeatAction")
+                
+                velocityX = (direita.position.x - direita.position.x + 50)/20
+                
+                self.playerNode.position.x += velocityX
+                
+                
+            }
+            
+            else if (esquerda.frame.contains(location)){
+                
+                print(velocityX)
+                
+                
+                let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+                let repeatAction = SKAction.repeatForever(animateAction)
+                
+                let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
+                let group = SKAction.group([repeatAction, leftScale])
+                
+                self.playerNode.run(group, withKey: "repeatAction")
+                
+                velocityX = (direita.position.x - direita.position.x - 50)/20
+                
+                self.playerNode.position.x += velocityX
+                
+            }
+            
+            
+            
+            
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
