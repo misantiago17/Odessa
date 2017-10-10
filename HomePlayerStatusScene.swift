@@ -14,7 +14,7 @@ class HomePlayerStatusScene: SKScene {
     //Fundo animado
     
     //Public
-    let statusPlayerButton = SKSpriteNode(imageNamed: "chureki")
+    let statusPlayerButton = SKSpriteNode(imageNamed: "jord")
     let cancelButton = SKSpriteNode(imageNamed: "1024px-Crystal_button_cancel")
     let statusPlayerText = SKLabelNode(text: "AAAAAA")
 

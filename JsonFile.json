@@ -1,0 +1,401 @@
+{
+    
+    "ModuleMap" : {
+        
+        "Module1" : {
+            
+            "ID" : "1",
+            "ImageName" : "floor1",
+            "Sets" : ["1", "2", "3"]
+            
+        },
+        
+        "Module2" : {
+            
+            "ID" : "2",
+            "ImageName" : "floor2",
+            "Sets" : ["4", "5", "6"]
+            
+        },
+        
+        "Module3" : {
+            
+            "ID" : "3",
+            "ImageName" : "floor3",
+            "Sets" : ["7", "8", "9"]
+            
+        },
+        
+        "Module4" : {
+            
+            "ID" : "4",
+            "ImageName" : "floor4",
+            "Sets" : ["10", "11", "12"]
+            
+        },
+        
+        "Module5" : {
+            
+            "ID" : "5",
+            "ImageName" : "floor5",
+            "Sets" : ["13", "14", "15"]
+            
+        },
+        
+        "Module6" : {
+            
+            "ID" : "6",
+            "ImageName" : "floor6",
+            "Sets" : ["16", "17", "18"]
+            
+        },
+        
+        "Module7" : {
+            
+            "ID" : "7",
+            "ImageName" : "floor7",
+            "Sets" : ["19", "20", "21"]
+            
+        },
+        
+        "Module8" : {
+            
+            "ID" : "8",
+            "ImageName" : "floor8",
+            "Sets" : ["22", "23", "24"]
+            
+        },
+        
+        "Module9" : {
+            
+            "ID" : "9",
+            "ImageName" : "floor9",
+            "Sets" : ["25", "26", "27"]
+            
+        },
+        
+        "Module10" : {
+            
+            "ID" : "10",
+            "ImageName" : "floor10",
+            "Sets" : ["28", "29", "30"]
+            
+        }
+        
+    },
+    
+    "Sets" : {
+        
+        "Set1" : {
+            
+            "ID" : "1",
+            "Dificulty" : "1",
+            "ModuleID" : "1",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set2" : {
+            
+            "ID" : "2",
+            "Dificulty" : "1",
+            "ModuleID" : "1",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set3" : {
+            
+            "ID" : "3",
+            "Dificulty" : "1",
+            "ModuleID" : "1",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set4" : {
+            
+            "ID" : "4",
+            "Dificulty" : "1",
+            "ModuleID" : "2",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set5" : {
+            
+            "ID" : "5",
+            "Dificulty" : "1",
+            "ModuleID" : "2",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set6" : {
+            
+            "ID" : "6",
+            "Dificulty" : "1",
+            "ModuleID" : "2",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set7" : {
+            
+            "ID" : "7",
+            "Dificulty" : "1",
+            "ModuleID" : "3",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set8" : {
+            
+            "ID" : "8",
+            "Dificulty" : "1",
+            "ModuleID" : "3",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set9" : {
+            
+            "ID" : "9",
+            "Dificulty" : "1",
+            "ModuleID" : "3",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set10" : {
+            
+            "ID" : "10",
+            "Dificulty" : "1",
+            "ModuleID" : "4",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set11" : {
+            
+            "ID" : "11",
+            "Dificulty" : "1",
+            "ModuleID" : "4",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set12" : {
+            
+            "ID" : "12",
+            "Dificulty" : "1",
+            "ModuleID" : "4",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set13" : {
+            
+            "ID" : "13",
+            "Dificulty" : "1",
+            "ModuleID" : "5",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set14" : {
+            
+            "ID" : "14",
+            "Dificulty" : "1",
+            "ModuleID" : "5",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set15" : {
+            
+            "ID" : "15",
+            "Dificulty" : "1",
+            "ModuleID" : "5",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set16" : {
+            
+            "ID" : "16",
+            "Dificulty" : "1",
+            "ModuleID" : "6",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set17" : {
+            
+            "ID" : "17",
+            "Dificulty" : "1",
+            "ModuleID" : "6",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set18" : {
+            
+            "ID" : "18",
+            "Dificulty" : "1",
+            "ModuleID" : "6",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set19" : {
+            
+            "ID" : "19",
+            "Dificulty" : "1",
+            "ModuleID" : "7",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set20" : {
+            
+            "ID" : "20",
+            "Dificulty" : "1",
+            "ModuleID" : "7",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set21" : {
+            
+            "ID" : "21",
+            "Dificulty" : "1",
+            "ModuleID" : "7",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set22" : {
+            
+            "ID" : "22",
+            "Dificulty" : "1",
+            "ModuleID" : "8",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set23" : {
+            
+            "ID" : "23",
+            "Dificulty" : "1",
+            "ModuleID" : "8",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set24" : {
+            
+            "ID" : "24",
+            "Dificulty" : "1",
+            "ModuleID" : "8",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set25" : {
+            
+            "ID" : "25",
+            "Dificulty" : "1",
+            "ModuleID" : "9",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set26" : {
+            
+            "ID" : "26",
+            "Dificulty" : "1",
+            "ModuleID" : "9",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set27" : {
+            
+            "ID" : "27",
+            "Dificulty" : "1",
+            "ModuleID" : "9",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set28" : {
+            
+            "ID" : "28",
+            "Dificulty" : "1",
+            "ModuleID" : "10",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set29" : {
+            
+            "ID" : "29",
+            "Dificulty" : "1",
+            "ModuleID" : "10",
+            "Enemies" : ["1","2","3"]
+            
+        },
+        
+        "Set30" : {
+            
+            "ID" : "30",
+            "Dificulty" : "1",
+            "ModuleID" : "10",
+            "Enemies" : ["1","2","3"]
+            
+        }
+    },
+    
+    "Enemies" : {
+        
+        "Enemy1" : {
+            
+            "Name" : "Rapidinho lá maneiro",
+            "Vida" : "50",
+            "Velocidade" : "150.0",
+            "Defesa" : "25",
+            "Dano" : "30",
+            "Tipo" : "Fraco",
+            "ImgName" : "enemy1"
+            
+        },
+        
+        "Enemy2" : {
+            
+            "Name" : "Não peida nem cheira",
+            "Vida" : "100",
+            "Velocidade" : "100.0",
+            "Defesa" : "50",
+            "Dano" : "50",
+            "Tipo" : "Medio",
+            "ImgName" : "enemy2"
+            
+        },
+        
+        "Enemy3" : {
+            
+            "Name" : "Tancão forte pra burro",
+            "Vida" : "150",
+            "Velocidade" : "50.0",
+            "Defesa" : "75",
+            "Dano" : "75",
+            "Tipo" : "Forte",
+            "ImgName" : "enemy3"
+            
+        }
+        
+    }
+    
+    
+}

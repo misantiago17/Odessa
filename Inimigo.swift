@@ -10,14 +10,19 @@ import Foundation
 
 class Inimigo {
     
+    //ajeitar o modulo que recebe os dados do json para receber as posições dentro do módulo
+    //colocar as posições do inimigo no módulo dentro do json
+    //fazer as posições reccebidas serem relativas ao módulo e não ao mundo (fazer inimigo filho do módulo?)
+    
     var nome: String
     var vida: Int
     var velocidade: Float
     var defesa: Int
     var dano: Int
     var tipo: String
+    var imgName: String
     
-    init(nome:String, vida:Int, velocidade:Float, defesa:Int, dano: Int, tipo: String){
+    init(nome:String, vida:Int, velocidade:Float, defesa:Int, dano: Int, tipo: String, imgName: String){
         
         self.nome = nome
         self.vida = vida
@@ -25,6 +30,7 @@ class Inimigo {
         self.defesa = defesa
         self.dano = dano
         self.tipo = tipo
+        self.imgName = imgName
         
     }
 
