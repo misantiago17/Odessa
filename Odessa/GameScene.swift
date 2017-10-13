@@ -152,10 +152,6 @@ class GameScene: SKScene {
 //            let repeatAction = SKAction.repeatForever(animateAction)
 //            self.player.run(repeatAction)
 //            
-        }
-        
-        
-        
     }
 
     
@@ -251,4 +247,6 @@ class GameScene: SKScene {
         
         return CGFloat(newPosition)
     }
+
+}
 
