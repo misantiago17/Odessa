@@ -20,6 +20,9 @@ class GameScene: SKScene {
     // - Fundo animado
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
     var playerNode = SKSpriteNode()
+    
+    
+    
     // - Inimigos
     var mapa: Mapa?
     // HUD:
@@ -36,7 +39,7 @@ class GameScene: SKScene {
     private let cam = SKCameraNode()
     // Criar uma função responsavel por unir cada bloco de chão com sua largura sem falhas e retorna um único sprite com todo o chão do nível
     
-    var playerNode = SKSpriteNode()
+
     
     //MARK: SETAS
     let direita = SKSpriteNode(imageNamed: "dir")
@@ -46,23 +49,20 @@ class GameScene: SKScene {
     var velocityX:CGFloat = 0.0
     var velocityY:CGFloat = 0.0
     
-    
+    let bg = SKSpriteNode(texture: SKTexture(imageNamed: "fundo"))
     
     override func sceneDidLoad() {
         
         
         
-        self.direita.position = CGPoint(x: 150, y: 70) //100
-        self.esquerda.position = CGPoint(x: 50, y: 70) //100
-        direita.setScale(1.6)
-        esquerda.setScale(1.6)
-        self.addChild(direita)
-        self.addChild(esquerda)
+        
         
         // MARK: Odessa Run
         for i in 1...9 {
-            spriteArray.append(SKTexture(imageNamed: "odessaRun\(i)"))
+            spriteArray.append(SKTexture(imageNamed: "odessaRunframe\(i)"))
         }
+        
+ 
         
         // Mapa
         mapa = createMap()
@@ -79,6 +79,15 @@ class GameScene: SKScene {
         addChild(self.playerNode)
         
         
+      
+        
+        // Camera
+        self.camera = cam
+        let constraint = SKConstraint.distance(SKRange(constantValue: 0), to: playerNode)
+        cam.constraints = [ constraint ]
+
+        
+        
         self.lastUpdateTime = 0
         
         // Get label node from scene and store it for use later
@@ -89,17 +98,41 @@ class GameScene: SKScene {
         }
         
         // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+//        let w = (self.size.width + self.size.height) * 0.05
+//        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+//
+//        if let spinnyNode = self.spinnyNode {
+//            spinnyNode.lineWidth = 2.5
+//
+//            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
+//            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
+//                                              SKAction.fadeOut(withDuration: 0.5),
+//                                              SKAction.removeFromParent()]))
+//        }
+    }
+    
+     override func didMove(to view: SKView) {
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
+        // Fundo
+        
+        bg.zPosition = -2
+        bg.setScale(0.5)
+        bg.position = CGPoint(x:(self.view?.frame.midX)! , y: (self.view?.frame.midY)!)
+        
+        addChild(bg)
+        
+       
+        
+        //Seta
+        self.direita.position = CGPoint(x:  150 , y:  70) //100
+        self.esquerda.position = CGPoint(x: 50 , y:   70) //100
+        direita.zPosition = 2
+        esquerda.zPosition = 2
+        direita.setScale(1.6)
+        esquerda.setScale(1.6)
+        self.addChild(direita)
+        self.addChild(esquerda)
+        
     }
     
     
@@ -185,7 +218,12 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        for t in touches { self.touchUp(atPoint: t.location(in: self))
+            
+            playerNode.removeAction(forKey: "repeatAction")
+            velocityX = 0
+            
+        }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -197,7 +235,13 @@ class GameScene: SKScene {
         // Called before each frame is rendered
         
         // Camera
-        cam.position = playerNode.position
+        
+//        cam.position = playerNode.position
+        
+        //Posicao player
+        self.playerNode.position.x += velocityX
+        self.playerNode.position.y += velocityY
+      
         
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
@@ -263,6 +307,7 @@ class GameScene: SKScene {
             floorModule.position.y = SetYFloorPosition(floor: floorModule)
             //floorModule.position = CGPoint(x: floor.calculateAccumulatedFrame().size.width + (floorModule.size.width/2), y: 200)
             //floorModule.position = CGPoint(x: 200 + offSet, y: 200)
+            floorModule.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: floorModule.frame.width, height: floorModule.frame.height))
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false
