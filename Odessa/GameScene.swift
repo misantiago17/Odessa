@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class GameScene: SKScene {
     
+     var spriteArray = [SKTexture]() //Odessa Run
+
     //Oraganização: precisa de coisa pra caralho
     
     //Public
@@ -19,6 +21,9 @@ class GameScene: SKScene {
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
     var playerNode = SKSpriteNode()
+    
+    
+    
     // - Inimigos
     var mapa: Mapa?
     var HUDNode = HUD()
@@ -33,7 +38,30 @@ class GameScene: SKScene {
     private let cam = SKCameraNode()
     // Criar uma função responsavel por unir cada bloco de chão com sua largura sem falhas e retorna um único sprite com todo o chão do nível
     
+
+    
+    //MARK: SETAS
+    let direita = SKSpriteNode(imageNamed: "dir")
+    let esquerda = SKSpriteNode(imageNamed: "esq")
+   
+    //movimento
+    var velocityX:CGFloat = 0.0
+    var velocityY:CGFloat = 0.0
+    
+    let bg = SKSpriteNode(texture: SKTexture(imageNamed: "fundo"))
+    
     override func sceneDidLoad() {
+        
+        
+        
+        
+        
+        // MARK: Odessa Run
+        for i in 1...9 {
+            spriteArray.append(SKTexture(imageNamed: "odessaRunframe\(i)"))
+        }
+        
+ 
         
         // Mapa
         mapa = createMap()
@@ -42,15 +70,21 @@ class GameScene: SKScene {
         addChild(floor)
         
         // Player
-        playerNode = SKSpriteNode(texture: SKTexture(image: UIImage(named: "Odessa-idle-frame1")!))
-        playerNode.position = CGPoint(x: 100, y: 300)
-        playerNode.setScale(0.48)
-        playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
+        playerNode = SKSpriteNode(texture:spriteArray[0])
+        playerNode.setScale(0.34) //0.68
+        playerNode.position = CGPoint(x: 100, y: 400)
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+        playerNode.zPosition = 1
+        addChild(self.playerNode)
         
-        addChild(playerNode)
+        
+      
         
         // Camera
         self.camera = cam
+        let constraint = SKConstraint.distance(SKRange(constantValue: 0), to: playerNode)
+        cam.constraints = [ constraint ]
+
         
         // Background
         background = SKSpriteNode(texture: SKTexture(imageNamed: "bg"))
@@ -208,6 +242,7 @@ class GameScene: SKScene {
             floorModule.position.y = SetYFloorPosition(floor: floorModule)
             //floorModule.position = CGPoint(x: floor.calculateAccumulatedFrame().size.width + (floorModule.size.width/2), y: 200)
             //floorModule.position = CGPoint(x: 200 + offSet, y: 200)
+            floorModule.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: floorModule.frame.width, height: floorModule.frame.height))
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false

@@ -217,7 +217,7 @@
 				TargetAttributes = {
 					8A5C63E31F6C061400271379 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = H98HS8WJD5;
+						DevelopmentTeam = EPL3UEE88E;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -459,7 +459,7 @@
 			baseConfigurationReference = 138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H98HS8WJD5;
+				DEVELOPMENT_TEAM = EPL3UEE88E;
 				INFOPLIST_FILE = Odessa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -474,7 +474,7 @@
 			baseConfigurationReference = 7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H98HS8WJD5;
+				DEVELOPMENT_TEAM = EPL3UEE88E;
 				INFOPLIST_FILE = Odessa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
