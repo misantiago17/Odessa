@@ -16,11 +16,13 @@ class GameScene: SKScene {
     
     //Public
     // - Fundo animado
+    var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
     var playerNode = SKSpriteNode()
     // - Inimigos
     var mapa: Mapa?
-    // HUD:
+    var HUDNode = HUD()
+    var movements = Movimentacao()
     // - Vida
     // - Especial
     // - BtnDeAtaque1
@@ -28,9 +30,6 @@ class GameScene: SKScene {
     // - Joystick
     // - Moedas
     
-    private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
     private let cam = SKCameraNode()
     // Criar uma função responsavel por unir cada bloco de chão com sua largura sem falhas e retorna um único sprite com todo o chão do nível
     
@@ -53,94 +52,114 @@ class GameScene: SKScene {
         // Camera
         self.camera = cam
         
+        // Background
+        background = SKSpriteNode(texture: SKTexture(imageNamed: "bg"))
         
-        self.lastUpdateTime = 0
+        // Set gestures into HUD buttons
+        HUDNode.setGestures(scene: self)
+        HUDNode.buttonConfiguration(scene: self)
+        let hud = HUDNode.getHUDNode()
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        addChild(hud)
+        view?.addSubview(hud.inputView!)
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        // Set animation movements
+        movements.setMovements()
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
     }
     
     
     func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
-        
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
         
         // Camera
         cam.position = playerNode.position
-        
-        // Initialize _lastUpdateTime if it has not already been
-        if (self.lastUpdateTime == 0) {
-            self.lastUpdateTime = currentTime
-        }
-        
-        // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
-        
-        self.lastUpdateTime = currentTime
     }
     
-    // -- Cria Mapa
+    // Gestures
+    
+    func Attack(_ sender: UIGestureRecognizer) {
+        
+//        let animateAction = SKAction.animate(with: self.attackArray, timePerFrame: 0.1, resize: true, restore: false)
+//        let repeatAction = SKAction.repeat(animateAction, count: 1)
+//        self.player.run(repeatAction, withKey: "repeatAction")
+        
+        //        if sender.state == .began {
+        //
+        //            print("UIGestureRecognizerStateEnded")
+        //            player.removeAction(forKey: "repeatAction")
+        //
+        //            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.2, resize: true, restore: false)
+        //            let repeatAction = SKAction.repeatForever(animateAction)
+        //            self.player.run(repeatAction)
+        //
+        //        }
+    }
+
+    func Tap(_ sender: UIGestureRecognizer) {
+        print("tap")
+//        let animateAction = SKAction.animate(with: self.blockArray, timePerFrame: 0.1, resize: true, restore: false)
+//        let repeatAction = SKAction.repeat(animateAction, count: 1)
+//        self.player.run(repeatAction, withKey: "repeatAction")
+        
+        //        if sender.state == .ended {
+        //
+        //            print("UIGestureRecognizerStateEnded")
+        //            player.removeAction(forKey: "repeatAction")
+        //
+        //            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.2, resize: true, restore: false)
+        //            let repeatAction = SKAction.repeatForever(animateAction)
+        //            self.player.run(repeatAction)
+        //            
+        //        }
+        
+        
+    }
+    
+    func Long(_ sender: UIGestureRecognizer) {
+//        print("long")
+//        let animateAction = SKAction.animate(with: self.longBlockArray, timePerFrame: 0.1, resize: true, restore: false)
+//        let repeatAction = SKAction.repeatForever(animateAction)
+//        self.player.run(repeatAction, withKey: "repeatAction")
+//        
+//        if sender.state == .ended {
+//            
+//            print("UIGestureRecognizerStateEnded")
+//            player.removeAction(forKey: "repeatAction")
+//            
+//            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.2, resize: true, restore: false)
+//            let repeatAction = SKAction.repeatForever(animateAction)
+//            self.player.run(repeatAction)
+//            
+        }
+        
+        
+        
+    }
+
+    
+    // Cria Mapa
     
     func createMap() -> Mapa {
         
@@ -178,7 +197,7 @@ class GameScene: SKScene {
         return sequenciaModulos
     }
     
-    // -- Arruma os sprites do mapa
+    // Arruma os sprites do mapa
     
     func organizeMap() -> SKNode {
         
@@ -215,9 +234,6 @@ class GameScene: SKScene {
         return floor
     }
     
-    // Achar uma forma de encontrar o CGpoint inicial do node (0.0,1.0) e final (1.0,1.0) e colocar a altura do próx node equivalente a altura do node anterior
-    // Achar o ponto inicial por matematica, pegando a posição.x - metade do tamanho.x e posição.y - metado do tamnaho.y 
-    
     func SetYFloorPosition(floor: SKSpriteNode) -> CGFloat {
         let yPosition: Float = Float((frame.size.height)/5)
         let originalYPosition: Float = Float(floor.size.height)
@@ -235,4 +251,4 @@ class GameScene: SKScene {
         
         return CGFloat(newPosition)
     }
-}
+
