@@ -12,6 +12,9 @@ import SwiftyJSON
 
 class GameScene: SKScene {
     
+    //odessa "tomba"para o lado. Como fazer ela cair sem tombar?
+    //Quando a camera move, a hud fica presa no lugar
+    
     var spriteArray = [SKTexture]() //Odessa Run
     var attackArray = [SKTexture]() //Odessa Attack
     var blockArray = [SKTexture]() //Odessa Block
@@ -46,6 +49,7 @@ class GameScene: SKScene {
     // Botões de ação
     var attackButton = UIButton() // botão de ataque
     var blockButton = UIButton() // botão de block
+    
     
     
     //MARK: SETAS
@@ -106,6 +110,7 @@ class GameScene: SKScene {
         
         // Camera
         self.camera = cam
+       
 //        let constraint = SKConstraint.distance(SKRange(constantValue: 0), to: playerNode)
 //        cam.constraints = [ constraint ]
 
@@ -129,10 +134,9 @@ class GameScene: SKScene {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(GameScene.Tap))
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(GameScene.Long))
         tapGesture.numberOfTapsRequired = 1
-        
         let attackGesture = UITapGestureRecognizer(target: self, action: #selector(GameScene.Attack(_:)))
         attackGesture.numberOfTapsRequired = 1
-        
+    
         blockButton.addGestureRecognizer(tapGesture)
         blockButton.addGestureRecognizer(longGesture)
         attackButton.addGestureRecognizer(attackGesture)
@@ -180,6 +184,8 @@ class GameScene: SKScene {
         blockButton.setImage(UIImage(named: "sButton"), for: .normal)
         
         self.view?.addSubview(blockButton)
+       
+     
         
     }
     
@@ -216,48 +222,45 @@ class GameScene: SKScene {
         for t in touches { self.touchDown(atPoint: t.location(in: self))
             
               let location = t.location(in: self)
-            
+
             if (direita.frame.contains(location)){
-                
-                
+
+
                 let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
                 let repeatAction = SKAction.repeatForever(animateAction)
-                
-                
+
+
                 let rightScale = SKAction.scaleX(to: 0.35, duration: 0)
                 let group = SKAction.group([repeatAction, rightScale])
-                
+
                 self.playerNode.run(group, withKey: "repeatAction")
-                
+
                 velocityX = (direita.position.x - direita.position.x + 50)/20
-                
+
                 self.playerNode.position.x += velocityX
-                
-                
+
+
             }
-            
+
             else if (esquerda.frame.contains(location)){
-                
+
                 print(velocityX)
-                
-                
+
+
                 let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
                 let repeatAction = SKAction.repeatForever(animateAction)
-                
+
                 let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
                 let group = SKAction.group([repeatAction, leftScale])
-                
+
                 self.playerNode.run(group, withKey: "repeatAction")
-                
+
                 velocityX = (direita.position.x - direita.position.x - 50)/20
-                
+
                 self.playerNode.position.x += velocityX
-                
+
             }
-            
-            
-            
-            
+   
         }
     }
     
@@ -456,8 +459,12 @@ class GameScene: SKScene {
             let repeatAction = SKAction.repeatForever(animateAction)
             self.playerNode.run(repeatAction)
         }
-
+ 
     }
+    
+   
+    
+    
     
     
 }
