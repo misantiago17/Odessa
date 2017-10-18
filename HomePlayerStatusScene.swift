@@ -14,7 +14,7 @@ class HomePlayerStatusScene: SKScene {
     //Fundo animado
     
     //Public
-    let statusPlayerButton = SKSpriteNode(imageNamed: "jord")
+    let statusPlayerButton = SKSpriteNode(imageNamed: "fundoLevel")
     let cancelButton = SKSpriteNode(imageNamed: "1024px-Crystal_button_cancel")
     let statusPlayerText = SKLabelNode(text: "AAAAAA")
 
@@ -25,6 +25,7 @@ class HomePlayerStatusScene: SKScene {
         // -- Background --
         let background = SKSpriteNode(imageNamed: "telainicial")
         background.position = CGPoint(x: frame.midX, y: frame.midY)
+        background.size = self.frame.size
         background.zPosition = -1
         
         addChild(background)
@@ -34,12 +35,12 @@ class HomePlayerStatusScene: SKScene {
         //Status Player -- colocar texto no botão(status player text)
         statusPlayerButton.position = CGPoint(x: frame.midX ,y: frame.midY)
         statusPlayerButton.zPosition = 1
-        statusPlayerButton.size = CGSize(width: 500, height: 300)
+        statusPlayerButton.size = CGSize(width: 400, height: 200) //500 300
         
         addChild(statusPlayerButton)
         
         //Cancel
-        cancelButton.position = CGPoint(x: frame.midX + 300 ,y: frame.midY + 150)
+        cancelButton.position = CGPoint(x: frame.midX + 250 ,y: frame.midY + 110) //300 150
         cancelButton.zPosition = 1
         cancelButton.size = CGSize(width: 50, height: 50)
         

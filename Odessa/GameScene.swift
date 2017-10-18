@@ -14,6 +14,12 @@ class GameScene: SKScene {
     
     //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
     //falta fazer considção de derrota e game over
+    //delay no botão de movimentação
+    
+    
+    // pular mais baixo// repetir escudo no ar mais uma vez
+    //pular mais longe
+    
     
     
     var spriteArray = [SKTexture]() //Odessa Run
@@ -26,7 +32,7 @@ class GameScene: SKScene {
     var puloBaixoArray = [SKTexture]()
     var aterrissagemArray = [SKTexture]()
     
-    
+    let barras = SKSpriteNode(imageNamed: "Barras")
     
 
     //Oraganização: precisa de coisa pra caralho
@@ -60,8 +66,8 @@ class GameScene: SKScene {
     var jumpButton = UIButton() //botão pulo
     
     // Botões de movimento
-    var direitaButton = UIButton()
-    var esquerdaButton = UIButton()
+//    var direitaButton = UIButton()
+//    var esquerdaButton = UIButton()
     
     var jumpAction = SKAction()
 
@@ -134,7 +140,10 @@ class GameScene: SKScene {
         playerNode = SKSpriteNode(texture:spriteArray[0])
         playerNode.setScale(0.34) //0.68
         playerNode.position = CGPoint(x: 100, y: 400)
-        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+       playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64)) //  ver isso
+        
+        //playerNode.physicsBody = SKPhysicsBody(texture: spriteArray[0], size: spriteArray[0].size())
+        
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
         addChild(self.playerNode)
@@ -156,9 +165,13 @@ class GameScene: SKScene {
         jumpSequence = SKAction.sequence([impulso,puloCima, jumpUp ,puloBaixo, fallBack])
         jumpAction = jumpSequence
         
+        // Fundo
         
-        // Camera
-        self.camera = cam
+        bg.zPosition = -2
+        bg.setScale(0.5)
+     //   bg.position = CGPoint(x:(self.view?.frame.maxX)! , y: (self.view?.frame.maxY)!)
+        
+        
        
         
         self.lastUpdateTime = 0
@@ -182,9 +195,9 @@ class GameScene: SKScene {
         let attackGesture = UITapGestureRecognizer(target: self, action: #selector(GameScene.Attack(_:)))
         attackGesture.numberOfTapsRequired = 1
         let jumpGesture = UITapGestureRecognizer(target: self, action: #selector(GameScene.Jump(_: )))
-        let direitaGesture = UILongPressGestureRecognizer(target: self, action: #selector(GameScene.Direita(_: )))
-        let esquerdaGesture = UILongPressGestureRecognizer(target: self, action: #selector(GameScene.Esquerda(_: )))
-        
+//        let direitaGesture = UILongPressGestureRecognizer(target: self, action: #selector(GameScene.Direita(_: )))
+//        let esquerdaGesture = UILongPressGestureRecognizer(target: self, action: #selector(GameScene.Esquerda(_: )))
+//
         
         
         blockButton.addGestureRecognizer(tapGesture)
@@ -194,29 +207,34 @@ class GameScene: SKScene {
         
         
         
-        // Fundo
+       
         
-        bg.zPosition = -2
-        bg.setScale(0.5)
-        bg.position = CGPoint(x:(self.view?.frame.maxX)! , y: (self.view?.frame.maxY)!)
-        
-        addChild(bg)
+//        addChild(bg)
         
       // CGPoint(x: view.frame.size.width/2 + 145  , y: view.frame.size.height/2 + 105)
         
         //Seta
+        
+        
+        self.direita.position = CGPoint(x: -150, y: -110) //100
+        self.esquerda.position = CGPoint(x: -250, y: -110) //100
+        
+        
+        
+        
+        
 //        self.direita.position =  CGPoint(x: view.frame.size.width/2 + 145  , y: view.frame.size.height/2 + 1) //100
 //        self.esquerda.position =  CGPoint(x: view.frame.size.width/2 + 145  , y: view.frame.size.height/2 + 1) //100
-//        direita.zPosition = 2
-//        esquerda.zPosition = 2
-//        direita.setScale(1.6)
-//        esquerda.setScale(1.6)
+        direita.zPosition = 2
+        esquerda.zPosition = 2
+        direita.setScale(1.6)
+        esquerda.setScale(1.6)
 //        self.addChild(direita)
 //        self.addChild(esquerda)
         
         //MARK: config botao de ataque
         
-        attackButton = UIButton(frame: CGRect(x: 0, y:0, width: 95, height: 95))
+        attackButton = UIButton(frame: CGRect(x: 0, y:0, width: 70, height: 70)) //95
         attackButton.backgroundColor = UIColor.clear
         attackButton.center =  CGPoint(x: view.frame.size.width/2 + 145  , y: view.frame.size.height/2 + 105)
         attackButton.addGestureRecognizer(attackGesture)
@@ -227,12 +245,12 @@ class GameScene: SKScene {
         
         //MARK: config botao de block
         
-        blockButton = UIButton(frame: CGRect(x: 0, y:0, width: 50, height: 50))
+        blockButton = UIButton(frame: CGRect(x: 0, y:0, width: 70, height: 70))  //50
         blockButton.backgroundColor = UIColor.clear
-        blockButton.center =  CGPoint(x: view.frame.size.width/2 + 230  , y: view.frame.size.height/2 + 60)
+        blockButton.center =  CGPoint(x: view.frame.size.width/2 + 230  , y: view.frame.size.height/2 + 120) //60
         blockButton.addGestureRecognizer(tapGesture)
         blockButton.addGestureRecognizer(longGesture)
-        blockButton.setImage(UIImage(named: "sButton"), for: .normal)
+        blockButton.setImage(UIImage(named: "bButton"), for: .normal)
         
         self.view?.addSubview(blockButton)
         
@@ -240,33 +258,56 @@ class GameScene: SKScene {
         
         jumpButton = UIButton(frame: CGRect(x: 0, y:0, width: 60, height: 60))
         jumpButton.backgroundColor = UIColor.clear
-        jumpButton.center =  CGPoint(x: view.frame.size.width/2 + 230  , y: view.frame.size.height/2 + 120)
+        jumpButton.center =  CGPoint(x: view.frame.size.width/2 + 230  , y: view.frame.size.height/2 + 60) //120
         jumpButton.addGestureRecognizer(jumpGesture)
-        jumpButton.setImage(UIImage(named: "jumpButton"), for: .normal)
+        jumpButton.setImage(UIImage(named: "sButton"), for: .normal)//jumpbutton
         
         self.view?.addSubview(jumpButton)
         
 
         
-        direitaButton = UIButton(frame: CGRect(x: 0, y:0, width: 60, height: 60))
-        direitaButton.backgroundColor = UIColor.clear
-        direitaButton.center =  CGPoint(x: view.frame.size.width/2 - 140  , y: view.frame.size.height/2 + 110)
-        direitaButton.addGestureRecognizer(direitaGesture)
-        direitaButton.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
-        direitaButton.setImage(UIImage(named: "dir"), for: .normal)
-        
-        self.view?.addSubview(direitaButton)
-        
-        esquerdaButton = UIButton(frame: CGRect(x: 0, y:0, width: 60, height: 60))
-        esquerdaButton.backgroundColor = UIColor.clear
-        esquerdaButton.center =  CGPoint(x: view.frame.size.width/2 - 210  , y: view.frame.size.height/2 + 110)
-        esquerdaButton.addGestureRecognizer(esquerdaGesture)
-        esquerdaButton.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
-        esquerdaButton.setImage(UIImage(named: "esq"), for: .normal)
-        
-        self.view?.addSubview(esquerdaButton)
+//        direitaButton = UIButton(frame: CGRect(x: 0, y:0, width: 60, height: 60))
+//        direitaButton.backgroundColor = UIColor.clear
+//        direitaButton.center =  CGPoint(x: view.frame.size.width/2 - 140  , y: view.frame.size.height/2 + 110)
+//        direitaButton.addGestureRecognizer(direitaGesture)
+//        direitaButton.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+//        direitaButton.setImage(UIImage(named: "dir"), for: .normal)
+//
+//        self.view?.addSubview(direitaButton)
+//
+//        esquerdaButton = UIButton(frame: CGRect(x: 0, y:0, width: 60, height: 60))
+//        esquerdaButton.backgroundColor = UIColor.clear
+//        esquerdaButton.center =  CGPoint(x: view.frame.size.width/2 - 210  , y: view.frame.size.height/2 + 110)
+//        esquerdaButton.addGestureRecognizer(esquerdaGesture)
+//        esquerdaButton.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+//        esquerdaButton.setImage(UIImage(named: "esq"), for: .normal)
+//
+//        self.view?.addSubview(esquerdaButton)
         
      
+        
+        
+        self.barras.position = CGPoint(x: -120, y: 130)
+        barras.setScale(0.4)
+        
+        // MARK: Camera
+       // self.camera = cam
+        
+        let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
+        
+        cam.position = center
+        addChild(cam)
+        camera = cam
+        
+        cam.addChild(bg)
+        cam.addChild(direita)
+        cam.addChild(esquerda)
+        cam.addChild(barras)
+
+        
+        
+        
+        
         
     }
     
@@ -300,49 +341,49 @@ class GameScene: SKScene {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
         
-//        for t in touches { self.touchDown(atPoint: t.location(in: self))
-//
-//              let location = t.location(in: self)
-//
-//            if (direita.frame.contains(location)){
-//
-//
-//                let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
-//                let repeatAction = SKAction.repeatForever(animateAction)
-//
-//
-//                let rightScale = SKAction.scaleX(to: 0.35, duration: 0)
-//                let group = SKAction.group([repeatAction, rightScale])
-//
-//                self.playerNode.run(group, withKey: "repeatAction")
-//
-//                velocityX = (direita.position.x - direita.position.x + 50)/20
-//
-//                self.playerNode.position.x += velocityX
-//
-//
-//            }
-//
-//            else if (esquerda.frame.contains(location)){
-//
-//                print(velocityX)
-//
-//
-//                let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
-//                let repeatAction = SKAction.repeatForever(animateAction)
-//
-//                let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
-//                let group = SKAction.group([repeatAction, leftScale])
-//
-//                self.playerNode.run(group, withKey: "repeatAction")
-//
-//                velocityX = (direita.position.x - direita.position.x - 50)/20
-//
-//                self.playerNode.position.x += velocityX
-//
-//            }
-//
-//        }
+        for t in touches { self.touchDown(atPoint: t.location(in: self))
+
+              let location = t.location(in: cam)
+
+            if (direita.frame.contains(location)){
+
+
+                let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+                let repeatAction = SKAction.repeatForever(animateAction)
+
+
+                let rightScale = SKAction.scaleX(to: 0.35, duration: 0)
+                let group = SKAction.group([repeatAction, rightScale])
+
+                self.playerNode.run(group, withKey: "repeatAction")
+
+                velocityX = (direita.position.x - direita.position.x + 50)/20
+
+                self.playerNode.position.x += velocityX
+
+
+            }
+
+            else if (esquerda.frame.contains(location)){
+
+                print(velocityX)
+
+
+                let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+                let repeatAction = SKAction.repeatForever(animateAction)
+
+                let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
+                let group = SKAction.group([repeatAction, leftScale])
+
+                self.playerNode.run(group, withKey: "repeatAction")
+
+                velocityX = (direita.position.x - direita.position.x - 50)/20
+
+                self.playerNode.position.x += velocityX
+
+            }
+
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -350,10 +391,13 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self))
+        for t in touches { self.touchUp(atPoint: t.location(in: cam))
             
             playerNode.removeAction(forKey: "repeatAction")
             velocityX = 0
+            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.2, resize: true, restore: false)
+            let repeatAction = SKAction.repeatForever(animateAction)
+            self.playerNode.run(repeatAction)
             
         }
     }
@@ -369,6 +413,7 @@ class GameScene: SKScene {
         // Camera
         
         cam.position = playerNode.position
+        
         
         //Posicao player
         self.playerNode.position.x += velocityX
@@ -562,77 +607,77 @@ class GameScene: SKScene {
         
     }
    
-    func Direita(_ sender: UIGestureRecognizer) {
-        
-        print("Direita")
-        
-         playerNode.removeAction(forKey: "repeatAction")
-        
-        let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
-        let repeatAction = SKAction.repeatForever(animateAction)
-        
-        
-        let rightScale = SKAction.scaleX(to: 0.35, duration: 0)
-        let group = SKAction.group([repeatAction, rightScale])
-        
-        self.playerNode.run(group, withKey: "repeatAction")
-        
-        velocityX = (playerNode.position.x - playerNode.position.x + 50)/20
-        
-        self.playerNode.position.x += velocityX
-        
-        if sender.state == .ended {
-
-            
-            playerNode.removeAction(forKey: "repeatAction")
-            velocityX = 0
-            
-            
-            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.3, resize: true, restore: false)
-            let repeatAction = SKAction.repeatForever(animateAction)
-            self.playerNode.run(repeatAction)
-        
-
-
-        }
-        
-        
-        
-    }
+//    func Direita(_ sender: UIGestureRecognizer) {
+//
+//        print("Direita")
+//
+//         playerNode.removeAction(forKey: "repeatAction")
+//
+//        let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+//        let repeatAction = SKAction.repeatForever(animateAction)
+//
+//
+//        let rightScale = SKAction.scaleX(to: 0.35, duration: 0)
+//        let group = SKAction.group([repeatAction, rightScale])
+//
+//        self.playerNode.run(group, withKey: "repeatAction")
+//
+//        velocityX = (playerNode.position.x - playerNode.position.x + 50)/20
+//
+//        self.playerNode.position.x += velocityX
+//
+//        if sender.state == .ended {
+//
+//
+//            playerNode.removeAction(forKey: "repeatAction")
+//            velocityX = 0
+//
+//
+//            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.3, resize: true, restore: false)
+//            let repeatAction = SKAction.repeatForever(animateAction)
+//            self.playerNode.run(repeatAction)
+//
+//
+//
+//        }
+//
+//
+//
+//    }
     
-    func Esquerda(_ sender: UIGestureRecognizer) {
-        
-        print("Esquerda")
-        
-        playerNode.removeAction(forKey: "repeatAction")
-        let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
-        let repeatAction = SKAction.repeatForever(animateAction)
-        
-        let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
-        let group = SKAction.group([repeatAction, leftScale])
-        
-        self.playerNode.run(group, withKey: "repeatAction")
-        
-        velocityX = (playerNode.position.x - playerNode.position.x - 50)/20
-        
-        self.playerNode.position.x += velocityX
-        
-        if sender.state == .ended {
-
-            
-            playerNode.removeAction(forKey: "repeatAction")
-            velocityX = 0
-
-            playerNode.removeAction(forKey: "repeatAction")
-            
-            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.3, resize: true, restore: false)
-            let repeatAction = SKAction.repeatForever(animateAction)
-            self.playerNode.run(repeatAction)
-        
-
-        }
-        
-    }
+//    func Esquerda(_ sender: UIGestureRecognizer) {
+//
+//        print("Esquerda")
+//
+//        playerNode.removeAction(forKey: "repeatAction")
+//        let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+//        let repeatAction = SKAction.repeatForever(animateAction)
+//
+//        let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
+//        let group = SKAction.group([repeatAction, leftScale])
+//
+//        self.playerNode.run(group, withKey: "repeatAction")
+//
+//        velocityX = (playerNode.position.x - playerNode.position.x - 50)/20
+//
+//        self.playerNode.position.x += velocityX
+//
+//        if sender.state == .ended {
+//
+//
+//            playerNode.removeAction(forKey: "repeatAction")
+//            velocityX = 0
+//
+//            playerNode.removeAction(forKey: "repeatAction")
+//
+//            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.3, resize: true, restore: false)
+//            let repeatAction = SKAction.repeatForever(animateAction)
+//            self.playerNode.run(repeatAction)
+//
+//
+//        }
+//
+//    }
     
     
     

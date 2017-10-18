@@ -15,9 +15,9 @@ class HomeOptionsScene: SKScene {
     //Fundo animado
     
     //Public - tem que inicializar caso contrário ele pede para por um init que buga a classe
-    let continueButton = SKSpriteNode(imageNamed: "expences-button-png-hi")
-    let newGameButton = SKSpriteNode(imageNamed: "expences-button-png-hi")
-    let settingsButton = SKSpriteNode(imageNamed: "expences-button-png-hi")
+    let continueButton = SKSpriteNode(imageNamed: "continue")
+    let newGameButton = SKSpriteNode(imageNamed: "newGame")
+    let settingsButton = SKSpriteNode(imageNamed: "options")
     
     override func sceneDidLoad() {
         
@@ -26,6 +26,7 @@ class HomeOptionsScene: SKScene {
         // -- Background --
         let background = SKSpriteNode(imageNamed: "telainicial")
         background.position = CGPoint(x: frame.midX, y: frame.midY)
+        background.size = self.frame.size
         background.zPosition = -1
         
         addChild(background)

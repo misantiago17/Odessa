@@ -18,7 +18,12 @@ class HomeScene: SKScene {
     override func sceneDidLoad() {
         
         let background = SKSpriteNode(imageNamed: "telainicial")
+       
+        
+        
+        
         background.position = CGPoint(x: frame.midX, y: frame.midY)
+         background.size = self.frame.size
         background.zPosition = 1
         
         addChild(background)
