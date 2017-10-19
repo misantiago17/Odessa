@@ -12,7 +12,28 @@ import SwiftyJSON
 
 class GameScene: SKScene {
     
-     var spriteArray = [SKTexture]() //Odessa Run
+    //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
+    //falta fazer considção de derrota e game over
+    //delay no botão de movimentação
+    
+    
+    // pular mais baixo// repetir escudo no ar mais uma vez
+    //pular mais longe
+    
+    
+    
+    var spriteArray = [SKTexture]() //Odessa Run
+    var attackArray = [SKTexture]() //Odessa Attack
+    var blockArray = [SKTexture]() //Odessa Block
+    var longBlockArray = [SKTexture]() //Odessa long Block
+    var idleArray = [SKTexture]()
+    var impulsoArray = [SKTexture]()
+    var puloCimaArray = [SKTexture]()
+    var puloBaixoArray = [SKTexture]()
+    var aterrissagemArray = [SKTexture]()
+    
+    let barras = SKSpriteNode(imageNamed: "Barras")
+    
 
     //Oraganização: precisa de coisa pra caralho
     
@@ -38,8 +59,17 @@ class GameScene: SKScene {
     private let cam = SKCameraNode()
     // Criar uma função responsavel por unir cada bloco de chão com sua largura sem falhas e retorna um único sprite com todo o chão do nível
     
-
+    // Botões de ação
+    var attackButton = UIButton() // botão de ataque
+    var blockButton = UIButton() // botão de block
+    var jumpButton = UIButton() //botão pulo
     
+    // Botões de movimento
+//    var direitaButton = UIButton()
+//    var esquerdaButton = UIButton()
+    
+    var jumpAction = SKAction()
+
     //MARK: SETAS
     let direita = SKSpriteNode(imageNamed: "dir")
     let esquerda = SKSpriteNode(imageNamed: "esq")
@@ -52,16 +82,52 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
+        //MARK: Odessa Attack
+        for i in 1...7 {
+            attackArray.append(SKTexture(imageNamed: "odessa-attackframe\(i)"))
+        }
+   
+        //MARK: Odessa Block
+        for i in 1...2 {
+            blockArray.append(SKTexture(imageNamed: "Odessa-block-frame\(i)"))
+        }
         
-        
-        
+        for i in 1...2 {
+            longBlockArray.append(SKTexture(imageNamed: "Odessa-block-hold-frame\(i)"))
+        }
         
         // MARK: Odessa Run
-        for i in 1...9 {
+        for i in 1...3 {
             spriteArray.append(SKTexture(imageNamed: "odessaRunframe\(i)"))
         }
         
+        //MARK:Idle
+        for i in 1...4 {
+           idleArray.append(SKTexture(imageNamed: "Odessa-idle-frame\(i)"))
+        }
+    
+        //MARK: Odessa Jump
+        
+        for i in 1...2 {
+            impulsoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+        }
+        
+        puloCimaArray.append(SKTexture(imageNamed: "odessaJumpframe3"))
+        // puloBaixoArray.append(textureAtlas.textureNamed("odessaJumpframe4"))
+        
+        for i in 4...6 {
+            puloBaixoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+        }
+        
+        puloBaixoArray.append(SKTexture(imageNamed: "odessa-attackframe1"))
+        //  aterrissagemArray.append(textureAtlas.textureNamed("odessaJumpframe6"));
+        
  
+        
+       
+        
+        
+        
         
         // Mapa
         mapa = createMap()
@@ -73,18 +139,20 @@ class GameScene: SKScene {
         playerNode = SKSpriteNode(texture:spriteArray[0])
         playerNode.setScale(0.34) //0.68
         playerNode.position = CGPoint(x: 100, y: 400)
-        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+       playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64)) //  ver isso
+        
+        //playerNode.physicsBody = SKPhysicsBody(texture: spriteArray[0], size: spriteArray[0].size())
+        
         playerNode.zPosition = 1
+        playerNode.physicsBody?.allowsRotation = false
         addChild(self.playerNode)
         
         
       
+        let jumpUp = SKAction.moveBy(x: playerNode.position.x, y: 200, duration: 0.3)
+        let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+        var jumpSequence = SKAction()
         
-        // Camera
-        self.camera = cam
-        let constraint = SKConstraint.distance(SKRange(constantValue: 0), to: playerNode)
-        cam.constraints = [ constraint ]
-
         
         // Background
         background = SKSpriteNode(texture: SKTexture(imageNamed: "bg"))
