@@ -144,7 +144,7 @@ class GameScene: SKScene {
 
             } else if (HUDNode.setaEsqButtonNode.frame.contains(location)){
 
-                let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+                let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.2, resize: true, restore: false)
                 let repeatAction = SKAction.repeatForever(animateAction)
 
                 let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
@@ -174,6 +174,9 @@ class GameScene: SKScene {
             self.playerNode.run(repeatAction)
             
         }
+        
+       
+        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -186,6 +189,24 @@ class GameScene: SKScene {
         
         // Camera
         cam.position = playerNode.position
+        
+        
+        if (playerNode.position.y < -239){
+            
+            
+            let nextScene = GameOverScene(size: self.scene!.size)
+            nextScene.scaleMode = self.scaleMode
+            nextScene.backgroundColor = UIColor.black
+            self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
+        
+            
+            
+            
+        }
+        
+        
+        
+        
 
     }
     

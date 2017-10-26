@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
 		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
 		8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63E71F6C061400271379 /* AppDelegate.swift */; };
 		8A5C63EA1F6C061400271379 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63E91F6C061400271379 /* GameScene.sks */; };
@@ -35,7 +36,6 @@
 		8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */; };
 		8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642E1F71775700271379 /* PauseGameScene.swift */; };
 		8A5C64311F71784A00271379 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64301F71784A00271379 /* HomeScene.swift */; };
-		8A9126251FA24504002954C6 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9126241FA24504002954C6 /* GameOverScene.swift */; };
 		8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A980C1C1F90099C00483B59 /* Movimentacao.swift */; };
 		8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */; };
 		8AB71B851F8406B600726E14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71B841F8406B600726E14 /* Assets.xcassets */; };
@@ -43,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
 		7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.release.xcconfig"; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusScene.swift; sourceTree = "<group>"; };
 		8A5C642E1F71775700271379 /* PauseGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameScene.swift; sourceTree = "<group>"; };
 		8A5C64301F71784A00271379 /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
-		8A9126241FA24504002954C6 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		8A980C1C1F90099C00483B59 /* Movimentacao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movimentacao.swift; sourceTree = "<group>"; };
 		8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reader_JSON.swift; sourceTree = "<group>"; };
 		8AB71B841F8406B600726E14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Odessa/Assets.xcassets; sourceTree = "<group>"; };
@@ -142,7 +142,6 @@
 				8A5C64141F6C0B3E00271379 /* HUD.swift */,
 				8A5C64161F6C0B5600271379 /* DAO.swift */,
 				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
-				8A9126241FA24504002954C6 /* GameOverScene.swift */,
 				8AE806551F7D305100AE71A0 /* JsonFile.json */,
 			);
 			name = Model;
@@ -159,6 +158,7 @@
 				8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */,
 				8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */,
 				8A5C63ED1F6C061400271379 /* GameScene.swift */,
+				0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */,
 				8A5C642E1F71775700271379 /* PauseGameScene.swift */,
 			);
 			name = View;
@@ -220,7 +220,7 @@
 				TargetAttributes = {
 					8A5C63E31F6C061400271379 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = H98HS8WJD5;
+						DevelopmentTeam = EPL3UEE88E;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -323,7 +323,7 @@
 				8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */,
 				8A5C64111F6C0B1800271379 /* Fase.swift in Sources */,
 				8A5C64031F6C0AC200271379 /* Player.swift in Sources */,
-				8A9126251FA24504002954C6 /* GameOverScene.swift in Sources */,
+				0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */,
 				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
 				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
 				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
@@ -466,7 +466,7 @@
 			baseConfigurationReference = 138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H98HS8WJD5;
+				DEVELOPMENT_TEAM = EPL3UEE88E;
 				INFOPLIST_FILE = Odessa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -481,7 +481,7 @@
 			baseConfigurationReference = 7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H98HS8WJD5;
+				DEVELOPMENT_TEAM = EPL3UEE88E;
 				INFOPLIST_FILE = Odessa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
