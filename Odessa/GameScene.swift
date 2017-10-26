@@ -75,7 +75,6 @@ class GameScene: SKScene {
         background.setScale(0.5)
         
         // Set gestures into HUD buttons
-        //HUDNode.setGestures(scene: self)
         HUDNode.buttonConfiguration(screenSize: UIScreen.main.bounds.size, camera: cam)
         hud = HUDNode.getHUDNode()
         
@@ -166,7 +165,12 @@ class GameScene: SKScene {
             }
             
             if (HUDNode.blockButtonNode.frame.contains(location)){
+                
+                //////////////////////////////////////// FAZER O LONG TAP AQUI
                 print("block")
+                let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.1, resize: true, restore: false)
+                let repeatAction = SKAction.repeat(animateAction, count: 1)
+                self.playerNode.run(repeatAction, withKey: "repeatAction")
             }
             
             if (HUDNode.jumpButtonNode.frame.contains(location)){
@@ -336,27 +340,6 @@ class GameScene: SKScene {
         //print(newPosition)
         
         return CGFloat(newPosition)
-    }
-
-    
-    func Tap(_ sender: UIGestureRecognizer) {
-
-        let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.1, resize: true, restore: false)
-        let repeatAction = SKAction.repeat(animateAction, count: 1)
-        self.playerNode.run(repeatAction, withKey: "repeatAction")
-
-        //        if sender.state == .ended {
-        //
-        //            print("UIGestureRecognizerStateEnded")
-        //            player.removeAction(forKey: "repeatAction")
-        //
-        //            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.2, resize: true, restore: false)
-        //            let repeatAction = SKAction.repeatForever(animateAction)
-        //            self.player.run(repeatAction)
-        //
-        //        }
-
-
     }
     
     func Long(_ sender: UIGestureRecognizer) {
