@@ -190,24 +190,14 @@ class GameScene: SKScene {
         // Camera
         cam.position = playerNode.position
         
-        
+        // Game Over
         if (playerNode.position.y < -239){
-            
             
             let nextScene = GameOverScene(size: self.scene!.size)
             nextScene.scaleMode = self.scaleMode
             nextScene.backgroundColor = UIColor.black
             self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
-        
-            
-            
-            
         }
-        
-        
-        
-        
-
     }
     
     // Place Enemies in modules
