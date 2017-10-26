@@ -18,9 +18,6 @@ class HomeScene: SKScene {
     override func sceneDidLoad() {
         
         let background = SKSpriteNode(imageNamed: "IntroBackground")
-       
-        
-        
         
         background.position = CGPoint(x: frame.midX, y: frame.midY)
          background.size = self.frame.size

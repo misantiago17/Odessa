@@ -146,7 +146,7 @@ class Reader {
         
         for ID in enemiesID {
             
-            Enemies.append(GetEnemy(EnemyID: ID))
+            Enemies.append(GetEnemy(EnemyID: ID, posX: nil, posY: nil))
         }
         
         return Enemies
@@ -158,18 +158,20 @@ class Reader {
         let setsDictionary = jsonDictionary["Sets"] as! [String: Any]
         let setDictionary = setsDictionary["Set\(SetID)"] as! [String: Any]
         let EnemiesIDs = setDictionary["Enemies"] as! [String]
+        let EnemiesXPos = setDictionary["posX"] as! [String]
+        let EnemiesYPos = setDictionary["posY"] as! [String]
         
         // Coloca as informações nas instancias
         var Enemies: [Inimigo] = []
         
         for ID in EnemiesIDs {
-            Enemies.append(GetEnemy(EnemyID: Int(ID)!))
+            Enemies.append(GetEnemy(EnemyID: Int(ID)!, posX: Float(EnemiesXPos[Int(ID)! - 1]), posY: Float(EnemiesYPos[Int(ID)! - 1])))
         }
         
         return Enemies
     }
     
-    func GetEnemy(EnemyID: Int) -> Inimigo {
+    func GetEnemy(EnemyID: Int, posX: Float?, posY: Float?) -> Inimigo {
         
         // Separa as informações do dicionário
         let enemiesDictionary = jsonDictionary["Enemies"] as! [String: Any]
@@ -184,7 +186,7 @@ class Reader {
         let img = enemyDictionary["ImgName"] as! String
         
         // Coloca as informações nas instancias
-        let Enemy = Inimigo(nome: name, vida: life!, velocidade: velocity!, defesa: defence!, dano: attack!, tipo: type, imgName: img)
+        let Enemy = Inimigo(nome: name, vida: life!, velocidade: velocity!, defesa: defence!, dano: attack!, tipo: type, imgName: img, X: posX, Y: posY)
         
         return Enemy
     }

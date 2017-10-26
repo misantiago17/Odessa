@@ -184,6 +184,16 @@ class GameScene: SKScene {
         cam.position = playerNode.position
 
     }
+    
+    // do mapa verificar os módulos, pra cada módulo randomizar um set e pegar os inimigos e suas posições
+    
+    // Place Enemies
+    
+    func placeEnemy() {
+        
+       
+        
+    }
 
     
     // Cria Mapa

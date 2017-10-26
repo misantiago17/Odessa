@@ -21,8 +21,10 @@ class Inimigo {
     var dano: Int
     var tipo: String
     var imgName: String
+    var posInModuleX: Float?
+    var posInModuleY: Float?
     
-    init(nome:String, vida:Int, velocidade:Float, defesa:Int, dano: Int, tipo: String, imgName: String){
+    init(nome:String, vida:Int, velocidade:Float, defesa:Int, dano: Int, tipo: String, imgName: String, X: Float?, Y: Float?){
         
         self.nome = nome
         self.vida = vida
@@ -31,6 +33,8 @@ class Inimigo {
         self.dano = dano
         self.tipo = tipo
         self.imgName = imgName
+        self.posInModuleX = X
+        self.posInModuleY = Y
         
     }
 
