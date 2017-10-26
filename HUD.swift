@@ -16,6 +16,7 @@ class HUD {
     var attackButtonNode = SKSpriteNode() // botão de ataque
     var blockButtonNode = SKSpriteNode() // botão de block
     var jumpButtonNode = SKSpriteNode() // botão de pulo
+    var specialButtonNode = SKSpriteNode() // botão de pulo
     var setaDirButtonNode = SKSpriteNode() // seta direita
     var setaEsqButtonNode = SKSpriteNode() // seta esquerda
     var barrasNode = SKSpriteNode() // barras
@@ -75,6 +76,14 @@ class HUD {
         jumpButtonNode.position = CGPoint(x: marginAButton + 7.5, y: -(screenSize.height/2 * 0.85))
         
         HUDNode.addChild(jumpButtonNode)
+        
+        // Special Button
+        specialButtonNode = SKSpriteNode(imageNamed: "sButton")
+        specialButtonNode.zPosition = 2
+        specialButtonNode.size = CGSize(width: 60, height: 60)
+        specialButtonNode.position = CGPoint(x: marginAButton + 7.5, y: -(screenSize.height/2 * 0.45))
+        
+        HUDNode.addChild(specialButtonNode)
         
         // Seta direita
         setaDirButtonNode = SKSpriteNode(imageNamed: "dir")
