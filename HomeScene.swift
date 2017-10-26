@@ -17,7 +17,7 @@ class HomeScene: SKScene {
     
     override func sceneDidLoad() {
         
-        let background = SKSpriteNode(imageNamed: "telainicial")
+        let background = SKSpriteNode(imageNamed: "IntroBackground")
        
         
         

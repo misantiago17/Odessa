@@ -23,7 +23,7 @@ class HomePlayerStatusScene: SKScene {
         print("Player Status")
         
         // -- Background --
-        let background = SKSpriteNode(imageNamed: "telainicial")
+        let background = SKSpriteNode(imageNamed: "IntroBackground")
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         background.size = self.frame.size
         background.zPosition = -1
