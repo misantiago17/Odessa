@@ -54,7 +54,9 @@ class HUD {
         attackButtonNode = SKSpriteNode(imageNamed: "aButton")
         attackButtonNode.zPosition = 2
         attackButtonNode.size = CGSize(width: 70, height: 70)
-        attackButtonNode.position = CGPoint(x: (HUDNode.frame.size.width)/2 + 310, y: (HUDNode.frame.size.height)/2 - 105)
+        attackButtonNode.position = CGPoint(x: (scene.frame.size.width)/2, y: (HUDNode.frame.size.height)/2 - 105)
+        
+        print(scene.view?.frame.size.width)
         
         HUDNode.addChild(attackButtonNode)
         

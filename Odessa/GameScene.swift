@@ -180,6 +180,8 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
+        
+        
         // Camera
         cam.position = playerNode.position
 
@@ -205,9 +207,7 @@ class GameScene: SKScene {
             
             inimigosNode.append(inimigoNode)
             //spriteMod.addChild(inimigoNode)
-            
-            print("scrr")
-
+        
         }
         
     }
