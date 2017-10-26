@@ -54,16 +54,17 @@ class HUD {
         attackButtonNode = SKSpriteNode(imageNamed: "aButton")
         attackButtonNode.zPosition = 2
         attackButtonNode.size = CGSize(width: 70, height: 70)
-        attackButtonNode.position = CGPoint(x: screenSize.width/2 * 0.85, y:
-            -(screenSize.height/2 * 0.80))
+        attackButtonNode.position = CGPoint(x: screenSize.width/2 * 0.60, y: -(screenSize.height/2 * 0.65))
         
         HUDNode.addChild(attackButtonNode)
+        
+        let marginAButton = self.attackButtonNode.frame.origin.x + self.attackButtonNode.frame.size.width
         
         // Block Button
         blockButtonNode = SKSpriteNode(imageNamed: "bButton")
         blockButtonNode.zPosition = 2
         blockButtonNode.size = CGSize(width: 70, height: 70)
-        blockButtonNode.position = CGPoint(x: screenSize.width/2 * 0.60, y: -(screenSize.height/2 * 0.70))
+        blockButtonNode.position = CGPoint(x: marginAButton + 50, y: -(screenSize.height/2 * 0.65))
         
         HUDNode.addChild(blockButtonNode)
         
@@ -71,7 +72,7 @@ class HUD {
         jumpButtonNode = SKSpriteNode(imageNamed: "sButton")
         jumpButtonNode.zPosition = 2
         jumpButtonNode.size = CGSize(width: 60, height: 60)
-        jumpButtonNode.position = CGPoint(x: screenSize.width/2 * 0.70, y: -(screenSize.height/2 * 0.80))
+        jumpButtonNode.position = CGPoint(x: marginAButton + 7.5, y: -(screenSize.height/2 * 0.85))
         
         HUDNode.addChild(jumpButtonNode)
         
