@@ -101,6 +101,7 @@ class GameScene: SKScene {
         
         addChild(cam)
         cam.addChild(hud)
+        cam.addChild(background)
 
         //cam.addChild(hud)
     }
