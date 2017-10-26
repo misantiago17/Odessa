@@ -75,7 +75,7 @@ class GameScene: SKScene {
         background.setScale(0.5)
         
         // Set gestures into HUD buttons
-        HUDNode.setGestures(scene: self)
+        //HUDNode.setGestures(scene: self)
         HUDNode.buttonConfiguration(screenSize: UIScreen.main.bounds.size, camera: cam)
         hud = HUDNode.getHUDNode()
         
@@ -141,7 +141,7 @@ class GameScene: SKScene {
 
                 self.playerNode.position.x += velocityX
                 
-
+                
             } else if (HUDNode.setaEsqButtonNode.frame.contains(location)){
 
                 let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.2, resize: true, restore: false)
@@ -156,6 +156,23 @@ class GameScene: SKScene {
 
                 self.playerNode.position.x += velocityX
 
+            }
+            
+            if (HUDNode.attackButtonNode.frame.contains(location)){
+                
+                let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.1, resize: true, restore: false)
+                let repeatAction = SKAction.repeat(animateAction, count: 1)
+                self.playerNode.run(repeatAction, withKey: "repeatAction")
+            }
+            
+            if (HUDNode.blockButtonNode.frame.contains(location)){
+                print("block")
+            }
+            
+            if (HUDNode.jumpButtonNode.frame.contains(location)){
+                
+                let repeatAction = SKAction.repeat(movements.jumpAction, count: 1)
+                self.playerNode.run(repeatAction, withKey: "repeatAction")
             }
 
         }
@@ -320,28 +337,7 @@ class GameScene: SKScene {
         
         return CGFloat(newPosition)
     }
-    
-    
-    //MARK: Gesture func
-    
-    func Attack(_ sender: UIGestureRecognizer) {
-        
-        let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.1, resize: true, restore: false)
-        let repeatAction = SKAction.repeat(animateAction, count: 1)
-        self.playerNode.run(repeatAction, withKey: "repeatAction")
-        
-        //        if sender.state == .began {
-        //
-        //            print("UIGestureRecognizerStateEnded")
-        //            player.removeAction(forKey: "repeatAction")
-        //
-        //            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.2, resize: true, restore: false)
-        //            let repeatAction = SKAction.repeatForever(animateAction)
-        //            self.player.run(repeatAction)
-        //
-        //        }
-    }
-    
+
     
     func Tap(_ sender: UIGestureRecognizer) {
 
@@ -379,29 +375,7 @@ class GameScene: SKScene {
             self.playerNode.run(repeatAction)
         }
  
-    }
-    
-    
-    func Jump(_ sender: UIGestureRecognizer) {
-        
-        let repeatAction = SKAction.repeat(movements.jumpAction, count: 1)
-        self.playerNode.run(repeatAction, withKey: "repeatAction")
-        
-        
-        //        let animateAction = SKAction.animate(with: self.blockArray, timePerFrame: 0.1, resize: true, restore: false)
-        //        let repeatAction = SKAction.repeat(animateAction, count: 1)
-        //        self.player.run(repeatAction, withKey: "repeatAction")
-        //
-        
-        
-        
-    }
-   
-
-    
-    
-    
-    
+    }  
     
 }
 
