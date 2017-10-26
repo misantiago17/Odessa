@@ -28,10 +28,9 @@ class GameScene: SKScene {
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
     var playerNode = SKSpriteNode()
     var hud = SKNode()
+    var inimigosNode = [SKSpriteNode()]
     
     
-    
-    // - Inimigos
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
@@ -185,17 +184,33 @@ class GameScene: SKScene {
 
     }
     
-    // do mapa verificar os módulos, pra cada módulo randomizar um set e pegar os inimigos e suas posições
+    // Place Enemies in modules
     
-    // Place Enemies
-    
-    func placeEnemy() {
+    func placeEnemy(modulo: ModuloMapa, spriteMod: SKSpriteNode) {
         
-       
+        var moduleWaves = Reader().GetModuleSets(ModuleID: modulo.IDModulo)
+        var item = Int(arc4random_uniform(UInt32(moduleWaves.count) - 1))
+        
+        for inimigo in moduleWaves[item].inimigos {
+            
+            let texture = SKTexture(image: UIImage(named: inimigo.imgName)!)
+            
+            var inimigoNode = SKSpriteNode(texture: texture)
+            inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!))
+            inimigoNode.zPosition = 1
+            inimigoNode.setScale(0.34)
+            inimigoNode.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
+            inimigoNode.physicsBody?.allowsRotation = false
+            
+            inimigosNode.append(inimigoNode)
+            //spriteMod.addChild(inimigoNode)
+            
+            print("scrr")
+
+        }
         
     }
 
-    
     // Cria Mapa
     
     func createMap() -> Mapa {
@@ -253,6 +268,8 @@ class GameScene: SKScene {
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false
+            
+            placeEnemy(modulo: module, spriteMod: floorModule)
             
             floorSegments.append(floorModule)
             
