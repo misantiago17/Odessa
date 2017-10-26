@@ -125,7 +125,7 @@ class GameScene: SKScene {
             
             if (HUDNode.setaDirButtonNode.frame.contains(location)){
 
-                let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
+                let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.2, resize: true, restore: false)
                 let repeatAction = SKAction.repeatForever(animateAction)
 
 
@@ -383,77 +383,7 @@ class GameScene: SKScene {
         
     }
    
-//    func Direita(_ sender: UIGestureRecognizer) {
-//
-//        print("Direita")
-//
-//         playerNode.removeAction(forKey: "repeatAction")
-//
-//        let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
-//        let repeatAction = SKAction.repeatForever(animateAction)
-//
-//
-//        let rightScale = SKAction.scaleX(to: 0.35, duration: 0)
-//        let group = SKAction.group([repeatAction, rightScale])
-//
-//        self.playerNode.run(group, withKey: "repeatAction")
-//
-//        velocityX = (playerNode.position.x - playerNode.position.x + 50)/20
-//
-//        self.playerNode.position.x += velocityX
-//
-//        if sender.state == .ended {
-//
-//
-//            playerNode.removeAction(forKey: "repeatAction")
-//            velocityX = 0
-//
-//
-//            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.3, resize: true, restore: false)
-//            let repeatAction = SKAction.repeatForever(animateAction)
-//            self.playerNode.run(repeatAction)
-//
-//
-//
-//        }
-//
-//
-//
-//    }
-    
-//    func Esquerda(_ sender: UIGestureRecognizer) {
-//
-//        print("Esquerda")
-//
-//        playerNode.removeAction(forKey: "repeatAction")
-//        let animateAction = SKAction.animate(with: self.spriteArray, timePerFrame: 0.1, resize: true, restore: false)
-//        let repeatAction = SKAction.repeatForever(animateAction)
-//
-//        let leftScale = SKAction.scaleX(to: -0.35, duration: 0)
-//        let group = SKAction.group([repeatAction, leftScale])
-//
-//        self.playerNode.run(group, withKey: "repeatAction")
-//
-//        velocityX = (playerNode.position.x - playerNode.position.x - 50)/20
-//
-//        self.playerNode.position.x += velocityX
-//
-//        if sender.state == .ended {
-//
-//
-//            playerNode.removeAction(forKey: "repeatAction")
-//            velocityX = 0
-//
-//            playerNode.removeAction(forKey: "repeatAction")
-//
-//            let animateAction = SKAction.animate(with: self.idleArray, timePerFrame: 0.3, resize: true, restore: false)
-//            let repeatAction = SKAction.repeatForever(animateAction)
-//            self.playerNode.run(repeatAction)
-//
-//
-//        }
-//
-//    }
+
     
     
     
