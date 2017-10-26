@@ -35,6 +35,7 @@
 		8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */; };
 		8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642E1F71775700271379 /* PauseGameScene.swift */; };
 		8A5C64311F71784A00271379 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64301F71784A00271379 /* HomeScene.swift */; };
+		8A9126251FA24504002954C6 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9126241FA24504002954C6 /* GameOverScene.swift */; };
 		8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A980C1C1F90099C00483B59 /* Movimentacao.swift */; };
 		8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */; };
 		8AB71B851F8406B600726E14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71B841F8406B600726E14 /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusScene.swift; sourceTree = "<group>"; };
 		8A5C642E1F71775700271379 /* PauseGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameScene.swift; sourceTree = "<group>"; };
 		8A5C64301F71784A00271379 /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
+		8A9126241FA24504002954C6 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		8A980C1C1F90099C00483B59 /* Movimentacao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movimentacao.swift; sourceTree = "<group>"; };
 		8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reader_JSON.swift; sourceTree = "<group>"; };
 		8AB71B841F8406B600726E14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Odessa/Assets.xcassets; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				8A5C64141F6C0B3E00271379 /* HUD.swift */,
 				8A5C64161F6C0B5600271379 /* DAO.swift */,
 				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
+				8A9126241FA24504002954C6 /* GameOverScene.swift */,
 				8AE806551F7D305100AE71A0 /* JsonFile.json */,
 			);
 			name = Model;
@@ -317,6 +320,7 @@
 				8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */,
 				8A5C64111F6C0B1800271379 /* Fase.swift in Sources */,
 				8A5C64031F6C0AC200271379 /* Player.swift in Sources */,
+				8A9126251FA24504002954C6 /* GameOverScene.swift in Sources */,
 				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
 				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
 				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
