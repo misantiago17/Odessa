@@ -2,7 +2,7 @@
 //  GameOverScene.swift
 //  Odessa
 //
-//  Created by Michelle Beadle on 26/10/17.
+//  Created by Mariela Andrade on 26/10/17.
 //  Copyright © 2017 Michelle Beadle. All rights reserved.
 //
 
