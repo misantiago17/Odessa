@@ -46,7 +46,7 @@ class HUD {
         jumpButton.addGestureRecognizer(jumpGesture)
     }
     
-    func buttonConfiguration(scene: GameScene, camera: SKCameraNode){
+    func buttonConfiguration(screenSize: CGSize , camera: SKCameraNode){
         
         HUDNode.inputView?.frame = CGRect(x: camera.position.x, y: camera.position.y, width: camera.frame.size.width, height: camera.frame.size.height)
         
@@ -54,17 +54,18 @@ class HUD {
         attackButtonNode = SKSpriteNode(imageNamed: "aButton")
         attackButtonNode.zPosition = 2
         attackButtonNode.size = CGSize(width: 70, height: 70)
-        attackButtonNode.position = CGPoint(x: (scene.frame.size.width)/2, y: (HUDNode.frame.size.height)/2 - 105)
-        
-        print(scene.view?.frame.size.width)
+        attackButtonNode.position = CGPoint(x: screenSize.width/2 * 0.80, y:
+            -(screenSize.height/2 * 0.80))
         
         HUDNode.addChild(attackButtonNode)
+        
+        print(screenSize.width)
         
         // Block Button
         blockButtonNode = SKSpriteNode(imageNamed: "bButton")
         blockButtonNode.zPosition = 2
         blockButtonNode.size = CGSize(width: 70, height: 70)
-        blockButtonNode.position = CGPoint(x: (HUDNode.frame.size.width)/2 + 255, y: (HUDNode.frame.size.height)/2 - 160)
+        blockButtonNode.position = CGPoint(x: screenSize.width + 255, y: screenSize.height - 160)
         
         HUDNode.addChild(blockButtonNode)
         
@@ -72,7 +73,7 @@ class HUD {
         jumpButtonNode = SKSpriteNode(imageNamed: "sButton")
         jumpButtonNode.zPosition = 2
         jumpButtonNode.size = CGSize(width: 60, height: 60)
-        jumpButtonNode.position = CGPoint(x: (HUDNode.frame.size.width)/2 + 235, y: (HUDNode.frame.size.height)/2 - 100)
+        jumpButtonNode.position = CGPoint(x: screenSize.width + 235, y: screenSize.height - 100)
         
         HUDNode.addChild(jumpButtonNode)
         
@@ -80,7 +81,7 @@ class HUD {
         setaDirButtonNode = SKSpriteNode(imageNamed: "dir")
         setaDirButtonNode.zPosition = 2
         setaDirButtonNode.size = CGSize(width: 70, height: 50)
-        setaDirButtonNode.position = CGPoint(x: (HUDNode.frame.size.width)/2 - 230, y: (HUDNode.frame.size.width)/2 - 160)
+        setaDirButtonNode.position = CGPoint(x: screenSize.width - 230, y: screenSize.height - 160)
         
         HUDNode.addChild(setaDirButtonNode)
         
@@ -88,7 +89,7 @@ class HUD {
         setaEsqButtonNode = SKSpriteNode(imageNamed: "esq")
         setaEsqButtonNode.zPosition = 2
         setaEsqButtonNode.size = CGSize(width: 70, height: 50)
-        setaEsqButtonNode.position = CGPoint(x: (HUDNode.frame.size.width)/2 - 300, y: (HUDNode.frame.size.width)/2 - 160)
+        setaEsqButtonNode.position = CGPoint(x: screenSize.width - 300, y: screenSize.height - 160)
         
         HUDNode.addChild(setaEsqButtonNode)
         
@@ -97,7 +98,7 @@ class HUD {
         barrasNode.zPosition = 2
         barrasNode.setScale(0.4)
         barrasNode.size = CGSize(width: (UIImage(named: "Barras")?.size.width)!/2, height: (UIImage(named: "Barras")?.size.height)!/2)
-        barrasNode.position = CGPoint(x: (HUDNode.frame.size.width)/2 - 120, y: (HUDNode.frame.size.width)/2 + 130)
+        barrasNode.position = CGPoint(x: screenSize.width - 120, y: screenSize.height + 130)
         
         HUDNode.addChild(barrasNode)
         

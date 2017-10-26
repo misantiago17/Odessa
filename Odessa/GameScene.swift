@@ -76,9 +76,11 @@ class GameScene: SKScene {
         
         // Set gestures into HUD buttons
         HUDNode.setGestures(scene: self)
-        HUDNode.buttonConfiguration(scene: self, camera: cam)
+        HUDNode.buttonConfiguration(screenSize: UIScreen.main.bounds.size, camera: cam)
         hud = HUDNode.getHUDNode()
         
+        print(UIScreen.main.bounds.size.width)
+        print(self.frame.size.width)
         //hud.addChild(HUDNode.HUDNode)
         
         //addChild(hud)
