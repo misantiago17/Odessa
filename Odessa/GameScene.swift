@@ -230,18 +230,8 @@ class GameScene: SKScene {
             
             longAnimation()
             fingerIsTouching = false
-            
-            
-          
-            
-           
-            
-            
-            
-            
         }
-        
-        
+
         // Camera
         cam.position = playerNode.position
         
@@ -251,6 +241,7 @@ class GameScene: SKScene {
         if (playerNode.position.y < -239){
             
             let nextScene = GameOverScene(size: self.scene!.size)
+           // let nextScene = VictoryScene(size: self.size)
             nextScene.scaleMode = self.scaleMode
             nextScene.backgroundColor = UIColor.black
             self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
