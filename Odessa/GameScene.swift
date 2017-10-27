@@ -190,6 +190,8 @@ class GameScene: SKScene {
         // Camera
         cam.position = playerNode.position
         
+         self.playerNode.position.x += velocityX
+        
         // Game Over
         if (playerNode.position.y < -239){
             
