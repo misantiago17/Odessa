@@ -125,6 +125,7 @@ class GameScene: SKScene {
             self.touchDown(atPoint: t.location(in: cam))
             let location = t.location(in: cam)
             
+            var banana = 1
             if (HUDNode.setaDirButtonNode.frame.contains(location)){
 
                 let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.2, resize: true, restore: false)
