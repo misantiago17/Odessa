@@ -47,6 +47,15 @@ class GameScene: SKScene {
     var velocityX:CGFloat = 0.0
     var velocityY:CGFloat = 0.0
     
+    
+    
+    var location = CGPoint(x: 0, y: 0)
+//    var touchStarted: TimeInterval?
+//    let longTapTime: TimeInterval = 0.5
+
+    var fingerIsTouching:Bool = false
+    
+    
     override func sceneDidLoad() {
         
         // Mapa
@@ -123,9 +132,9 @@ class GameScene: SKScene {
         for t in touches {
             
             self.touchDown(atPoint: t.location(in: cam))
-            let location = t.location(in: cam)
+            location = t.location(in: cam)
             
-            var banana = 1
+           
             if (HUDNode.setaDirButtonNode.frame.contains(location)){
 
                 let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.2, resize: true, restore: false)
@@ -167,6 +176,7 @@ class GameScene: SKScene {
             
             if (HUDNode.blockButtonNode.frame.contains(location)){
                 
+               fingerIsTouching = true
                 //////////////////////////////////////// FAZER O LONG TAP AQUI
                 print("block")
                 let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.1, resize: true, restore: false)
@@ -174,7 +184,11 @@ class GameScene: SKScene {
                 self.playerNode.run(repeatAction, withKey: "repeatAction")
             }
             
-            if (HUDNode.jumpButtonNode.frame.contains(location)){
+            if (HUDNode.jumpButtonNode.frame.contains(location) ){
+                
+                print("aaaaaaa")
+                
+                
                 
                 let repeatAction = SKAction.repeat(movements.jumpAction, count: 1)
                 self.playerNode.run(repeatAction, withKey: "repeatAction")
@@ -184,6 +198,9 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -195,18 +212,34 @@ class GameScene: SKScene {
             let repeatAction = SKAction.repeatForever(animateAction)
             self.playerNode.run(repeatAction)
             
+            fingerIsTouching = false
+  
         }
-        
-       
-        
+
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        fingerIsTouching = false
     }
     
     
     override func update(_ currentTime: TimeInterval) {
         
+//        HUDNode.blockButtonNode.frame.contains(location)
+        if (fingerIsTouching == true){
+            
+            longAnimation()
+            fingerIsTouching = false
+            
+            
+          
+            
+           
+            
+            
+            
+            
+        }
         
         
         // Camera
@@ -345,23 +378,18 @@ class GameScene: SKScene {
         return CGFloat(newPosition)
     }
     
-    func Long(_ sender: UIGestureRecognizer) {
-
+   
+    
+    func longAnimation(){
+        
         let animateAction = SKAction.animate(with: movements.longBlockArray, timePerFrame: 0.1, resize: true, restore: false)
         let repeatAction = SKAction.repeatForever(animateAction)
         self.playerNode.run(repeatAction, withKey: "repeatAction")
-
-        if sender.state == .ended {
-
-            print("UIGestureRecognizerStateEnded")
-            playerNode.removeAction(forKey: "repeatAction")
-
-            let animateAction = SKAction.animate(with: movements.idleArray, timePerFrame: 0.3, resize: true, restore: false)
-            let repeatAction = SKAction.repeatForever(animateAction)
-            self.playerNode.run(repeatAction)
-        }
- 
-    }  
+        
+        
+    }
+    
+    
     
 }
 
