@@ -32,21 +32,6 @@ class HUD {
         return HUDNode
     }
     
-    func setGestures(scene: GameScene){
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(scene.Tap))
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(scene.Long))
-        tapGesture.numberOfTapsRequired = 1
-        let attackGesture = UITapGestureRecognizer(target: self, action: #selector(scene.Attack(_:)))
-        attackGesture.numberOfTapsRequired = 1
-        let jumpGesture = UITapGestureRecognizer(target: self, action: #selector(scene.Jump(_: )))
-        
-        blockButton.addGestureRecognizer(tapGesture)
-        blockButton.addGestureRecognizer(longGesture)
-        attackButton.addGestureRecognizer(attackGesture)
-        jumpButton.addGestureRecognizer(jumpGesture)
-    }
-    
     func buttonConfiguration(screenSize: CGSize , camera: SKCameraNode){
         
         HUDNode.inputView?.frame = CGRect(x: camera.position.x, y: camera.position.y, width: camera.frame.size.width, height: camera.frame.size.height)
