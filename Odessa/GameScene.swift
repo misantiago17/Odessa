@@ -186,7 +186,7 @@ class GameScene: SKScene {
             
             if (HUDNode.jumpButtonNode.frame.contains(location) ){
                 
-                print("aaaaaaa")
+                
                 
                 
                 
