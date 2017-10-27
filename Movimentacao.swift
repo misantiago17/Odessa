@@ -82,9 +82,9 @@ class Movimentacao {
         
     }
     
-    func setAction(player: SKSpriteNode){
+    func setAction(player: SKSpriteNode, velocity: CGFloat){
         
-        jumpUp = SKAction.moveBy(x: player.position.x, y: 200, duration: 0.3)
+        jumpUp = SKAction.moveBy(x: player.position.x + velocity, y: 200, duration: 0.3)
         fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
         
         impulso =  SKAction.animate(with: impulsoArray, timePerFrame: 0.1, resize: true, restore: false)

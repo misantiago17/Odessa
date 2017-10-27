@@ -57,7 +57,7 @@ class GameScene: SKScene {
         
         // Inicializa as animações
         movements.setMovements()
-        movements.setAction(player: playerNode)
+        movements.setAction(player: playerNode, velocity: velocityX)
         
         // Player
         playerNode = SKSpriteNode(texture: movements.spriteArray[0])
@@ -125,7 +125,6 @@ class GameScene: SKScene {
             self.touchDown(atPoint: t.location(in: cam))
             let location = t.location(in: cam)
             
-            var banana = 1
             if (HUDNode.setaDirButtonNode.frame.contains(location)){
 
                 let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.2, resize: true, restore: false)
@@ -137,7 +136,7 @@ class GameScene: SKScene {
 
                 self.playerNode.run(group, withKey: "repeatAction")
 
-                velocityX = (playerNode.position.x - playerNode.position.x + 50)/20
+                velocityX = 50/20
 
                 self.playerNode.position.x += velocityX
                 
