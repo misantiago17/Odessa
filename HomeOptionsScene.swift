@@ -70,7 +70,8 @@ class HomeOptionsScene: SKScene {
                 print("Continue game")
                 
                 let nextScene = HomePlayerStatusScene(size: frame.size)
-                view?.presentScene(nextScene)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+//                view?.presentScene(nextScene)
                 
             case newGameButton:
                 print("New game")

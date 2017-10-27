@@ -61,6 +61,7 @@ class HUD {
         jumpButtonNode.size = CGSize(width: 60, height: 60)
         jumpButtonNode.position = CGPoint(x: marginAButton + 18, y: -(screenSize.height/2 * 0.82))
         
+        
         HUDNode.addChild(jumpButtonNode)
         
         // Special Button

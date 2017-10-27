@@ -21,9 +21,9 @@ class HomeOptionsViewController: UIViewController {
             // Present the scene
             let view = self.view as! SKView
             
-            view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+//            view.ignoresSiblingOrder = true
+//            view.showsFPS = true
+//            view.showsNodeCount = true
             
             view.presentScene(sceneNode)
             
