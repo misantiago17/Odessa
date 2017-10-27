@@ -66,7 +66,7 @@ class GameScene: SKScene {
         
         // Inicializa as animações
         movements.setMovements()
-        movements.setAction(player: playerNode)
+        movements.setAction(player: playerNode, velocity: velocityX)
         
         // Player
         playerNode = SKSpriteNode(texture: movements.spriteArray[0])
@@ -134,7 +134,6 @@ class GameScene: SKScene {
             self.touchDown(atPoint: t.location(in: cam))
             location = t.location(in: cam)
             
-           
             if (HUDNode.setaDirButtonNode.frame.contains(location)){
 
                 let animateAction = SKAction.animate(with: movements.spriteArray, timePerFrame: 0.2, resize: true, restore: false)
@@ -146,7 +145,7 @@ class GameScene: SKScene {
 
                 self.playerNode.run(group, withKey: "repeatAction")
 
-                velocityX = (playerNode.position.x - playerNode.position.x + 50)/20
+                velocityX = 50/20
 
                 self.playerNode.position.x += velocityX
                 
@@ -178,7 +177,7 @@ class GameScene: SKScene {
                 
                fingerIsTouching = true
                 //////////////////////////////////////// FAZER O LONG TAP AQUI
-                print("block")
+                
                 let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.1, resize: true, restore: false)
                 let repeatAction = SKAction.repeat(animateAction, count: 1)
                 self.playerNode.run(repeatAction, withKey: "repeatAction")
@@ -225,13 +224,8 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-//        HUDNode.blockButtonNode.frame.contains(location)
-        if (fingerIsTouching == true){
-            
-            longAnimation()
-            fingerIsTouching = false
-        }
-
+        self.playerNode.position.x = velocityX
+        
         // Camera
         cam.position = playerNode.position
         
