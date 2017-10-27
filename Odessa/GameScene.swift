@@ -167,7 +167,7 @@ class GameScene: SKScene {
             if (HUDNode.blockButtonNode.frame.contains(location)){
                 
                 //////////////////////////////////////// FAZER O LONG TAP AQUI
-                print("block")
+                
                 let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.1, resize: true, restore: false)
                 let repeatAction = SKAction.repeat(animateAction, count: 1)
                 self.playerNode.run(repeatAction, withKey: "repeatAction")
@@ -206,7 +206,7 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-        
+        self.playerNode.position.x = velocityX
         
         // Camera
         cam.position = playerNode.position
