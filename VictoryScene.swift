@@ -8,24 +8,24 @@
 
 import UIKit
 
-class VictoryScene: SKScene {
-    
-    
-    override func sceneDidLoad() {
-       
-        
-        print("GANHOU")
-        
-       
-       
-        let background = SKSpriteNode(imageNamed: "GameOver")
-        background.position = CGPoint(x: frame.midX, y: frame.midY)
-        background.size = self.frame.size
-        background.zPosition = -1
-        
-        addChild(background)
-    }
-   
-    
-
-}
+//class VictoryScene: SKScene {
+//    
+//    
+////    override func sceneDidLoad() {
+////       
+////        
+////        print("GANHOU")
+////        
+////       
+////       
+////        let background = SKSpriteNode(imageNamed: "GameOver")
+////        background.position = CGPoint(x: frame.midX, y: frame.midY)
+////        background.size = self.frame.size
+////        background.zPosition = -1
+////        
+////        addChild(background)
+////    }
+//   
+//    
+//
+//}

@@ -26,7 +26,7 @@ class GameScene: SKScene {
     // - Fundo animado
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
-    var playerNode = SKSpriteNode()
+    var playerNode = SKSpriteNode(texture: SKTexture(imageNamed: "Odessa-idle-frame1"))
     var hud = SKNode()
     var inimigosNode = [SKSpriteNode()]
     
@@ -55,6 +55,24 @@ class GameScene: SKScene {
 
     var fingerIsTouching:Bool = false
     
+    //Joystick
+    var joystick: JoyStickView?
+    var angle = CGFloat(0)
+    var displacemet = CGFloat(0)
+    
+    //Current Frame
+    var currentOdessaRunSprite = 0
+    var currentOdessaIdleSprite = 0
+    
+    //Joystick
+    var joystickInUse = false
+    
+    //Timer da Vassoura
+    var startTime: TimeInterval = 0
+    var endTime: TimeInterval = 0
+    var dt = 0.00
+    var stopTimer : Bool!
+    
     
     override func sceneDidLoad() {
         
@@ -69,11 +87,18 @@ class GameScene: SKScene {
         movements.setAction(player: playerNode)
         
         // Player
-        playerNode = SKSpriteNode(texture: movements.spriteArray[0])
-        playerNode.setScale(0.34)
+        //playerNode = SKSpriteNode(texture: movements.spriteArray[0])
+        //playerNode = SKSpriteNode(texture: SKTexture(imageNamed: "Odessa-idle-frame1"))
+        //playerNode.setScale(0.34)
+        playerNode.size = CGSize(width: size.height/4, height: size.height/4)
         playerNode.position = CGPoint(x: 100, y: 400)
+        
         // criar uma função pra pegar a textura atual da odessa e mudar o physics body conforme ela no update
-        playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
+        //playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 32.5,
+                                                                            height: 60))
+        
+        playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
         addChild(self.playerNode)
@@ -87,8 +112,6 @@ class GameScene: SKScene {
         HUDNode.buttonConfiguration(screenSize: UIScreen.main.bounds.size, camera: cam)
         hud = HUDNode.getHUDNode()
         
-        print(UIScreen.main.bounds.size.width)
-        print(self.frame.size.width)
         //hud.addChild(HUDNode.HUDNode)
         
         //addChild(hud)
@@ -114,6 +137,51 @@ class GameScene: SKScene {
         cam.addChild(background)
 
         //cam.addChild(hud)
+        
+        // MARK: joystick
+        let rect = view.frame
+        let size = CGSize(width: 80.0, height: 80.0)
+        let joystickFrame = CGRect(origin: CGPoint(x: 40.0,
+                                                   y: (rect.height - size.height - 25.0)),
+                                   size: size)
+        joystick = JoyStickView(frame: joystickFrame)
+        
+        joystick?.monitor = { angle, displacement in
+            self.angle = angle
+            self.displacemet = displacement
+        }
+        
+        view.addSubview(joystick!)
+        
+        joystick?.movable = false
+        joystick?.alpha = 1.0
+        joystick?.baseAlpha = 1.0 // let the background bleed thru the base
+        
+        joystick?.beginHandler = {
+            
+            self.joystickInUse = true
+            self.startTime = Date().timeIntervalSinceReferenceDate
+            self.stopTimer = false
+            
+        }
+        
+        joystick?.trackingHandler = {
+            
+        }
+        
+        joystick?.stopHandler = {
+            
+            
+            self.joystickInUse = false
+            self.stopTimer = false
+            self.playerNode.removeAction(forKey: "repeatForever")
+            let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame1")
+            self.playerNode.texture = playerTexture
+            self.currentOdessaIdleSprite = 1
+            //self.playerNode.physicsBody = SKPhysicsBody(texture: self.playerNode.texture! , size: CGSize(width: self.playerNode.size.width, height: self.playerNode.size.height))
+            
+            
+        }
     }
     
     // Handle Touches
@@ -178,7 +246,7 @@ class GameScene: SKScene {
                 
                fingerIsTouching = true
                 //////////////////////////////////////// FAZER O LONG TAP AQUI
-                print("block")
+                //print("block")
                 let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.1, resize: true, restore: false)
                 let repeatAction = SKAction.repeat(animateAction, count: 1)
                 self.playerNode.run(repeatAction, withKey: "repeatAction")
@@ -186,12 +254,10 @@ class GameScene: SKScene {
             
             if (HUDNode.jumpButtonNode.frame.contains(location) ){
                 
-                print("aaaaaaa")
+                print("jump")
                 
+                self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
                 
-                
-                let repeatAction = SKAction.repeat(movements.jumpAction, count: 1)
-                self.playerNode.run(repeatAction, withKey: "repeatAction")
             }
 
         }
@@ -206,13 +272,13 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: cam))
             
-            playerNode.removeAction(forKey: "repeatAction")
+//            playerNode.removeAction(forKey: "repeatAction")
             velocityX = 0
-            let animateAction = SKAction.animate(with: movements.idleArray, timePerFrame: 0.2, resize: true, restore: false)
-            let repeatAction = SKAction.repeatForever(animateAction)
-            self.playerNode.run(repeatAction)
-            
-            fingerIsTouching = false
+//            let animateAction = SKAction.animate(with: movements.idleArray, timePerFrame: 0.2, resize: true, restore: false)
+//            let repeatAction = SKAction.repeatForever(animateAction)
+//            self.playerNode.run(repeatAction)
+//            
+//            fingerIsTouching = false
   
         }
 
@@ -226,26 +292,20 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         
 //        HUDNode.blockButtonNode.frame.contains(location)
-        if (fingerIsTouching == true){
-            
-            longAnimation()
-            fingerIsTouching = false
-            
-            
-          
-            
-           
-            
-            
-            
-            
-        }
+        
+        
+//        if (fingerIsTouching == true){
+//            
+//            longAnimation()
+//            fingerIsTouching = false
+//            
+//        }
         
         
         // Camera
         cam.position = playerNode.position
         
-         self.playerNode.position.x += velocityX
+//         self.playerNode.position.x += velocityX
         
         // Game Over
         if (playerNode.position.y < -239){
@@ -255,6 +315,84 @@ class GameScene: SKScene {
             nextScene.backgroundColor = UIColor.black
             self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
         }
+        
+        
+        // Current Sprite
+        if (currentOdessaRunSprite == 9){
+            currentOdessaRunSprite = 0
+        }
+        
+        if (currentOdessaIdleSprite == 4){
+            currentOdessaIdleSprite = 0
+        }
+        
+        // Joystick
+        if joystickInUse == true {
+            
+            // Movimentação
+            if (self.angle >= 60 && self.angle <= 120){
+                
+                self.playerNode.position.x += displacemet*3
+                let rightScale = SKAction.scaleX(to: 1, duration: 0)
+                self.playerNode.run(rightScale)
+                
+                if dt > 0.1 {
+                    dt = 0
+                    self.startTime = Date().timeIntervalSinceReferenceDate
+                    let playerTexture = SKTexture(imageNamed: "odessaRunframe" + String(currentOdessaRunSprite + 1))
+                    playerNode.texture = playerTexture
+                    currentOdessaRunSprite += 1
+                }
+                
+                
+            } else if (self.angle >= 240 && self.angle <= 300){
+                
+                self.playerNode.position.x -= displacemet*3
+                let leftScale = SKAction.scaleX(to: -1, duration: 0)
+                self.playerNode.run(leftScale)
+                
+                if dt > 0.1 {
+                    dt = 0
+                    self.startTime = Date().timeIntervalSinceReferenceDate
+                    let playerTexture = SKTexture(imageNamed: "odessaRunframe" + String(currentOdessaRunSprite + 1))
+                    playerNode.texture = playerTexture
+                    currentOdessaRunSprite += 1
+                }
+                
+            } else {
+                
+                if dt > 0.30 {
+                    dt = 0
+                    self.startTime = Date().timeIntervalSinceReferenceDate
+                    let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame" + String(currentOdessaIdleSprite + 1))
+                    playerNode.texture = playerTexture
+                    currentOdessaIdleSprite += 1
+                }
+                
+            }
+            
+            // Contador para mudar os sprites
+            endTime = Date().timeIntervalSinceReferenceDate
+            dt = Double(endTime - startTime)
+            
+            
+        }
+        
+        if joystickInUse == false {
+            
+            endTime = Date().timeIntervalSinceReferenceDate
+            dt = Double(endTime - startTime)
+            
+            if dt > 0.30 {
+                dt = 0
+                self.startTime = Date().timeIntervalSinceReferenceDate
+                let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame" + String(currentOdessaIdleSprite + 1))
+                playerNode.texture = playerTexture
+                currentOdessaIdleSprite += 1
+            }
+        }
+        
+ 
     }
     
     // Place Enemies in modules
@@ -380,14 +518,13 @@ class GameScene: SKScene {
     
    
     
-    func longAnimation(){
-        
-        let animateAction = SKAction.animate(with: movements.longBlockArray, timePerFrame: 0.1, resize: true, restore: false)
-        let repeatAction = SKAction.repeatForever(animateAction)
-        self.playerNode.run(repeatAction, withKey: "repeatAction")
-        
-        
-    }
+//    func longAnimation(){
+//        
+//        let animateAction = SKAction.animate(with: movements.longBlockArray, timePerFrame: 0.1, resize: true, restore: false)
+//        let repeatAction = SKAction.repeatForever(animateAction)
+//        self.playerNode.run(repeatAction, withKey: "repeatAction")
+//        
+//    }
     
     
     

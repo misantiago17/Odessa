@@ -84,15 +84,55 @@ class Movimentacao {
     
     func setAction(player: SKSpriteNode){
         
-        jumpUp = SKAction.moveBy(x: velocityX, y: 200, duration: 0.3)
+//        jumpUp = SKAction.moveBy(x: velocityX, y: 200, duration: 0.3)
+//        fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+//        
+//        impulso =  SKAction.animate(with: impulsoArray, timePerFrame: 0.1, resize: false, restore: false)
+//        puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05, resize: false, restore: false)
+//        puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.19, resize: false, restore: false)
+//        //        let aterrisagem =  SKAction.animate(with: aterrissagemArray, timePerFrame: 0.3, resize: true, restore: false)
+//        
+//        jumpAction = SKAction.sequence([impulso,puloCima, jumpUp ,puloBaixo, fallBack])
+        
+        
+        
+//        jumpUp = SKAction.moveBy(x: 0, y: 60, duration: 0.3)
+//        fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+//        
+//        
+//        let impulso = SKAction.animate(withNormalTextures: impulsoArray, timePerFrame: 0.1, resize: false, restore: true)
+//        let puloCima = SKAction.animate(withNormalTextures: puloCimaArray, timePerFrame: 0.05, resize: false, restore: true)
+//        let puloBaixo = SKAction.animate(withNormalTextures: puloBaixoArray, timePerFrame: 0.1, resize: false, restore: true)
+//
+//        
+//        let group = SKAction.group([puloBaixo, fallBack])
+//        
+//        jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group])
+        
+        var impulsoArray = [SKTexture]()
+        var puloCimaArray = [SKTexture]()
+        var puloBaixoArray = [SKTexture]()
+        
+        for i in 1...2 {
+            impulsoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+        }
+    
+        puloCimaArray.append(SKTexture(imageNamed: "odessaJumpframe3"))
+    
+        for i in 4...6 {
+            puloBaixoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+        }
+    
+        jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
         fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+    
+        let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
+        let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
+        let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
+        let group = SKAction.group([puloBaixo, fallBack])
+        jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group])
         
-        impulso =  SKAction.animate(with: impulsoArray, timePerFrame: 0.1, resize: true, restore: false)
-        puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05, resize: true, restore: false)
-        puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.19, resize: true, restore: false)
-        //        let aterrisagem =  SKAction.animate(with: aterrissagemArray, timePerFrame: 0.3, resize: true, restore: false)
         
-        jumpAction = SKAction.sequence([impulso,puloCima, jumpUp ,puloBaixo, fallBack])
         
     }
     
