@@ -59,13 +59,15 @@ class HomePlayerStatusScene: SKScene {
                 //print("Play game")
                 
                 let nextScene = GameScene(size: frame.size)
-                view?.presentScene(nextScene)
+                //view?.presentScene(nextScene)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.5))
                 
             case cancelButton:
                 //print("Voltar")
                 
                 let backScene = HomeOptionsScene(size: frame.size)
-                view?.presentScene(backScene)
+                self.view?.presentScene(backScene, transition: SKTransition.crossFade(withDuration: 1.3))
+                //view?.presentScene(backScene)
                 
             default:
                 print("Not an avaliable button")

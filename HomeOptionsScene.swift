@@ -15,9 +15,9 @@ class HomeOptionsScene: SKScene {
     //Fundo animado
     
     //Public - tem que inicializar caso contrário ele pede para por um init que buga a classe
-    let continueButton = SKSpriteNode(imageNamed: "continue")
+//    let continueButton = SKSpriteNode(imageNamed: "continue")
     let newGameButton = SKSpriteNode(imageNamed: "newGame")
-    let settingsButton = SKSpriteNode(imageNamed: "options")
+//    let settingsButton = SKSpriteNode(imageNamed: "options")
     
     override func sceneDidLoad() {
         
@@ -37,11 +37,11 @@ class HomeOptionsScene: SKScene {
         // no BD pois não existirá o botão "Continue"
         
         //Continue
-        continueButton.position = CGPoint(x: frame.midX ,y: frame.midY + 100)
-        continueButton.zPosition = 1
-        continueButton.size = CGSize(width: 350, height: 50)
-        
-        addChild(continueButton)
+//        continueButton.position = CGPoint(x: frame.midX ,y: frame.midY + 100)
+//        continueButton.zPosition = 1
+//        continueButton.size = CGSize(width: 350, height: 50)
+//
+//        addChild(continueButton)
         
         //New Game
         newGameButton.position = CGPoint(x: frame.midX ,y: frame.midY)
@@ -51,11 +51,11 @@ class HomeOptionsScene: SKScene {
         addChild(newGameButton)
         
         //Settings
-        settingsButton.position = CGPoint(x: frame.midX ,y: frame.midY - 100)
-        settingsButton.zPosition = 1
-        settingsButton.size = CGSize(width: 350, height: 50)
-        
-        addChild(settingsButton)
+//        settingsButton.position = CGPoint(x: frame.midX ,y: frame.midY - 100)
+//        settingsButton.zPosition = 1
+//        settingsButton.size = CGSize(width: 350, height: 50)
+//
+//        addChild(settingsButton)
         
     }
     
@@ -74,8 +74,13 @@ class HomeOptionsScene: SKScene {
                 
             case newGameButton:
                 print("New game")
-            case settingsButton:
-                print("Settings")
+                
+                let nextScene = GameScene(size: frame.size)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+                //                view?.presentScene(nextScene)
+                
+//            case settingsButton:
+//                print("Settings")
             default:
                 print("Not an avaliable button")
             }
