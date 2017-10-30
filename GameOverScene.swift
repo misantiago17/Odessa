@@ -20,8 +20,6 @@ class GameOverScene: SKScene {
     private var spinnyNode : SKShapeNode?
     
     override func sceneDidLoad() {
-        print("GameOver")
-        print("E morreu")
         
         self.yesButton.position = CGPoint(x: frame.midX - 20, y: frame.midY - 40) //100
         self.noButton.position = CGPoint(x: frame.midX + 90, y: frame.midY - 40) //100
@@ -62,7 +60,6 @@ class GameOverScene: SKScene {
             
             if (yesButton.frame.contains(location)){
                 
-                print("yes")
                 
                 let newScene = HomePlayerStatusScene(size: self.size)
                 let animation = SKTransition.fade(withDuration: 1.0)
@@ -73,7 +70,6 @@ class GameOverScene: SKScene {
                 
             else if (noButton.frame.contains(location)){
                 
-                print("no")
                 let newScene = HomeScene(size: self.size)
                 let animation = SKTransition.fade(withDuration: 1.0)
                 self.view?.presentScene(newScene, transition: animation)

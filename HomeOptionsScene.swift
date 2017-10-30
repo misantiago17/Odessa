@@ -21,7 +21,7 @@ class HomeOptionsScene: SKScene {
     
     override func sceneDidLoad() {
         
-        print("Home Options")
+        //print("Home Options")
         
         // -- Background --
         let background = SKSpriteNode(imageNamed: "IntroBackground")
@@ -66,18 +66,16 @@ class HomeOptionsScene: SKScene {
             let touchedNode = atPoint(location)
             
             switch touchedNode {
-//            case continueButton:
-//                print("Continue game")
-//
-//                let nextScene = HomePlayerStatusScene(size: frame.size)
-//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-//
             case newGameButton:
-                print("New game")
-                
+                print("new game")
                 let nextScene = GameScene(size: frame.size)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-                //                view?.presentScene(nextScene)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+//            case continueButton:
+//                //print("Continue game")
+//                
+//                let nextScene = GameScene(size: frame.size)
+//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+//                //                view?.presentScene(nextScene)
                 
 //            case settingsButton:
 //                print("Settings")
