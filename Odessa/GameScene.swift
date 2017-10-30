@@ -314,6 +314,7 @@ class GameScene: SKScene {
            // let nextScene = VictoryScene(size: self.size)
             nextScene.scaleMode = self.scaleMode
             nextScene.backgroundColor = UIColor.black
+            joystick?.removeFromSuperview()
             self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
         }
         
