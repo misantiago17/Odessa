@@ -66,18 +66,16 @@ class HomeOptionsScene: SKScene {
             let touchedNode = atPoint(location)
             
             switch touchedNode {
-            case continueButton:
-                //print("Continue game")
-                
-                let nextScene = HomePlayerStatusScene(size: frame.size)
-                view?.presentScene(nextScene)
-                
             case newGameButton:
-                print("New game")
-                
+                print("new game")
                 let nextScene = GameScene(size: frame.size)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-                //                view?.presentScene(nextScene)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+//            case continueButton:
+//                //print("Continue game")
+//                
+//                let nextScene = GameScene(size: frame.size)
+//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+//                //                view?.presentScene(nextScene)
                 
 //            case settingsButton:
 //                print("Settings")

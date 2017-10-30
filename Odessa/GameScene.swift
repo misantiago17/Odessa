@@ -245,7 +245,7 @@ class GameScene: SKScene {
                 
                fingerIsTouching = true
                 //////////////////////////////////////// FAZER O LONG TAP AQUI
-                //print("block")
+                
                 let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.1, resize: true, restore: false)
                 let repeatAction = SKAction.repeat(animateAction, count: 1)
                 self.playerNode.run(repeatAction, withKey: "repeatAction")
