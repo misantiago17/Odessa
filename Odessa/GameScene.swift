@@ -34,6 +34,9 @@ class GameScene: SKScene {
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
+    var parallax = ParallaxScene()
+    
+    
     // - Vida
     // - Especial
     // - BtnDeAtaque1
@@ -46,6 +49,12 @@ class GameScene: SKScene {
     //movimento
     var velocityX:CGFloat = 0.0
     var velocityY:CGFloat = 0.0
+    
+    // Time of last frame
+    var lastFrameTime : TimeInterval = 0
+    
+    // Time since last frame
+    var deltaTime : TimeInterval = 0
     
     
     
@@ -76,6 +85,8 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
+        
+        
         // Mapa
         mapa = createMap()
         let floor = organizeMap()
@@ -86,6 +97,9 @@ class GameScene: SKScene {
         movements.setMovements()
         movements.setAction(player: playerNode, velocity: velocityX)
         
+        //Incializa Parallax
+//        parallax.setParallax()
+     
         // Player
         //playerNode = SKSpriteNode(texture: movements.spriteArray[0])
         //playerNode = SKSpriteNode(texture: SKTexture(imageNamed: "Odessa-idle-frame1"))
@@ -105,7 +119,7 @@ class GameScene: SKScene {
         
         // Background
         background = SKSpriteNode(texture: SKTexture(imageNamed: "fundo"))
-        background.zPosition = -2
+        background.zPosition = -6
         background.setScale(0.5)
         
         // Set gestures into HUD buttons
@@ -123,25 +137,27 @@ class GameScene: SKScene {
      override func didMove(to view: SKView) {
 
         
-        // MARK: Camera        
-        let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
+        // MARK: Camera
         
-        cam.position = center
+        //let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
+        //cam.position = center
         //addChild(cam)
-        camera = cam
         
+        camera = cam
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
+        cam.addChild(parallax.frente)
+        cam.addChild(parallax.meio)
+     //   cam.addChild(ParallaxScene().parallaxNode)
+     //   cam.addChild(ParallaxScene().parallaxNode)
 
         //cam.addChild(hud)
         
         // MARK: joystick
         let rect = view.frame
         let size = CGSize(width: 80.0, height: 80.0)
-        let joystickFrame = CGRect(origin: CGPoint(x: 40.0,
-                                                   y: (rect.height - size.height - 25.0)),
-                                   size: size)
+        let joystickFrame = CGRect(origin: CGPoint(x: 40.0, y: (rect.height - size.height - 25.0)), size: size)
         joystick = JoyStickView(frame: joystickFrame)
         
         joystick?.monitor = { angle, displacement in
@@ -250,10 +266,7 @@ class GameScene: SKScene {
             }
             
             if (HUDNode.jumpButtonNode.frame.contains(location) ){
-                
-                
-                
-                
+    
                 self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
                 
             }
@@ -289,6 +302,30 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
+        
+        
+        // First, update the delta time values:
+        
+        // If we don't have a last frame time value, this is the first frame,
+        // so delta time will be zero.
+        if lastFrameTime <= 0 {
+            lastFrameTime = currentTime
+        }
+        
+        // Update delta time
+        deltaTime = currentTime - lastFrameTime
+        
+        // Set last frame time to current time
+        lastFrameTime = currentTime
+        
+        
+        self.moveSprite(sprite: parallax.frente, nextSprite: parallax.frenteNext, speed: 10.0)
+        self.moveSprite(sprite: parallax.meio, nextSprite: parallax.frenteNext, speed: 5.0)
+        
+        
+        
+        
+    
 //        HUDNode.blockButtonNode.frame.contains(location)
         
         
@@ -301,7 +338,9 @@ class GameScene: SKScene {
         
         
         // Camera
-        cam.position = playerNode.position
+       // cam.position = playerNode.position
+        cam.position = CGPoint(x: playerNode.position.x, y: 120)
+        
         
 //         self.playerNode.position.x += velocityX
         
@@ -398,26 +437,26 @@ class GameScene: SKScene {
     // Place Enemies in modules
     
     func placeEnemy(modulo: ModuloMapa, spriteMod: SKSpriteNode) {
-        
+
         var moduleWaves = Reader().GetModuleSets(ModuleID: modulo.IDModulo)
         var item = Int(arc4random_uniform(UInt32(moduleWaves.count) - 1))
-        
+
         for inimigo in moduleWaves[item].inimigos {
-            
+
             let texture = SKTexture(image: UIImage(named: inimigo.imgName)!)
-            
+
             var inimigoNode = SKSpriteNode(texture: texture)
             inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!))
             inimigoNode.zPosition = 1
             inimigoNode.setScale(0.34)
             inimigoNode.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
             inimigoNode.physicsBody?.allowsRotation = false
-            
+
             inimigosNode.append(inimigoNode)
             //spriteMod.addChild(inimigoNode)
-        
+
         }
-        
+
     }
 
     // Cria Mapa
@@ -525,6 +564,32 @@ class GameScene: SKScene {
 //        self.playerNode.run(repeatAction, withKey: "repeatAction")
 //        
 //    }
+    
+    func moveSprite(sprite : SKSpriteNode, nextSprite : SKSpriteNode, speed : Float) -> Void {
+        var newPosition = CGPoint(x: 50, y: 0)
+        
+        // For both the sprite and its duplicate:
+        for spriteToMove in [sprite, nextSprite] {
+            
+            // Shift the sprite leftward based on the speed
+            newPosition = spriteToMove.position
+            
+            newPosition.x -= CGFloat(speed * Float(deltaTime))
+            spriteToMove.position = newPosition
+            
+            // If this sprite is now offscreen (i.e., its rightmost edge is
+            // farther left than the scene's leftmost edge):
+            if (spriteToMove.frame.maxX < self.frame.minX) {
+                
+                // Shift it over so that it's now to the immediate right
+                // of the other sprite.
+                // This means that the two sprites are effectively
+                // leap-frogging each other as they both move.
+                spriteToMove.position = CGPoint(x: spriteToMove.position.x - spriteToMove.size.width * 2, y: spriteToMove.position.y)
+            }
+            
+        }
+    }
     
     
     

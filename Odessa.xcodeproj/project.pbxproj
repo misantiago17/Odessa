@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5530411FA3860800CFE572 /* VictoryScene.swift */; };
 		0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
+		0BC7293E1FA8A081005A835F /* ParallaxScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7293D1FA8A081005A835F /* ParallaxScene.swift */; };
 		56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
 		56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
 		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		0B5530411FA3860800CFE572 /* VictoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryScene.swift; sourceTree = "<group>"; };
 		0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		0BC7293D1FA8A081005A835F /* ParallaxScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxScene.swift; sourceTree = "<group>"; };
 		0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
 		56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
@@ -148,9 +150,9 @@
 				8A5C64141F6C0B3E00271379 /* HUD.swift */,
 				8A5C64161F6C0B5600271379 /* DAO.swift */,
 				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
-				8AE806551F7D305100AE71A0 /* JsonFile.json */,
 				56105E651FA388C8002D3832 /* JoyStickView.swift */,
 				56105E671FA38934002D3832 /* CoreGraphics.swift */,
+				8AE806551F7D305100AE71A0 /* JsonFile.json */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -169,6 +171,7 @@
 				0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */,
 				8A5C642E1F71775700271379 /* PauseGameScene.swift */,
 				0B5530411FA3860800CFE572 /* VictoryScene.swift */,
+				0BC7293D1FA8A081005A835F /* ParallaxScene.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */,
 				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
 				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
+				0BC7293E1FA8A081005A835F /* ParallaxScene.swift in Sources */,
 				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
 				8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */,
 				8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */,
