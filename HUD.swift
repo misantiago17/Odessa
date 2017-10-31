@@ -56,7 +56,7 @@ class HUD {
         HUDNode.addChild(blockButtonNode)
         
         // Jump Button
-        jumpButtonNode = SKSpriteNode(imageNamed: "sButton")
+        jumpButtonNode = SKSpriteNode(imageNamed: "jButton")
         jumpButtonNode.zPosition = 2
         jumpButtonNode.size = CGSize(width: 60, height: 60)
         jumpButtonNode.position = CGPoint(x: marginAButton + 18, y: -(screenSize.height/2 * 0.82))
@@ -72,23 +72,23 @@ class HUD {
         
         HUDNode.addChild(specialButtonNode)
         
-        // Seta esquerda
-        setaEsqButtonNode = SKSpriteNode(imageNamed: "esq")
-        setaEsqButtonNode.zPosition = 2
-        setaEsqButtonNode.size = CGSize(width: 70, height: 50)
-        setaEsqButtonNode.position = CGPoint(x: -(screenSize.width * 0.4), y: aButtonHeight - 35)
-        
-        HUDNode.addChild(setaEsqButtonNode)
-        
-        let margiSetaEsquerda = self.setaEsqButtonNode.frame.origin.x + self.setaEsqButtonNode.frame.size.width
-        
-        // Seta direita
-        setaDirButtonNode = SKSpriteNode(imageNamed: "dir")
-        setaDirButtonNode.zPosition = 2
-        setaDirButtonNode.size = CGSize(width: 70, height: 50)
-        setaDirButtonNode.position = CGPoint(x: margiSetaEsquerda + 75, y: aButtonHeight - 35)
-        
-        HUDNode.addChild(setaDirButtonNode)
+//        // Seta esquerda
+//        setaEsqButtonNode = SKSpriteNode(imageNamed: "esq")
+//        setaEsqButtonNode.zPosition = 2
+//        setaEsqButtonNode.size = CGSize(width: 70, height: 50)
+//        setaEsqButtonNode.position = CGPoint(x: -(screenSize.width * 0.4), y: aButtonHeight - 35)
+//        
+//        HUDNode.addChild(setaEsqButtonNode)
+//        
+//        let margiSetaEsquerda = self.setaEsqButtonNode.frame.origin.x + self.setaEsqButtonNode.frame.size.width
+//        
+//        // Seta direita
+//        setaDirButtonNode = SKSpriteNode(imageNamed: "dir")
+//        setaDirButtonNode.zPosition = 2
+//        setaDirButtonNode.size = CGSize(width: 70, height: 50)
+//        setaDirButtonNode.position = CGPoint(x: margiSetaEsquerda + 75, y: aButtonHeight - 35)
+//        
+//        HUDNode.addChild(setaDirButtonNode)
         
         
         

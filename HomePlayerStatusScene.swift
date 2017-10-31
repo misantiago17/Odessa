@@ -20,7 +20,7 @@ class HomePlayerStatusScene: SKScene {
 
     override func sceneDidLoad() {
         
-        print("Player Status")
+        //print("Player Status")
         
         // -- Background --
         let background = SKSpriteNode(imageNamed: "IntroBackground")
@@ -56,14 +56,14 @@ class HomePlayerStatusScene: SKScene {
             switch touchedNode {
                 
             case statusPlayerButton:
-                print("Play game")
+                //print("Play game")
                 
                 let nextScene = GameScene(size: frame.size)
                 //view?.presentScene(nextScene)
                 self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.5))
                 
             case cancelButton:
-                print("Voltar")
+                //print("Voltar")
                 
                 let backScene = HomeOptionsScene(size: frame.size)
                 self.view?.presentScene(backScene, transition: SKTransition.crossFade(withDuration: 1.3))
