@@ -76,8 +76,8 @@ class HomeOptionsScene: SKScene {
                 print("New game")
                 
                 let nextScene = GameScene(size: frame.size)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-                //                view?.presentScene(nextScene)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 0.5))
+                //view?.presentScene(nextScene)
                 
 //            case settingsButton:
 //                print("Settings")

@@ -132,7 +132,7 @@ class HomeScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
-         self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
+         self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 0.5))
         //        view?.presentScene(sceneOptions)
     }
     

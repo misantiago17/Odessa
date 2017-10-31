@@ -94,9 +94,7 @@ class GameScene: SKScene {
         //addChild(hud)
         //view?.addSubview(hud.inputView!)
         
-        // Camera
         
-
     }
     
      override func didMove(to view: SKView) {
