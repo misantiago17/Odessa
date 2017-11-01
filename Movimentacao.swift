@@ -20,23 +20,29 @@ class Movimentacao {
     
     var spriteArray = [SKTexture]() //Odessa Run
     var attackArray = [SKTexture]() //Odessa Attack
+    var lancaAttack = [SKTexture]() //Lança Attack
     var blockArray = [SKTexture]() //Odessa Block
+    var lancaBlock = [SKTexture]() //Lança Block
     var longBlockArray = [SKTexture]() //Odessa long Block
-    var idleArray = [SKTexture]()
+    var idleArray = [SKTexture]() //Odessa Idle
+    
     // Jump animation
     var impulsoArray = [SKTexture]()
     var puloCimaArray = [SKTexture]()
     var puloBaixoArray = [SKTexture]()
     var aterrissagemArray = [SKTexture]()
     
+    // Velocity
     var velocityX:CGFloat = 0.0
     var velocityY:CGFloat = 0.0
     
+    // Action
     var jumpUp = SKAction()
     var fallBack = SKAction()
     var impulso =  SKAction()
     var puloCima = SKAction()
     var puloBaixo = SKAction()
+    
     
     func setMovements() {
         
@@ -45,11 +51,22 @@ class Movimentacao {
             attackArray.append(SKTexture(imageNamed: "odessa-attackframe\(i)"))
         }
         
+        //MARK: Lança Attack
+        for i in 1...7 {
+            lancaAttack.append(SKTexture(imageNamed: "lanca-odessa-attackframe\(i)"))
+        }
+        
         //MARK: Odessa Block
         for i in 1...2 {
             blockArray.append(SKTexture(imageNamed: "Odessa-block-frame\(i)"))
         }
         
+        //MARK: Lança Block
+        for i in 1...2 {
+            lancaBlock.append(SKTexture(imageNamed: "Lanca-Odessa-block-frame\(i)"))
+        }
+        
+        //MARK: Odessa Long Block
         for i in 1...2 {
             longBlockArray.append(SKTexture(imageNamed: "Odessa-block-hold-frame\(i)"))
         }
@@ -83,31 +100,6 @@ class Movimentacao {
     }
     
     func setAction(player: SKSpriteNode, velocity: CGFloat){
-        
-//        jumpUp = SKAction.moveBy(x: velocityX, y: 200, duration: 0.3)
-//        fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
-//        
-//        impulso =  SKAction.animate(with: impulsoArray, timePerFrame: 0.1, resize: false, restore: false)
-//        puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05, resize: false, restore: false)
-//        puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.19, resize: false, restore: false)
-//        //        let aterrisagem =  SKAction.animate(with: aterrissagemArray, timePerFrame: 0.3, resize: true, restore: false)
-//        
-//        jumpAction = SKAction.sequence([impulso,puloCima, jumpUp ,puloBaixo, fallBack])
-        
-        
-        
-//        jumpUp = SKAction.moveBy(x: 0, y: 60, duration: 0.3)
-//        fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
-//        
-//        
-//        let impulso = SKAction.animate(withNormalTextures: impulsoArray, timePerFrame: 0.1, resize: false, restore: true)
-//        let puloCima = SKAction.animate(withNormalTextures: puloCimaArray, timePerFrame: 0.05, resize: false, restore: true)
-//        let puloBaixo = SKAction.animate(withNormalTextures: puloBaixoArray, timePerFrame: 0.1, resize: false, restore: true)
-//
-//        
-//        let group = SKAction.group([puloBaixo, fallBack])
-//        
-//        jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group])
         
         var impulsoArray = [SKTexture]()
         var puloCimaArray = [SKTexture]()
