@@ -92,14 +92,14 @@ class HUD {
         
         
         
-        // Barras
-        barrasNode = SKSpriteNode(imageNamed: "Barras")
-        barrasNode.zPosition = 2
-        barrasNode.setScale(0.4)
-        barrasNode.size = CGSize(width: (UIImage(named: "Barras")?.size.width)!/2, height: (UIImage(named: "Barras")?.size.height)!/2)
-        barrasNode.position = CGPoint(x: screenSize.width - 120, y: screenSize.height + 130)
-        
-        HUDNode.addChild(barrasNode)
+//        // Barras
+//        barrasNode = SKSpriteNode(imageNamed: "Barras")
+//        barrasNode.zPosition = 2
+//        barrasNode.setScale(0.4)
+//        barrasNode.size = CGSize(width: (UIImage(named: "Barras")?.size.width)!/2, height: (UIImage(named: "Barras")?.size.height)!/2)
+//        barrasNode.position = CGPoint(x: screenSize.width - 120, y: screenSize.height + 130)
+//        
+//        HUDNode.addChild(barrasNode)
         
     }
     
