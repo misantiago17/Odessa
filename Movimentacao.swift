@@ -24,6 +24,7 @@ class Movimentacao {
     var blockArray = [SKTexture]() //Odessa Block
     var lancaBlock = [SKTexture]() //Lança Block
     var longBlockArray = [SKTexture]() //Odessa long Block
+    var lancaLongBlock = [SKTexture]() //Lança long Block
     var idleArray = [SKTexture]() //Odessa Idle
     
     // Jump animation
@@ -67,8 +68,13 @@ class Movimentacao {
         }
         
         //MARK: Odessa Long Block
-        for i in 1...2 {
+        for i in 1...3 {
             longBlockArray.append(SKTexture(imageNamed: "Odessa-block-hold-frame\(i)"))
+        }
+        
+        //MARK: Lanca Long Block
+        for i in 1...3 {
+            lancaLongBlock.append(SKTexture(imageNamed: "Lanca-Odessa-block-hold-frame\(i)"))
         }
         
         // MARK: Odessa Run
