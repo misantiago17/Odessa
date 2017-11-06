@@ -48,9 +48,27 @@ class HomeScene: SKScene {
         backgroundFloor.size = CGSize(width: screenWidth, height: screenWidth/10)
         backgroundFloor.zPosition = 1.5
         
+        let colunaEsquerda = SKSpriteNode(imageNamed: "coluna2")
+        colunaEsquerda.position = CGPoint(x: screenWidth*0.05, y: screenHeight*0.25)
+        colunaEsquerda.setScale(0.5)
+        colunaEsquerda.zPosition = 1.4
+        
+        let colunaMeio = SKSpriteNode(imageNamed: "coluna3")
+        colunaMeio.position = CGPoint(x: screenWidth*0.80, y: screenHeight*0.25)
+        colunaMeio.setScale(0.5)
+        colunaMeio.zPosition = 1.4
+        
+        let colunaDireita = SKSpriteNode(imageNamed: "coluna1")
+        colunaDireita.position = CGPoint(x: screenWidth*0.95, y: screenHeight*0.25)
+        colunaDireita.setScale(0.5)
+        colunaDireita.zPosition = 1.4
+        
         addChild(background)
         addChild(backgroundFloor)
         addChild(title)
+        addChild(colunaEsquerda)
+        addChild(colunaMeio)
+        addChild(colunaDireita)
         
         print("Home")
         
