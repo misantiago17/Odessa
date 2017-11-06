@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5530411FA3860800CFE572 /* VictoryScene.swift */; };
 		0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
+		181A7A9F1FB0E71700ECA0C3 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 181A7A9E1FB0E6EF00ECA0C3 /* Montserrat-Regular.ttf */; };
 		56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
 		56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
 		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
@@ -50,6 +51,7 @@
 		0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
+		181A7A9E1FB0E6EF00ECA0C3 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
 		56105E671FA38934002D3832 /* CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphics.swift; sourceTree = "<group>"; };
 		7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.release.xcconfig"; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181A7A9D1FB0E6B100ECA0C3 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				181A7A9E1FB0E6EF00ECA0C3 /* Montserrat-Regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		4149374C4372F449CAA502E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +121,7 @@
 		8A5C63DB1F6C061400271379 = {
 			isa = PBXGroup;
 			children = (
+				181A7A9D1FB0E6B100ECA0C3 /* fonts */,
 				8A5C64011F6C06E500271379 /* Controller */,
 				8A5C64001F6C06DE00271379 /* View */,
 				8A5C63FF1F6C06D500271379 /* Model */,
@@ -257,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				181A7A9F1FB0E71700ECA0C3 /* Montserrat-Regular.ttf in Resources */,
 				8A5C63F31F6C061400271379 /* Main.storyboard in Resources */,
 				8A5C63EA1F6C061400271379 /* GameScene.sks in Resources */,
 				8A5C63F81F6C061400271379 /* LaunchScreen.storyboard in Resources */,

@@ -62,7 +62,7 @@ class GameOverScene: SKScene {
         addChild(continueButton)
         addChild(homeButton)
         
-        let continuesLeft = SKLabelNode(fontNamed: "montserrat")
+        let continuesLeft = SKLabelNode(fontNamed: "Montserrat-Regular")
         continuesLeft.text = "Continues left:"
         continuesLeft.fontSize = 20
         continuesLeft.zPosition = 3
@@ -70,7 +70,7 @@ class GameOverScene: SKScene {
         continuesLeft.position = CGPoint(x: screenWidth*0.46 , y: screenHeight*0.25)
         addChild(continuesLeft)
         
-        let continuesNumber = SKLabelNode(fontNamed: "montserrat")
+        let continuesNumber = SKLabelNode(fontNamed: "Montserrat-Regular")
         continuesNumber.text = "999"
         continuesNumber.fontSize = 20
         continuesNumber.zPosition = 3

@@ -72,7 +72,7 @@ class HomeScene: SKScene {
         
         print("Home")
         
-        let tapLabel = SKLabelNode(fontNamed: "montserrat")
+        let tapLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
         tapLabel.text = "Tap to play"
         tapLabel.fontSize = 20
         tapLabel.zPosition = 3
@@ -174,11 +174,6 @@ class HomeScene: SKScene {
         
         
         
-        
-        
-        
-        
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -187,6 +182,7 @@ class HomeScene: SKScene {
         self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
         //        view?.presentScene(sceneOptions)
     }
+
     
     
     
