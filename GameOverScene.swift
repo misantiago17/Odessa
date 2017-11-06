@@ -52,8 +52,8 @@ class GameOverScene: SKScene {
         addChild(pig)
         //
         
-        self.continueButton.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.4) //100
-        self.homeButton.position = CGPoint(x: screenWidth*0.7, y: screenHeight*0.4) //100
+        self.continueButton.position = CGPoint(x: screenWidth*0.25, y: screenHeight*0.4) //100
+        self.homeButton.position = CGPoint(x: screenWidth*0.75, y: screenHeight*0.4) //100
         continueButton.zPosition = 2
         continueButton.setScale(1)
         homeButton.setScale(1)
