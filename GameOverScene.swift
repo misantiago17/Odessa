@@ -40,11 +40,11 @@ class GameOverScene: SKScene {
         
         pig = SKSpriteNode(texture: pigComendo[0])
         pig.zPosition = 2
-        pig.setScale(0.45)
+        pig.setScale(0.55)
         
         let comendoAction = SKAction.animate(with: pigComendo, timePerFrame: 0.9, resize: true, restore: false)
         
-        pig.position = CGPoint(x: screenWidth*0.5, y: screenHeight*0.7)
+        pig.position = CGPoint(x: screenWidth*0.5, y: screenHeight*0.65)
         
         let repeatAction = SKAction.repeatForever(comendoAction)
         
@@ -52,10 +52,8 @@ class GameOverScene: SKScene {
         addChild(pig)
         //
         
-        
-        
-        self.continueButton.position = CGPoint(x: frame.midX, y: screenHeight*0.55) //100
-        self.homeButton.position = CGPoint(x: frame.midX, y: screenHeight*0.4) //100
+        self.continueButton.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.4) //100
+        self.homeButton.position = CGPoint(x: screenWidth*0.7, y: screenHeight*0.4) //100
         continueButton.zPosition = 2
         continueButton.setScale(1)
         homeButton.setScale(1)
@@ -63,6 +61,22 @@ class GameOverScene: SKScene {
         
         addChild(continueButton)
         addChild(homeButton)
+        
+        let continuesLeft = SKLabelNode(fontNamed: "montserrat")
+        continuesLeft.text = "Continues left:"
+        continuesLeft.fontSize = 20
+        continuesLeft.zPosition = 3
+        continuesLeft.horizontalAlignmentMode = .center
+        continuesLeft.position = CGPoint(x: screenWidth*0.46 , y: screenHeight*0.25)
+        addChild(continuesLeft)
+        
+        let continuesNumber = SKLabelNode(fontNamed: "montserrat")
+        continuesNumber.text = "999"
+        continuesNumber.fontSize = 20
+        continuesNumber.zPosition = 3
+        continuesNumber.horizontalAlignmentMode = .center
+        continuesNumber.position = CGPoint(x: screenWidth*0.61 , y: screenHeight*0.25)
+        addChild(continuesNumber)
         
     }
     
