@@ -38,7 +38,13 @@ class HomeScene: SKScene {
         background.size = self.frame.size
         background.zPosition = 1
         
+        let backgroundFloor = SKSpriteNode(imageNamed: "IntroFloor")
+        backgroundFloor.position = CGPoint(x: frame.midX, y: frame.midY)
+        backgroundFloor.size = self.frame.size
+        backgroundFloor.zPosition = 1.5
+        
         addChild(background)
+        addChild(backgroundFloor)
         addChild(title)
         
         print("Home")
@@ -98,7 +104,7 @@ class HomeScene: SKScene {
         bandeirao.setScale(0.21)
         //
         let comendoAction = SKAction.animate(with: pigComendo, timePerFrame: 0.9, resize: true, restore: false)
-        let balancarAction = SKAction.animate(with: bandeiraGrande, timePerFrame: 0.02, resize: true, restore: false)
+        let balancarAction = SKAction.animate(with: bandeiraGrande, timePerFrame: 0.3, resize: true, restore: false)
         //
         //
         //        let andandoAction = SKAction.animate(with: pigAndando, timePerFrame: 0.5, resize: true, restore: false)
@@ -112,10 +118,10 @@ class HomeScene: SKScene {
         //
         //         let group = SKAction.group([andandoAction,direita])
         //
-        pig.position = CGPoint(x: frame.midX - 30, y: frame.midY - 155)
+        pig.position = CGPoint(x: frame.midX - 30, y: frame.midY - 140)
         //        pig2.position = CGPoint(x: frame.midX + 100, y: frame.midY - 139)
         //
-        bandeirao.position = CGPoint(x: frame.midX - 120, y: frame.midY - 115)
+        bandeirao.position = CGPoint(x: frame.midX - 300, y: frame.midY - 102)
         
         let repeatAction = SKAction.repeatForever(comendoAction)
         
