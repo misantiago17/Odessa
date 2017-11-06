@@ -12,8 +12,10 @@ import GameplayKit
 class GameOverScene: SKScene {
     
     
-    let yesButton = SKSpriteNode(imageNamed: "yes") // Sim
-    let noButton = SKSpriteNode(imageNamed: "no") // Nao
+    let continueButton = SKSpriteNode(imageNamed: "continue") // Sim
+    let homeButton = SKSpriteNode(imageNamed: "newGame") // Nao
+    var pigComendo = [SKTexture]()
+    var pig = SKSpriteNode()
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
@@ -21,22 +23,61 @@ class GameOverScene: SKScene {
     
     override func sceneDidLoad() {
         
-        self.yesButton.position = CGPoint(x: frame.midX - 20, y: frame.midY - 40) //100
-        self.noButton.position = CGPoint(x: frame.midX + 90, y: frame.midY - 40) //100
-        yesButton.zPosition = 2
-        yesButton.setScale(0.4)
-        noButton.setScale(0.4)
-        noButton.zPosition = 2
         
-        addChild(yesButton)
-        addChild(noButton)
+        view?.backgroundColor = UIColor.black
         
-        let background = SKSpriteNode(imageNamed: "GameOver")
-        background.position = CGPoint(x: frame.midX, y: frame.midY)
-        background.size = self.frame.size
-        background.zPosition = -1
+        let title = SKSpriteNode(imageNamed: "odessa")
+        title.position = CGPoint(x: frame.midX, y: screenHeight*0.15)
+        title.zPosition = 2
+        title.setScale(0.4)
         
-        addChild(background)
+        addChild(title)
+        
+        //
+        for i in 1...2 {
+            pigComendo.append(SKTexture(imageNamed:("porquinho-comendo\(i)")))
+        }
+        
+        pig = SKSpriteNode(texture: pigComendo[0])
+        pig.zPosition = 2
+        pig.setScale(0.55)
+        
+        let comendoAction = SKAction.animate(with: pigComendo, timePerFrame: 0.9, resize: true, restore: false)
+        
+        pig.position = CGPoint(x: screenWidth*0.5, y: screenHeight*0.65)
+        
+        let repeatAction = SKAction.repeatForever(comendoAction)
+        
+        pig.run(repeatAction, withKey: "repeatAction")
+        addChild(pig)
+        //
+        
+        self.continueButton.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.4) //100
+        self.homeButton.position = CGPoint(x: screenWidth*0.7, y: screenHeight*0.4) //100
+        continueButton.zPosition = 2
+        continueButton.setScale(1)
+        homeButton.setScale(1)
+        homeButton.zPosition = 2
+        
+        addChild(continueButton)
+        addChild(homeButton)
+        
+        let continuesLeft = SKLabelNode(fontNamed: "montserrat")
+        continuesLeft.text = "Continues left:"
+        continuesLeft.fontSize = 20
+        continuesLeft.zPosition = 3
+        continuesLeft.horizontalAlignmentMode = .center
+        continuesLeft.position = CGPoint(x: screenWidth*0.46 , y: screenHeight*0.25)
+        addChild(continuesLeft)
+        
+        let continuesNumber = SKLabelNode(fontNamed: "montserrat")
+        continuesNumber.text = "999"
+        continuesNumber.fontSize = 20
+        continuesNumber.zPosition = 3
+        continuesNumber.horizontalAlignmentMode = .center
+        continuesNumber.position = CGPoint(x: screenWidth*0.61 , y: screenHeight*0.25)
+        addChild(continuesNumber)
+        
     }
     
     
@@ -58,7 +99,7 @@ class GameOverScene: SKScene {
             
             let location = t.location(in: self)
             
-            if (yesButton.frame.contains(location)){
+            if (continueButton.frame.contains(location)){
                 
                 
                 let newScene = HomePlayerStatusScene(size: self.size)
@@ -68,7 +109,7 @@ class GameOverScene: SKScene {
                 
             }
                 
-            else if (noButton.frame.contains(location)){
+            else if (homeButton.frame.contains(location)){
                 
                 let newScene = HomeScene(size: self.size)
                 let animation = SKTransition.fade(withDuration: 1.0)
