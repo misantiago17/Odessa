@@ -89,13 +89,6 @@ class HomeScene: SKScene {
         tapLabel.run(repeatA)
         
         
-        
-        
-        
-        
-        
-        
-        
         // MARK: Animacoes dos porquinhos
         
         
