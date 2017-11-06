@@ -284,8 +284,70 @@ class GameScene: SKScene {
                 
             }
             
-            if (HUDNode.jumpButtonNode.frame.contains(location) ){
-    
+            if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false {
+                
+                block = true
+                
+                let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.20, resize: false, restore: false)
+                
+                let animateLanca = SKAction.animate(with: self.movements.lancaBlock, timePerFrame: 0.20, resize: false, restore: false)
+                
+                let addLanca = SKAction.run({
+                    
+                    self.playerNode.addChild(self.lancaNode)
+                    self.lancaNode.position = CGPoint(x: 20, y: 0)
+                    self.lancaNode.zPosition = -1
+                    
+                    self.lancaNode.run(animateLanca)
+                    
+                })
+                
+                let removeLanca = SKAction.run {
+                    
+                    for child in self.playerNode.children{
+                        if child.name == "lancaNode"{
+                            child.removeFromParent()
+                        }
+                    }
+                    
+                }
+                
+                let ultimoFrame = SKAction.run({
+                    
+                    let lancaAttackArray = [SKTexture(imageNamed: "Odessa-idle-frame1")]
+                    let puloCima = SKAction.animate(with: lancaAttackArray, timePerFrame: 0.13)
+                    let sequence = SKAction.sequence([removeLanca, puloCima])
+                    self.playerNode.run(sequence)
+                    
+                    
+                })
+                
+                
+                let group = SKAction.group([animateAction, addLanca])
+                let sequence = SKAction.sequence([group, ultimoFrame])
+                
+                
+                self.playerNode.run(sequence, withKey: "repeatAction")
+                self.blockStartTime = Date().timeIntervalSinceReferenceDate
+                
+                
+            }
+            
+            if (HUDNode.jumpButtonNode.frame.contains(location) ) && jump == false {
+                
+                if attack == true || block == true {
+                    
+                    for child in self.playerNode.children{
+                        if child.name == "lancaNode"{
+                            child.removeFromParent()
+                        }
+                    }
+                    
+                    attack = false
+                    block = false
+                    
+                }
+                
                 self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
                 self.jumpStartTime = Date().timeIntervalSinceReferenceDate
                 jump = true
@@ -357,7 +419,6 @@ class GameScene: SKScene {
         // Camera
        // cam.position = playerNode.position
         cam.position = CGPoint(x: playerNode.position.x, y: 120)
-        
         
         //         self.playerNode.position.x += velocityX
         
