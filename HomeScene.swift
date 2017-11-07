@@ -21,7 +21,7 @@ class HomeScene: SKScene {
     
     var velocityX:CGFloat = 0.0
     
-    
+    let newGameButton = SKSpriteNode(imageNamed: "newGame")
     var pigComendo = [SKTexture]()
     var bandeiraGrande = [SKTexture]()
     var primeiraNuvem = [SKTexture]()
@@ -35,11 +35,14 @@ class HomeScene: SKScene {
     var nuvem1 = SKSpriteNode()
     var nuvem2 = SKSpriteNode()
     var nuvem3 = SKSpriteNode()
+    var title = SKSpriteNode()
+    var tapLabel = SKLabelNode()
+    var flagNewGame = false
     
     override func sceneDidLoad() {
         
         
-        let title = SKSpriteNode(imageNamed: "odessa")
+        title = SKSpriteNode(imageNamed: "odessa")
         title.position = CGPoint(x: frame.midX, y: frame.midY)
         title.zPosition = 2
         
@@ -78,7 +81,7 @@ class HomeScene: SKScene {
         
         print("Home")
         
-        let tapLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
+        tapLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
         tapLabel.text = "Tap to play"
         tapLabel.fontSize = 20
         tapLabel.zPosition = 3
@@ -121,7 +124,7 @@ class HomeScene: SKScene {
         }
         
         for i in 1...4 {
-           terceiraNuvem.append(SKTexture(imageNamed:("cloud3frame\(i)")))
+            terceiraNuvem.append(SKTexture(imageNamed:("cloud3frame\(i)")))
         }
         
         pig = SKSpriteNode(texture: pigComendo[0])
@@ -225,16 +228,52 @@ class HomeScene: SKScene {
         nuvem3.run(groupNuvem3Action, withKey: "nuvemAction")
         addChild(nuvem3)
         
-   
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
-        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
-        //        view?.presentScene(sceneOptions)
+        title.removeFromParent()
+        tapLabel.removeFromParent()
+        
+        //        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
+        //        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
+        //        //        view?.presentScene(sceneOptions)
+        //New Game
+        if flagNewGame == false{
+        newGameButton.position = CGPoint(x: frame.midX ,y: frame.midY)
+        newGameButton.zPosition = 1
+        newGameButton.size = CGSize(width: 350, height: 50)
+        
+        addChild(newGameButton)
+        flagNewGame = true
+        }
+        
+        if let location = touches.first?.location(in: self) {
+            let touchedNode = atPoint(location)
+    
+            
+            switch touchedNode {
+            case newGameButton:
+                print("new game")
+                let nextScene = GameScene(size: frame.size)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+                //            case continueButton:
+                //                //print("Continue game")
+                //
+                //                let nextScene = GameScene(size: frame.size)
+                //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+                //                //                view?.presentScene(nextScene)
+                
+                //            case settingsButton:
+            //                print("Settings")
+            default:
+                print("Not an avaliable button")
+            }
+        }
+        
     }
-
+    
     
     
     
