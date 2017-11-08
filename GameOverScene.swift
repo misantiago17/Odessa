@@ -13,7 +13,7 @@ class GameOverScene: SKScene {
     
     
     let continueButton = SKSpriteNode(imageNamed: "continue") // Sim
-    let homeButton = SKSpriteNode(imageNamed: "newGame") // Nao
+    let homeButton = SKSpriteNode(imageNamed: "smallHomeButton") // Nao
     var pigComendo = [SKTexture]()
     var pig = SKSpriteNode()
     
@@ -52,11 +52,11 @@ class GameOverScene: SKScene {
         addChild(pig)
         //
         
-        self.continueButton.position = CGPoint(x: screenWidth*0.25, y: screenHeight*0.4) //100
-        self.homeButton.position = CGPoint(x: screenWidth*0.75, y: screenHeight*0.4) //100
+        self.continueButton.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.4) //100
+        self.homeButton.position = CGPoint(x: screenWidth*0.7, y: screenHeight*0.4) //100
         continueButton.zPosition = 2
-        continueButton.setScale(1)
-        homeButton.setScale(1)
+        continueButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
+        homeButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
         homeButton.zPosition = 2
         
         addChild(continueButton)
@@ -102,9 +102,9 @@ class GameOverScene: SKScene {
             if (continueButton.frame.contains(location)){
                 
                 
-                let newScene = HomePlayerStatusScene(size: self.size)
-                let animation = SKTransition.fade(withDuration: 1.0)
-                self.view?.presentScene(newScene, transition: animation)
+                let nextScene = GameScene(size: frame.size)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+                //self.view?.presentScene(newScene, transition: animation)
                 
                 
             }
