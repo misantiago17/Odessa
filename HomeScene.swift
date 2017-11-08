@@ -164,14 +164,6 @@ class HomeScene: SKScene {
         addChild(bandeirao2)
         
         
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
