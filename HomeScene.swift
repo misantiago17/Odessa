@@ -224,34 +224,69 @@ class HomeScene: SKScene {
         
     }
     
-            
-//            switch touchedNode {
-//            case newGameButton:
-//                print("new game")
-//                let nextScene = GameScene(size: frame.size)
-//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
-//                //            case continueButton:
-//                //                //print("Continue game")
-//                //
-//                //                let nextScene = GameScene(size: frame.size)
-//                //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-//                //                //                view?.presentScene(nextScene)
-//
-//                //            case settingsButton:
-//            //                print("Settings")
-//            default:
-//                print("Not an avaliable button")
-//    }
+    
+    //            switch touchedNode {
+    //            case newGameButton:
+    //                print("new game")
+    //                let nextScene = GameScene(size: frame.size)
+    //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+    //                //            case continueButton:
+    //                //                //print("Continue game")
+    //                //
+    //                //                let nextScene = GameScene(size: frame.size)
+    //                //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+    //                //                //                view?.presentScene(nextScene)
+    //
+    //                //            case settingsButton:
+    //            //                print("Settings")
+    //            default:
+    //                print("Not an avaliable button")
+    //    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        self.removeAllChildren()
-        self.removeAllActions()
-        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
-        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
         
+        //        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
+        //        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
+        title.removeFromParent()
+        tapLabel.removeFromParent()
         
+        //        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
+        //        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
+        //        //        view?.presentScene(sceneOptions)
+        //New Game
+        if flagNewGame == false{
+            newGameButton.position = CGPoint(x: frame.midX ,y: frame.midY)
+            newGameButton.zPosition = 1
+            newGameButton.size = CGSize(width: 350, height: 50)
             
-    }
-    
+            addChild(newGameButton)
+            flagNewGame = true
+        }
+        
+        if let location = touches.first?.location(in: self) {
+            let touchedNode = atPoint(location)
+            
+            
+            switch touchedNode {
+            case newGameButton:
+                print("new game")
+                let nextScene = GameScene(size: frame.size)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+                //            case continueButton:
+                //                //print("Continue game")
+                //
+                //                let nextScene = GameScene(size: frame.size)
+                //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+                //                //                view?.presentScene(nextScene)
+                
+                //            case settingsButton:
+            //                print("Settings")
+            default:
+                print("Not an avaliable button")
+            }
+        }
+        
+        
+}
 }
