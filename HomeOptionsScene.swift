@@ -227,31 +227,47 @@ class HomeOptionsScene: SKScene {
         
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        
-        if let location = touches.first?.location(in: self) {
-            let touchedNode = atPoint(location)
-            
-            switch touchedNode {
-            case newGameButton:
-                print("new game")
-                let nextScene = GameScene(size: frame.size)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
-//            case continueButton:
-//                //print("Continue game")
-//                
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        super.touchesBegan(touches, with: event)
+//
+//        if let location = touches.first?.location(in: self) {
+//            let touchedNode = atPoint(location)
+//
+//            switch touchedNode {
+//            case newGameButton:
+//                print("new game")
 //                let nextScene = GameScene(size: frame.size)
-//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-//                //                view?.presentScene(nextScene)
-                
-//            case settingsButton:
-//                print("Settings")
-            default:
-                print("Not an avaliable button")
-            }
+//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+////            case continueButton:
+////                //print("Continue game")
+////
+////                let nextScene = GameScene(size: frame.size)
+////                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+////                //                view?.presentScene(nextScene)
+//
+////            case settingsButton:
+////                print("Settings")
+//            default:
+//                print("Not an avaliable button")
+//                print("oi")
+//            }
+//
+//        }
+//    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        for touch in (touches) {
+            let location = touch.location(in: self)
             
+            if self.atPoint(location) == self.newGameButton {
+        self.removeAllChildren()
+        self.removeAllActions()
+        let sceneOptions = GameScene(size: (self.scene?.size)!)
+        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
+            }
         }
     }
+ 
 
 }

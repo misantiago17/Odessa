@@ -225,28 +225,33 @@ class HomeScene: SKScene {
     }
     
             
-            switch touchedNode {
-            case newGameButton:
-                print("new game")
-                let nextScene = GameScene(size: frame.size)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
-                //            case continueButton:
-                //                //print("Continue game")
-                //
-                //                let nextScene = GameScene(size: frame.size)
-                //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-                //                //                view?.presentScene(nextScene)
-                
-                //            case settingsButton:
-            //                print("Settings")
-            default:
-                print("Not an avaliable button")
-            }
-        }
+//            switch touchedNode {
+//            case newGameButton:
+//                print("new game")
+//                let nextScene = GameScene(size: frame.size)
+//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+//                //            case continueButton:
+//                //                //print("Continue game")
+//                //
+//                //                let nextScene = GameScene(size: frame.size)
+//                //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
+//                //                //                view?.presentScene(nextScene)
+//
+//                //            case settingsButton:
+//            //                print("Settings")
+//            default:
+//                print("Not an avaliable button")
+//    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        self.removeAllChildren()
+        self.removeAllActions()
+        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
+        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
+        
+        
+            
     }
-    
-    
-    
     
 }
