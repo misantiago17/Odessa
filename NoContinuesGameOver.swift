@@ -1,19 +1,19 @@
 //
-//  GameOverScene.swift
+//  NoContinuesGameOver.swift
 //  Odessa
 //
-//  Created by Mariela Andrade on 26/10/17.
+//  Created by Antonio Salgado on 08/11/17.
 //  Copyright © 2017 Michelle Beadle. All rights reserved.
 //
 
 import UIKit
 import GameplayKit
 
-class GameOverScene: SKScene {
+class NoCOntinuesGameOver: SKScene {
     
     
-    let continueButton = SKSpriteNode(imageNamed: "continue") // Sim
-    let homeButton = SKSpriteNode(imageNamed: "smallHomeButton") // Nao
+    let getMoreButton = SKSpriteNode(imageNamed: "getMore") // Sim
+    let watchVideoButton = SKSpriteNode(imageNamed: "watchVideo") // Nao
     var pigComendo = [SKTexture]()
     var pig = SKSpriteNode()
     
@@ -52,31 +52,23 @@ class GameOverScene: SKScene {
         addChild(pig)
         //
         
-        self.continueButton.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.4) //100
-        self.homeButton.position = CGPoint(x: screenWidth*0.7, y: screenHeight*0.4) //100
-        continueButton.zPosition = 2
-        continueButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
-        homeButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
-        homeButton.zPosition = 2
+        self.getMoreButton.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.4) //100
+        self.watchVideoButton.position = CGPoint(x: screenWidth*0.7, y: screenHeight*0.4) //100
+        getMoreButton.zPosition = 2
+        getMoreButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
+        watchVideoButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
+        watchVideoButton.zPosition = 2
         
-        addChild(continueButton)
-        addChild(homeButton)
+        addChild(getMoreButton)
+        addChild(watchVideoButton)
         
-//        let continuesLeft = SKLabelNode(fontNamed: "Montserrat-Regular")
-//        continuesLeft.text = "Continues left:"
-//        continuesLeft.fontSize = 20
-//        continuesLeft.zPosition = 3
-//        continuesLeft.horizontalAlignmentMode = .center
-//        continuesLeft.position = CGPoint(x: screenWidth*0.46 , y: screenHeight*0.25)
-//        addChild(continuesLeft)
-//
-//        let continuesNumber = SKLabelNode(fontNamed: "Montserrat-Regular")
-//        continuesNumber.text = "999"
-//        continuesNumber.fontSize = 20
-//        continuesNumber.zPosition = 3
-//        continuesNumber.horizontalAlignmentMode = .center
-//        continuesNumber.position = CGPoint(x: screenWidth*0.61 , y: screenHeight*0.25)
-//        addChild(continuesNumber)
+        let tapToLeave = SKLabelNode(fontNamed: "Montserrat-Regular")
+        tapToLeave.text = "Tap to leave"
+        tapToLeave.fontSize = 20
+        tapToLeave.zPosition = 3
+        tapToLeave.horizontalAlignmentMode = .center
+        tapToLeave.position = CGPoint(x: screenWidth*0.46 , y: screenHeight*0.25)
+        addChild(tapToLeave)
         
     }
     
@@ -95,11 +87,14 @@ class GameOverScene: SKScene {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
         
+        let nextScene = HomeScene(size: frame.size)
+        self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+        
         for t in touches { self.touchDown(atPoint: t.location(in: self))
             
             let location = t.location(in: self)
             
-            if (continueButton.frame.contains(location)){
+            if (getMoreButton.frame.contains(location)){
                 
                 
                 let nextScene = GameScene(size: frame.size)
@@ -109,7 +104,7 @@ class GameOverScene: SKScene {
                 
             }
                 
-            else if (homeButton.frame.contains(location)){
+            else if (watchVideoButton.frame.contains(location)){
                 
                 let newScene = HomeScene(size: self.size)
                 let animation = SKTransition.fade(withDuration: 1.0)
