@@ -222,6 +222,12 @@ class HomeScene: SKScene {
         nuvem1.run(groupNuvemAction, withKey: "nuvemAction")
         addChild(nuvem1)
         
+        nuvem2.run(groupNuvem2Action, withKey: "nuvemAction")
+        addChild(nuvem2)
+        
+        nuvem3.run(groupNuvem3Action, withKey: "nuvemAction")
+        addChild(nuvem3)
+        
     }
     
     
