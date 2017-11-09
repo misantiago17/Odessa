@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Odessa_Logo3.png",
+      "filename" : "Watch Video.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Odessa_Logo3@2x.png",
+      "filename" : "Watch Video@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Odessa_Logo3@3x.png",
+      "filename" : "Watch Video@3x.png",
       "scale" : "3x"
     }
   ],

@@ -20,7 +20,7 @@ class VictoryScene: SKScene {
         print("GameOver")
         
         
-        let winLabel = SKLabelNode(fontNamed: "montserrat")
+        let winLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
         winLabel.text = "Fim do testflight"     //colocar mensagem de vitoria aqui
         winLabel.fontSize = 30
         winLabel.zPosition = 3
@@ -29,7 +29,7 @@ class VictoryScene: SKScene {
         addChild(winLabel)
         
    
-        let continueLabel = SKLabelNode(fontNamed: "montserrat")
+        let continueLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
         continueLabel.text = "continue"
         continueLabel.fontSize = 15
         continueLabel.zPosition = 3

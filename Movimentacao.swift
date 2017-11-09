@@ -106,32 +106,32 @@ class Movimentacao {
     }
     
     func setAction(player: SKSpriteNode, velocity: CGFloat){
-        
+
         var impulsoArray = [SKTexture]()
         var puloCimaArray = [SKTexture]()
         var puloBaixoArray = [SKTexture]()
-        
+
         for i in 1...2 {
             impulsoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
         }
-    
+
         puloCimaArray.append(SKTexture(imageNamed: "odessaJumpframe3"))
-    
+
         for i in 4...6 {
             puloBaixoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
         }
-    
+
         jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
         fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
-    
+
         let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
         let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
         let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
         let group = SKAction.group([puloBaixo, fallBack])
         jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group])
-        
-        
-        
+
+
+
     }
     
 }

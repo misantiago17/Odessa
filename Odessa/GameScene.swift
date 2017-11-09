@@ -19,7 +19,7 @@ class GameScene: SKScene {
     
     // pular mais baixo// repetir escudo no ar mais uma vez
     //pular mais longe
-
+    
     //Oraganização: precisa de coisa pra caralho
     
     //Public
@@ -46,7 +46,7 @@ class GameScene: SKScene {
     // - Moedas
     
     private let cam = SKCameraNode()
-   
+    
     //movimento
     var velocityX:CGFloat = 0.0
     var velocityY:CGFloat = 0.0
@@ -64,7 +64,7 @@ class GameScene: SKScene {
     //Joystick
     var joystick: JoyStickView?
     var angle = CGFloat(0)
-    var displacemet = CGFloat(0)
+    var displacement = CGFloat(0)
     
     //Current Frame
     var currentOdessaRunSprite = 0
@@ -121,12 +121,13 @@ class GameScene: SKScene {
         // criar uma função pra pegar a textura atual da odessa e mudar o physics body conforme ela no update
         //playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
         playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 32.5,
-                                                                            height: 60))
+                                                                   height: 60))
         
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
         addChild(self.playerNode)
+        idleOdessa()
         
         //Lança
         lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
@@ -149,8 +150,7 @@ class GameScene: SKScene {
         
     }
     
-     override func didMove(to view: SKView) {
-
+    override func didMove(to view: SKView) {
         
         // MARK: Camera
         
@@ -177,7 +177,7 @@ class GameScene: SKScene {
         
         joystick?.monitor = { angle, displacement in
             self.angle = angle
-            self.displacemet = displacement
+            self.displacement = displacement
         }
         
         view.addSubview(joystick!)
@@ -191,10 +191,23 @@ class GameScene: SKScene {
             self.joystickInUse = true
             self.startTime = Date().timeIntervalSinceReferenceDate
             self.stopTimer = false
+            self.runOdessa()
             
         }
         
         joystick?.trackingHandler = {
+            
+            if (self.angle >= 60 && self.angle <= 120){
+                
+                let rightScale = SKAction.scaleX(to: 1, duration: 0)
+                self.playerNode.run(rightScale)
+                
+            } else if (self.angle >= 240 && self.angle <= 300){
+                
+                let leftScale = SKAction.scaleX(to: -1, duration: 0)
+                self.playerNode.run(leftScale)
+                
+            }
             
         }
         
@@ -208,6 +221,7 @@ class GameScene: SKScene {
             self.playerNode.texture = playerTexture
             self.currentOdessaIdleSprite = 1
             //self.playerNode.physicsBody = SKPhysicsBody(texture: self.playerNode.texture! , size: CGSize(width: self.playerNode.size.width, height: self.playerNode.size.height))
+            self.playerNode.removeAction(forKey: "runOdessa")
             
             
         }
@@ -250,7 +264,11 @@ class GameScene: SKScene {
                     
                 })
                 
-                let removeLanca = SKAction.run {
+                
+                let end = SKAction.run({
+                    
+                    self.playerNode.removeAction(forKey: "attackAction")
+                    self.attack = false
                     
                     for child in self.playerNode.children{
                         if child.name == "lancaNode"{
@@ -258,32 +276,18 @@ class GameScene: SKScene {
                         }
                     }
                     
-                }
-                
-                let ultimoFrame = SKAction.run({
                     
-                    let odessaIdleTexture = [SKTexture(imageNamed: "Odessa-idle-frame1")]
-                    let odessaIdle = SKAction.animate(with: odessaIdleTexture, timePerFrame: 0.08)
-                    let sequence = SKAction.sequence([removeLanca, odessaIdle])
-                    self.playerNode.run(sequence)
-                    
-                })
-                
-                let end = SKAction.run({
-                    self.attack = false
                 })
                 
                 
                 let group = SKAction.group([animateAction, addLanca])
-                let sequence = SKAction.sequence([group, ultimoFrame, end])
-                
-                
-                self.playerNode.run(sequence, withKey: "repeatAction")
+                let sequence = SKAction.sequence([group,end])
+                self.playerNode.run(sequence, withKey: "attackAction")
                 
                 
             }
             
-            if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false {
+            if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false && longBlock == false {
                 
                 block = true
                 fingerIsTouching = true
@@ -302,7 +306,10 @@ class GameScene: SKScene {
                     
                 })
                 
-                let removeLanca = SKAction.run {
+                let end = SKAction.run({
+                    
+                    self.playerNode.removeAction(forKey: "blockAction")
+                    self.block = false
                     
                     for child in self.playerNode.children{
                         if child.name == "lancaNode"{
@@ -310,36 +317,26 @@ class GameScene: SKScene {
                         }
                     }
                     
-                }
-                
-                let ultimoFrame = SKAction.run({
-                    
-                    let odessaIdleTexture = [SKTexture(imageNamed: "Odessa-idle-frame1")]
-                    let odessaIdle = SKAction.animate(with: odessaIdleTexture, timePerFrame: 0.13)
-                    let sequence = SKAction.sequence([removeLanca, odessaIdle])
-                    self.playerNode.run(sequence)
-                    
-                    
-                })
-                
-                let end = SKAction.run({
-                    self.block = false
                 })
                 
                 let group = SKAction.group([animateAction, addLanca])
-                let sequence = SKAction.sequence([group, ultimoFrame, end])
+                let sequence = SKAction.sequence([group, end])
                 
                 
-                self.playerNode.run(sequence, withKey: "repeatAction")
+                self.playerNode.run(sequence, withKey: "blockAction")
                 self.longBlockStartTime = Date().timeIntervalSinceReferenceDate
                 
                 
             }
             
-            if (HUDNode.jumpButtonNode.frame.contains(location) ) && jump == false {
+            if (HUDNode.jumpButtonNode.frame.contains(location) ) && jump == false{
                 
-
-                if attack == true || block == true {
+                
+                if attack == true || block == true || longBlock == true{
+                    
+                    self.playerNode.removeAction(forKey: "attackAction")
+                    self.playerNode.removeAction(forKey: "blockAction")
+                    
                     
                     for child in self.playerNode.children{
                         if child.name == "lancaNode"{
@@ -352,11 +349,48 @@ class GameScene: SKScene {
                     
                 }
                 
+                //                self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
+                //                self.jumpStartTime = Date().timeIntervalSinceReferenceDate
                 
-                self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
-                
-                self.jumpStartTime = Date().timeIntervalSinceReferenceDate
                 jump = true
+                
+                var impulsoArray = [SKTexture]()
+                var puloCimaArray = [SKTexture]()
+                var puloBaixoArray = [SKTexture]()
+                
+                for i in 1...2 {
+                    impulsoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+                }
+                
+                puloCimaArray.append(SKTexture(imageNamed: "odessaJumpframe3"))
+                
+                for i in 4...6 {
+                    puloBaixoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+                }
+                
+                let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
+                let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+                
+                let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
+                let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
+                let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
+                let group = SKAction.group([puloBaixo, fallBack])
+                
+                let endMoviment = SKAction.run({
+                    
+                    self.jump = false
+                    self.playerNode.removeAction(forKey: "jumpAction")
+                    
+                    if self.joystickInUse == true {
+                        self.runOdessa()
+                    }
+                    
+                })
+                
+                let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
+                
+                //                self.playerNode.removeAction(forKey: "runOdessa")
+                self.playerNode.run(jumpAction, withKey: "jumpAction")
                 
             }
             
@@ -379,41 +413,52 @@ class GameScene: SKScene {
             
             if (HUDNode.blockButtonNode.frame.contains(location)) && longBlock == true{
                 
-                let removeLanca = SKAction.run {
-                    
-                    for child in self.playerNode.children{
-                        if child.name == "lancaNode"{
-                            child.removeFromParent()
-                        }
+                for child in self.playerNode.children{
+                    if child.name == "lancaNode"{
+                        child.removeFromParent()
                     }
-                    
                 }
                 
-                let ultimoFrame = SKAction.run({
-                    
-                    let odessaIdleTexture = [SKTexture(imageNamed: "Odessa-idle-frame1")]
-                    let odessaIdle = SKAction.animate(with: odessaIdleTexture, timePerFrame: 0.08)
-                    let sequence = SKAction.sequence([removeLanca, odessaIdle])
-                    self.playerNode.run(sequence)
-                    
-                    
-                })
+                self.block = false
+                self.longBlock = false
+                self.playerNode.removeAction(forKey: "longBlock")
+                self.playerNode.removeAction(forKey: "blockAction")
                 
-                let end = SKAction.run({
-                    self.longBlock = false
-                    self.fingerIsTouching = false
-                })
                 
-                let sequence = SKAction.sequence([removeLanca, ultimoFrame, end])
-                self.playerNode.run(sequence, withKey: "repeatAction")
             }
             
         }
-
+        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        for t in touches {
+            
+            self.touchUp(atPoint: t.location(in: cam))
+            
+            velocityX = 0
+            
             fingerIsTouching = false
+            
+            if (HUDNode.blockButtonNode.frame.contains(location)) && longBlock == true{
+                
+                for child in self.playerNode.children{
+                    if child.name == "lancaNode"{
+                        child.removeFromParent()
+                    }
+                }
+                
+                self.block = false
+                self.longBlock = false
+                self.playerNode.removeAction(forKey: "longBlock")
+                self.playerNode.removeAction(forKey: "blockAction")
+                
+                
+            }
+            
+        }
+        
     }
     
     
@@ -464,112 +509,109 @@ class GameScene: SKScene {
         }
         
         
-        // Current Sprite
-        if (currentOdessaRunSprite == 9){
-            currentOdessaRunSprite = 0
-        }
+        //        // Current Sprite
+        //        if (currentOdessaRunSprite == 9){
+        //            currentOdessaRunSprite = 0
+        //        }
+        //
+        //        if (currentOdessaIdleSprite == 4){
+        //            currentOdessaIdleSprite = 0
+        //        }
+        //
+        //        // Joystick
+        //        if joystickInUse == true {
+        //
+        //            // Movimentação
+        //            if (self.angle >= 60 && self.angle <= 120){
+        //
+        //                if (longBlock == false) {
+        //                self.playerNode.position.x += displacement*3
+        //                }
+        //
+        //                let rightScale = SKAction.scaleX(to: 1, duration: 0)
+        //                self.playerNode.run(rightScale)
+        //
+        //                if dt > 0.1 {
+        //                    dt = 0
+        //                    self.startTime = Date().timeIntervalSinceReferenceDate
+        //                    let playerTexture = SKTexture(imageNamed: "odessaRunframe" + String(currentOdessaRunSprite + 1))
+        //                    playerNode.texture = playerTexture
+        //                    currentOdessaRunSprite += 1
+        //                }
+        //
+        //
+        //            } else if (self.angle >= 240 && self.angle <= 300){
+        //
+        //                if (longBlock == false) {
+        //                self.playerNode.position.x -= displacement*3
+        //                }
+        //
+        //                let leftScale = SKAction.scaleX(to: -1, duration: 0)
+        //                self.playerNode.run(leftScale)
+        //
+        //                if dt > 0.1 {
+        //                    dt = 0
+        //                    self.startTime = Date().timeIntervalSinceReferenceDate
+        //                    let playerTexture = SKTexture(imageNamed: "odessaRunframe" + String(currentOdessaRunSprite + 1))
+        //                    playerNode.texture = playerTexture
+        //                    currentOdessaRunSprite += 1
+        //                }
+        //
+        //            } else {
+        //
+        //                if dt > 0.30 && longBlock == false{
+        //                    dt = 0
+        //                    self.startTime = Date().timeIntervalSinceReferenceDate
+        //                    let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame" + String(currentOdessaIdleSprite + 1))
+        //                    playerNode.texture = playerTexture
+        //                    currentOdessaIdleSprite += 1
+        //                }
+        //
+        //            }
+        //
+        //            // Contador para mudar os sprites
+        //            endTime = Date().timeIntervalSinceReferenceDate
+        //            dt = Double(endTime - startTime)
+        //
+        //
+        //        }
+        //
+        //        if joystickInUse == false {
+        //
+        //            endTime = Date().timeIntervalSinceReferenceDate
+        //            dt = Double(endTime - startTime)
+        //
+        //            if dt > 0.30 && longBlock == false{
+        //                dt = 0
+        //                self.startTime = Date().timeIntervalSinceReferenceDate
+        //                let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame" + String(currentOdessaIdleSprite + 1))
+        //                playerNode.texture = playerTexture
+        //                currentOdessaIdleSprite += 1
+        //            }
+        //        }
+        //
+        //        if jump == true {
+        //            jumpEndTime = Date().timeIntervalSinceReferenceDate
+        //            jumpDt = Double(jumpEndTime - jumpStartTime)
+        //
+        //            if jumpDt > 0.845 {
+        //                jump = false
+        //            }
+        //
+        //        }
         
-        if (currentOdessaIdleSprite == 4){
-            currentOdessaIdleSprite = 0
-        }
-        
-        // Joystick
-        if joystickInUse == true {
-            
-            // Movimentação
-            if (self.angle >= 60 && self.angle <= 120){
-                
-                if (longBlock == false) {
-                self.playerNode.position.x += displacemet*3
-                }
-                
-                let rightScale = SKAction.scaleX(to: 1, duration: 0)
-                self.playerNode.run(rightScale)
-                
-                if dt > 0.1 {
-                    dt = 0
-                    self.startTime = Date().timeIntervalSinceReferenceDate
-                    let playerTexture = SKTexture(imageNamed: "odessaRunframe" + String(currentOdessaRunSprite + 1))
-                    playerNode.texture = playerTexture
-                    currentOdessaRunSprite += 1
-                }
-                
-                
-            } else if (self.angle >= 240 && self.angle <= 300){
-                
-                if (longBlock == false) {
-                self.playerNode.position.x -= displacemet*3
-                }
-                
-                let leftScale = SKAction.scaleX(to: -1, duration: 0)
-                self.playerNode.run(leftScale)
-                
-                if dt > 0.1 {
-                    dt = 0
-                    self.startTime = Date().timeIntervalSinceReferenceDate
-                    let playerTexture = SKTexture(imageNamed: "odessaRunframe" + String(currentOdessaRunSprite + 1))
-                    playerNode.texture = playerTexture
-                    currentOdessaRunSprite += 1
-                }
-                
-            } else {
-                
-                if dt > 0.30 && longBlock == false{
-                    dt = 0
-                    self.startTime = Date().timeIntervalSinceReferenceDate
-                    let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame" + String(currentOdessaIdleSprite + 1))
-                    playerNode.texture = playerTexture
-                    currentOdessaIdleSprite += 1
-                }
-                
-            }
-            
-            // Contador para mudar os sprites
-            endTime = Date().timeIntervalSinceReferenceDate
-            dt = Double(endTime - startTime)
-            
-            
-        }
-        
-        if joystickInUse == false {
-            
-            endTime = Date().timeIntervalSinceReferenceDate
-            dt = Double(endTime - startTime)
-            
-            if dt > 0.30 && longBlock == false{
-                dt = 0
-                self.startTime = Date().timeIntervalSinceReferenceDate
-                let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame" + String(currentOdessaIdleSprite + 1))
-                playerNode.texture = playerTexture
-                currentOdessaIdleSprite += 1
-            }
-        }
-        
-        if jump == true {
-            jumpEndTime = Date().timeIntervalSinceReferenceDate
-            jumpDt = Double(jumpEndTime - jumpStartTime)
-            
-            if jumpDt > 0.845 {
-                jump = false
-            }
-            
-        }
         
         if (fingerIsTouching == true) && (longBlock == false){
             
             longBlockEndTime = Date().timeIntervalSinceReferenceDate
             longBlockDt = Double(longBlockEndTime - longBlockStartTime)
             
-            print(longBlockDt)
-            
             if longBlockDt > 0.6 {
-                longBlockAnimation()
-                print("press")
+                odessaLongBlockAnimation()
             }
             
-            
         }
- 
+        
     }
     
     // Place Enemies in modules
@@ -596,7 +638,7 @@ class GameScene: SKScene {
         }
 
     }
-
+    
     // Cria Mapa
     
     func createMap() -> Mapa {
@@ -663,12 +705,12 @@ class GameScene: SKScene {
             
             if (i > 0){
                 //SKPhysicsJointPin.joint(withBodyA: floorSegments[i-1].physicsBody!, bodyB: floorSegments[i].physicsBody!, anchor: CGPoint(x: 1.0, y: 1.0))
-               // SKPhysicsJointPin.joint(withBodyA: floorSegments[i].physicsBody!, bodyB: floorSegments[i-1].physicsBody!, anchor: CGPoint(x: 0.0, y: 1.0))
+                // SKPhysicsJointPin.joint(withBodyA: floorSegments[i].physicsBody!, bodyB: floorSegments[i-1].physicsBody!, anchor: CGPoint(x: 0.0, y: 1.0))
                 SKPhysicsJointFixed.joint(withBodyA: floorSegments[i-1].physicsBody!, bodyB: floorSegments[i].physicsBody!, anchor: CGPoint(x: 0.5, y: 0.5))
             }
             
             //floor.addChild(floorModule)
-
+            
             i+=1
         }
         
@@ -693,15 +735,57 @@ class GameScene: SKScene {
         return CGFloat(newPosition)
     }
     
-   
     
-    func longBlockAnimation(){
+    
+    //    func longBlockAnimation(){
+    //
+    //        longBlock = true
+    //
+    //        let animateOdessa = SKAction.animate(with: movements.longBlockArray, timePerFrame: 0.10, resize: false, restore: false)
+    //
+    //        let animateLanca = SKAction.animate(with: self.movements.lancaLongBlock, timePerFrame: 0.10, resize: false, restore: false)
+    //
+    //        let repeatOdessa = SKAction.repeatForever(animateOdessa)
+    //        let repeatLanca = SKAction.repeatForever(animateLanca)
+    //
+    //        let addLanca = SKAction.run({
+    //
+    //            self.playerNode.addChild(self.lancaNode)
+    //            self.lancaNode.position = CGPoint(x: 20, y: 0)
+    //            self.lancaNode.zPosition = -1
+    //
+    //            self.lancaNode.run(repeatLanca)
+    //
+    //        })
+    //
+    //
+    //        let group = SKAction.group([repeatOdessa, addLanca])
+    //
+    //        self.playerNode.run(group, withKey: "repeatAction")
+    //
+    //
+    //    }
+    
+    // Odessa
+    
+    func odessaLongBlockAnimation(){
         
         longBlock = true
         
-        let animateOdessa = SKAction.animate(with: movements.longBlockArray, timePerFrame: 0.10, resize: false, restore: false)
+        var longBlockArray = [SKTexture]() //Odessa long Block
+        var lancaLongBlock = [SKTexture]() //Lança long Block
         
-        let animateLanca = SKAction.animate(with: self.movements.lancaLongBlock, timePerFrame: 0.10, resize: false, restore: false)
+        for i in 1...3 {
+            longBlockArray.append(SKTexture(imageNamed: "Odessa-block-hold-frame\(i)"))
+        }
+        
+        for i in 1...3 {
+            lancaLongBlock.append(SKTexture(imageNamed: "Lanca-Odessa-block-hold-frame\(i)"))
+        }
+        
+        let animateOdessa = SKAction.animate(with: longBlockArray, timePerFrame: 0.10, resize: false, restore: false)
+        
+        let animateLanca = SKAction.animate(with: lancaLongBlock, timePerFrame: 0.10, resize: false, restore: false)
         
         let repeatOdessa = SKAction.repeatForever(animateOdessa)
         let repeatLanca = SKAction.repeatForever(animateLanca)
@@ -719,8 +803,8 @@ class GameScene: SKScene {
         
         let group = SKAction.group([repeatOdessa, addLanca])
         
-        self.playerNode.run(group, withKey: "repeatAction")
-
+        self.playerNode.run(group, withKey: "longBlock")
+        
         
     }
     
