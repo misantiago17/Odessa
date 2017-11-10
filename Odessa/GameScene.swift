@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 import SwiftyJSON
 
-class GameScene: SKScene {
+class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     
     var modulesInitialPositions: [CGFloat] = []
@@ -29,6 +29,8 @@ class GameScene: SKScene {
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
     var playerNode = SKSpriteNode(texture: SKTexture(imageNamed: "Odessa-idle-frame1"))
+    var enemyNode = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
+    
     var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
     var hud = SKNode()
     var inimigosNode = [SKSpriteNode()]
@@ -101,11 +103,31 @@ class GameScene: SKScene {
     var ultimo = CGFloat()
     var posicaoBandeira = CGFloat()
     
+    
+    
+    let MaxHealth = 250
+    var playerHP = 250
+    var enemyHP = 100
+    let HealthBarWidth: CGFloat = 250
+    let HealthBarWE: CGFloat = 40
+    let HealthBarHeight: CGFloat = 4
+    
+    let playerHealthBar = SKSpriteNode()
+    let enemyHealthBar = SKSpriteNode()
+    public var pontosLabel: SKLabelNode!
+    var  pontos: Int = 0 {
+        didSet{
+            pontosLabel.text = "\(pontos)"
+        }
+    }
+
+    var inimigol = 4
+    
+//    let moeda = SKSpriteNode(imageNamed: "moeda")
+    let suporte = SKSpriteNode(texture: SKTexture(imageNamed: "SuporteHPSP"))
+    
     override func sceneDidLoad() {
-        
-        
-        
-        
+
         // Mapa
         mapa = createMap()
         let floor = organizeMap()
@@ -125,14 +147,26 @@ class GameScene: SKScene {
         
         // criar uma função pra pegar a textura atual da odessa e mudar o physics body conforme ela no update
         //playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
-        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 32.5,
-                                                                   height: 60))
-        
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 32.5, height: 60))
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
+        playerNode.physicsBody?.categoryBitMask = PhysicsCategory.odessa
+        playerNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
         addChild(self.playerNode)
         idleOdessa()
+        
+        //hoplita
+       // enemyNode.setScale(0.34)
+        enemyNode.size = CGSize(width: size.height/4, height: size.height/4)
+        enemyNode.position = CGPoint(x: 500, y: 500)
+        enemyNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+        enemyNode.physicsBody?.allowsRotation = false
+        enemyNode.physicsBody?.usesPreciseCollisionDetection = true
+       // enemyNode.physicsBody?.affectedByGravity = false
+        enemyNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+     //  enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+        
         
         //Lança
         lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
@@ -151,7 +185,7 @@ class GameScene: SKScene {
         
         //addChild(hud)
         //view?.addSubview(hud.inputView!)
-        
+ 
         ultimo = modulesInitialPositions.last!
         setFlag()
         
@@ -160,7 +194,30 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        setScore()
+        updateHealthBar(node: playerHealthBar, withHealthPoints: MaxHealth)
+        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
+        physicsWorld.contactDelegate = self
+        
+        
+        suporte.position = CGPoint(x: 500 , y: 300)
+        suporte.setScale(0.3)
+        suporte.zPosition = 50
+       
+//        moeda.position = CGPoint(x: 500 , y: 280)
+//        moeda.setScale(0.8)
+     
+        playerHealthBar.setScale(0.25)
+        playerHealthBar.zPosition =  50
+        playerHealthBar.position = CGPoint(
+            x: 500 ,
+            y: 296
+            
+        )
+        
+        
+   
         // MARK: Camera
         let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
         
@@ -172,9 +229,15 @@ class GameScene: SKScene {
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
-        cam.addChild(parallax.frente)
-        cam.addChild(parallax.meio)
+      //  cam.addChild(parallax.frente)
+       // cam.addChild(parallax.meio)
         
+        cam.addChild(playerHealthBar)
+        cam.addChild(enemyHealthBar)
+        cam.addChild(suporte)
+//        cam.addChild(moeda)
+        cam.addChild(enemyNode)
+    //    cam.addChild(pontosLabel)
         
         
         
@@ -493,6 +556,12 @@ class GameScene: SKScene {
             self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 0.5))
 
         }
+        
+        enemyHealthBar.position = CGPoint(
+            x: enemyNode.position.x,
+            y: enemyNode.position.y + enemyNode.size.height / 2
+        )
+        
         
         
         // First, update the delta time values:
@@ -932,6 +1001,142 @@ class GameScene: SKScene {
         
         
     }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if ((firstBody.categoryBitMask & PhysicsCategory.enemy != 0) &&
+            (secondBody.categoryBitMask & PhysicsCategory.odessa != 0)) {
+            
+            odessaAttackedEnemy(enemy: firstBody.node as! SKSpriteNode, odessa: secondBody.node as! SKSpriteNode)
+        }
+        
+        
+    }
+    
+    func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa einimigo
+        
+        print("aaaaa")
+        
+        enemyHP = max(0, enemyHP - 25)
+        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+
+        //  updateHealthBar(node: playerHealthBar, withHealthPoints: playerHP)
+
+        print("atacou inimigo")
+
+        inimigol -= 1
+
+        if (inimigol == 0){
+
+
+            print("inimigo morreu")
+
+            enemyNode.removeFromParent()
+
+            pontos += 100
+
+            //        inimigoLabel.removeFromParent()
+            enemyHealthBar.removeFromParent()
+        }
+        
+    }
+
+    
+    func updateHealthBar(node: SKSpriteNode, withHealthPoints hp: Int) {
+        
+        
+        if (node == enemyHealthBar){
+            
+            let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
+            
+            let fillColor = UIColor(red: 113.0/255, green: 202.0/255, blue: 53.0/255, alpha:1)
+            let borderColor = UIColor(red: 35.0/255, green: 28.0/255, blue: 40.0/255, alpha:1)
+            
+            // create drawing context
+            UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
+            let context = UIGraphicsGetCurrentContext()
+            
+            // draw the outline for the health bar
+            borderColor.setStroke()
+            let borderRect = CGRect(origin: CGPoint(x:0, y:0), size: barSize)
+            context!.stroke(borderRect, width: 1)
+            
+            // draw the health bar with a colored rectangle
+            fillColor.setFill()
+            let barWidth = (barSize.width - 1) * CGFloat(hp) / CGFloat(100)
+            let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
+            context!.fill(barRect)
+            
+            // extract image
+            let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            // set sprite texture and size
+            node.texture = SKTexture(image: spriteImage!)
+            node.size = barSize
+        }
+            
+        else {
+            
+            let barSize = CGSize(width: HealthBarWidth, height: HealthBarHeight);
+            let fillColor = UIColor(red: 197.0/255, green: 76.0/255, blue: 91.0/255, alpha:1)
+            // create drawing context
+            UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
+            let context = UIGraphicsGetCurrentContext()
+            
+            // draw the health bar with a colored rectangle
+            fillColor.setFill()
+            let barWidth = (barSize.width - 1) * CGFloat(hp) / CGFloat(MaxHealth)
+            let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
+            context!.fill(barRect)
+            
+            // extract image
+            let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            // set sprite texture and size
+            node.texture = SKTexture(image: spriteImage!)
+            node.size = barSize
+            
+        }
+    }
+    
+    func setScore(){
+        
+        pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
+        pontosLabel.text = "0"
+        pontosLabel.horizontalAlignmentMode = .right
+        pontosLabel.position = CGPoint(x: 545 , y: 265)
+        pontosLabel.fontSize = 15
+        pontosLabel.zPosition = 50
+        pontosLabel.color = UIColor.white
+        
+        cam.addChild(pontosLabel)
+        
+        
+    }
+    
+    
+    
+    
+    public struct PhysicsCategory {
+        static let None      : UInt32 = 0
+        static let All       : UInt32 = UInt32.max
+        static let enemy   : UInt32 = 0b1       // 1
+        static let odessa: UInt32 = 0b10      // 2
+        static let chao    : UInt32 = 3
+    }
+    
     
 
     
