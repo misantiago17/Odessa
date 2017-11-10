@@ -260,17 +260,11 @@ class HomeOptionsScene: SKScene {
         for touch in (touches) {
             let location = touch.location(in: self)
             
-            switch touchedNode {
-            case newGameButton:
-                print("new game")
-                let nextScene = GameScene(size: frame.size)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 0.5))
-                //view?.presentScene(nextScene)
-                
-//            case settingsButton:
-//                print("Settings")
-            default:
-                print("Not an avaliable button")
+            if self.atPoint(location) == self.newGameButton {
+        self.removeAllChildren()
+        self.removeAllActions()
+        let sceneOptions = GameScene(size: (self.scene?.size)!)
+        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
             }
         }
     }

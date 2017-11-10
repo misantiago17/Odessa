@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class GameScene: SKScene {
     
+    
+    var modulesInitialPositions: [CGFloat] = []
     //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
     //falta fazer considção de derrota e game over
     //delay no botão de movimentação
@@ -96,8 +98,11 @@ class GameScene: SKScene {
     var longBlockDt = 0.00
     var longBlock:Bool = false
     
+    var ultimo = CGFloat()
+    var posicaoBandeira = CGFloat()
     
     override func sceneDidLoad() {
+        
         
         
         
@@ -147,12 +152,17 @@ class GameScene: SKScene {
         //addChild(hud)
         //view?.addSubview(hud.inputView!)
         
+        ultimo = modulesInitialPositions.last!
+        setFlag()
+        
         
     }
     
     override func didMove(to view: SKView) {
         
+        
         // MARK: Camera
+        let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
         
         //let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
         //cam.position = center
@@ -164,6 +174,10 @@ class GameScene: SKScene {
         cam.addChild(background)
         cam.addChild(parallax.frente)
         cam.addChild(parallax.meio)
+        
+        
+        
+        
      //   cam.addChild(ParallaxScene().parallaxNode)
      //   cam.addChild(ParallaxScene().parallaxNode)
 
@@ -225,6 +239,12 @@ class GameScene: SKScene {
             
             
         }
+//
+        
+       
+        
+        
+        
     }
     
     // Handle Touches
@@ -463,7 +483,16 @@ class GameScene: SKScene {
     
     
     override func update(_ currentTime: TimeInterval) {
-        
+   
+        if (playerNode.position.x > 6862 ){
+
+            let nextScene = VictoryScene(size: self.scene!.size)
+            nextScene.scaleMode = self.scaleMode
+            nextScene.backgroundColor = UIColor.black
+            joystick?.removeFromSuperview()
+            self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 0.5))
+
+        }
         
         
         // First, update the delta time values:
@@ -486,16 +515,25 @@ class GameScene: SKScene {
         
         
         
-        
     
 //        HUDNode.blockButtonNode.frame.contains(location)
+        
+        if (self.angle >= 60 && self.angle <= 120) && joystickInUse == true && longBlock == false {
+            
+            self.playerNode.position.x += self.displacement*3
+            
+        } else if (self.angle >= 240 && self.angle <= 300) && joystickInUse == true && longBlock == false{
+            
+            self.playerNode.position.x -= self.displacement*3
+            
+        }
         
         
         // Camera
        // cam.position = playerNode.position
         cam.position = CGPoint(x: playerNode.position.x, y: 120)
         
-        //         self.playerNode.position.x += velocityX
+        //self.playerNode.position.x += velocityX
         
         // Game Over
         if (playerNode.position.y < -239){
@@ -697,23 +735,24 @@ class GameScene: SKScene {
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false
             
+            // aqui
+            modulesInitialPositions.append(floor.calculateAccumulatedFrame().size.width - floorModule.size.width)
+      //      print("\(modulesInitialPositions)")
+            
+            
+            
             placeEnemy(modulo: module, spriteMod: floorModule)
             
             floorSegments.append(floorModule)
-            
             floor.addChild(floorModule)
-            
             if (i > 0){
                 //SKPhysicsJointPin.joint(withBodyA: floorSegments[i-1].physicsBody!, bodyB: floorSegments[i].physicsBody!, anchor: CGPoint(x: 1.0, y: 1.0))
                 // SKPhysicsJointPin.joint(withBodyA: floorSegments[i].physicsBody!, bodyB: floorSegments[i-1].physicsBody!, anchor: CGPoint(x: 0.0, y: 1.0))
                 SKPhysicsJointFixed.joint(withBodyA: floorSegments[i-1].physicsBody!, bodyB: floorSegments[i].physicsBody!, anchor: CGPoint(x: 0.5, y: 0.5))
             }
-            
             //floor.addChild(floorModule)
-            
             i+=1
         }
-        
         return floor
     }
     
@@ -799,13 +838,8 @@ class GameScene: SKScene {
             self.lancaNode.run(repeatLanca)
             
         })
-        
-        
         let group = SKAction.group([repeatOdessa, addLanca])
-        
         self.playerNode.run(group, withKey: "longBlock")
-        
-        
     }
     
     func moveSprite(sprite : SKSpriteNode, nextSprite : SKSpriteNode, speed : Float) -> Void {
@@ -833,8 +867,75 @@ class GameScene: SKScene {
             
         }
     }
+        
+        
+        func idleOdessa(){
+            
+            var idleArray = [SKTexture]()
+            
+            for i in 1...4 {
+                idleArray.append(SKTexture(imageNamed: "Odessa-idle-frame\(i)"))
+            }
+        
+        
+        let animateOdessa = SKAction.animate(with: idleArray, timePerFrame: 0.15, resize: false, restore: false)
+        
+        let repeatForever = SKAction.repeatForever(animateOdessa)
+        
+        
+        self.playerNode.run(repeatForever, withKey: "idleOdessa")
+            
+        }
+        
+        
     
+    
+    func runOdessa(){
+        
+        var runArray = [SKTexture]()
+        
+        for i in 1...9 {
+            runArray.append(SKTexture(imageNamed: "odessaRunframe\(i)"))
+        }
+        
+        let animateOdessa = SKAction.animate(with: runArray, timePerFrame: 0.13, resize: false, restore: false)
+        
+        let repeatForever = SKAction.repeatForever(animateOdessa)
+        
+        
+        self.playerNode.run(repeatForever, withKey: "runOdessa")
+        
+        
+    }
+    
+    func setFlag(){
+        
+        var bandeirao = SKSpriteNode()
+        var bandeiraGrande = [SKTexture]()
+        for i in 1...6 {
+            bandeiraGrande.append(SKTexture(imageNamed:("Bandeira1frame\(i)")))
+        }
+        bandeirao = SKSpriteNode(texture: bandeiraGrande[0])
+        let balancarAction = SKAction.animate(with: bandeiraGrande, timePerFrame: 0.26, resize: true, restore: false)
+        let repeatBandeira = SKAction.repeatForever(balancarAction)
+        
+        
+        
+        
+        bandeirao.run(repeatBandeira, withKey: "repeatBandeira")
+        bandeirao.position = CGPoint(x: 6862, y: 150)
+        bandeirao.zPosition = -2
+        bandeirao.setScale(0.35)
+        addChild(bandeirao)
+        
+        posicaoBandeira = bandeirao.position.x
+        
+        
+    }
+    
+
     
     
 }
+
 
