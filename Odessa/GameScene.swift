@@ -162,14 +162,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         //hoplita
        // enemyNode.setScale(0.34)
-        enemyNode.size = CGSize(width: size.height/4, height: size.height/4)
-        enemyNode.position = CGPoint(x: 500, y: 500)
-        enemyNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
-        enemyNode.physicsBody?.allowsRotation = false
-        enemyNode.physicsBody?.usesPreciseCollisionDetection = true
-       // enemyNode.physicsBody?.affectedByGravity = false
-        enemyNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
-     //  enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+        
+        for index in 0...300 {
+            print("AAAAAAAAA")
+            
+            var spriteEnemy = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
+            spriteEnemy.size = CGSize(width: size.height/4, height: size.height/4)
+            spriteEnemy.position = CGPoint(x: 500, y: 500)
+            spriteEnemy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+            spriteEnemy.physicsBody?.allowsRotation = false
+            spriteEnemy.physicsBody?.usesPreciseCollisionDetection = true
+            // enemyNode.physicsBody?.affectedByGravity = false
+            //spriteEnemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+            //  enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+            
+            addChild(spriteEnemy)
+            
+        }
         
         
         //Lança

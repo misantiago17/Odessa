@@ -130,7 +130,7 @@ class HUD {
         
         playerHealthBar.setScale(0.3)
         playerHealthBar.zPosition = 3
-        playerHealthBar.position = CGPoint(x: screenSize.width/2 - 421, y: -(screenSize.height/2) + 290)
+        playerHealthBar.position = CGPoint(x: screenSize.width/2 - 421, y: -(screenSize.height/2) + 288)
         HUDNode.addChild(playerHealthBar)
         
      
