@@ -60,13 +60,13 @@ class HomePlayerStatusScene: SKScene {
                 
                 let nextScene = GameScene(size: frame.size)
                 //view?.presentScene(nextScene)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.5))
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
                 
             case cancelButton:
                 //print("Voltar")
                 
                 let backScene = HomeOptionsScene(size: frame.size)
-                self.view?.presentScene(backScene, transition: SKTransition.crossFade(withDuration: 1.3))
+                self.view?.presentScene(backScene, transition: SKTransition.crossFade(withDuration: 1.0))
                 //view?.presentScene(backScene)
                 
             default:
