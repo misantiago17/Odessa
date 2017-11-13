@@ -111,22 +111,26 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     let HealthBarWidth: CGFloat = 250
     let HealthBarWE: CGFloat = 40
     let HealthBarHeight: CGFloat = 4
+    let HealthBarHO: CGFloat = 7
     
-    let playerHealthBar = SKSpriteNode()
+    
     let enemyHealthBar = SKSpriteNode()
-    public var pontosLabel: SKLabelNode!
-    var  pontos: Int = 0 {
-        didSet{
-            pontosLabel.text = "\(pontos)"
-        }
-    }
+  
 
     var inimigol = 4
     
+    var  pontos: Int = 0 {
+        didSet{
+            HUDNode.pontosLabel.text = "\(pontos)"
+        }
+    }
+    
 //    let moeda = SKSpriteNode(imageNamed: "moeda")
-    let suporte = SKSpriteNode(texture: SKTexture(imageNamed: "SuporteHPSP"))
+   
     
     override func sceneDidLoad() {
+        
+       
 
         // Mapa
         mapa = createMap()
@@ -194,27 +198,18 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-        setScore()
-        updateHealthBar(node: playerHealthBar, withHealthPoints: MaxHealth)
+//        setScore()
+        updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
         updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
         physicsWorld.contactDelegate = self
         
-        
-        suporte.position = CGPoint(x: 500 , y: 300)
-        suporte.setScale(0.3)
-        suporte.zPosition = 50
+       
        
 //        moeda.position = CGPoint(x: 500 , y: 280)
 //        moeda.setScale(0.8)
      
-        playerHealthBar.setScale(0.25)
-        playerHealthBar.zPosition =  50
-        playerHealthBar.position = CGPoint(
-            x: 500 ,
-            y: 296
-            
-        )
+       
         
         
    
@@ -232,9 +227,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
       //  cam.addChild(parallax.frente)
        // cam.addChild(parallax.meio)
         
-        cam.addChild(playerHealthBar)
+//        cam.addChild(playerHealthBar)
         cam.addChild(enemyHealthBar)
-        cam.addChild(suporte)
 //        cam.addChild(moeda)
         cam.addChild(enemyNode)
     //    cam.addChild(pontosLabel)
@@ -1088,7 +1082,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
         else {
             
-            let barSize = CGSize(width: HealthBarWidth, height: HealthBarHeight);
+            let barSize = CGSize(width: HealthBarWidth, height: HealthBarHO);
             let fillColor = UIColor(red: 197.0/255, green: 76.0/255, blue: 91.0/255, alpha:1)
             // create drawing context
             UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
@@ -1111,20 +1105,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
     }
     
-    func setScore(){
-        
-        pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
-        pontosLabel.text = "0"
-        pontosLabel.horizontalAlignmentMode = .right
-        pontosLabel.position = CGPoint(x: 545 , y: 265)
-        pontosLabel.fontSize = 15
-        pontosLabel.zPosition = 50
-        pontosLabel.color = UIColor.white
-        
-        cam.addChild(pontosLabel)
-        
-        
-    }
+//    func setScore(){
+//
+//        pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
+//        pontosLabel.text = "0"
+//        pontosLabel.horizontalAlignmentMode = .right
+//        pontosLabel.position = CGPoint(x: 545 , y: 265)
+//        pontosLabel.fontSize = 15
+//        pontosLabel.zPosition = 50
+//        pontosLabel.color = UIColor.white
+//
+//        cam.addChild(pontosLabel)
+//
+//
+//    }
     
     
     

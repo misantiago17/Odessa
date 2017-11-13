@@ -19,7 +19,12 @@ class HUD {
     var specialButtonNode = SKSpriteNode() // botão de pulo
     var setaDirButtonNode = SKSpriteNode() // seta direita
     var setaEsqButtonNode = SKSpriteNode() // seta esquerda
-    var barrasNode = SKSpriteNode() // barras
+    var suporteNode = SKSpriteNode() // suporte
+    public var pontosLabel: SKLabelNode!
+   
+    let playerHealthBar = SKSpriteNode() // hp da Odessa
+    
+    
     
     var attackButton = UIButton() // botão de ataque
     var blockButton = UIButton() // botão de block
@@ -93,13 +98,42 @@ class HUD {
         
         
 //        // Barras
+        
+        suporteNode = SKSpriteNode(imageNamed: "SuporteHPSP")
+        suporteNode.setScale(0.3)
+        suporteNode.position = CGPoint(x: screenSize.width/2 - 430, y: -(screenSize.height/2) + 290)
+        suporteNode.zPosition = 2
+        HUDNode.addChild(suporteNode)
+        
+        
+        
 //        barrasNode = SKSpriteNode(imageNamed: "Barras")
 //        barrasNode.zPosition = 2
 //        barrasNode.setScale(0.4)
 //        barrasNode.size = CGSize(width: (UIImage(named: "Barras")?.size.width)!/2, height: (UIImage(named: "Barras")?.size.height)!/2)
 //        barrasNode.position = CGPoint(x: screenSize.width - 120, y: screenSize.height + 130)
 //
-//        HUDNode.addChild(barrasNode)
+        
+        // Contador de Moedas
+        
+        pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
+        pontosLabel.text = "0"
+        pontosLabel.horizontalAlignmentMode = .right
+        pontosLabel.position = CGPoint(x: marginAButton * 1.3, y: -(screenSize.height/2) + 290)
+        pontosLabel.fontSize = 15
+        pontosLabel.zPosition = 2
+        pontosLabel.color = UIColor.white
+        
+        HUDNode.addChild(pontosLabel)
+        
+        // Hp Odessa
+        
+        playerHealthBar.setScale(0.3)
+        playerHealthBar.zPosition = 3
+        playerHealthBar.position = CGPoint(x: screenSize.width/2 - 421, y: -(screenSize.height/2) + 290)
+        HUDNode.addChild(playerHealthBar)
+        
+     
         
     }
     
