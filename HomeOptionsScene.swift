@@ -17,6 +17,7 @@ class HomeOptionsScene: SKScene {
     //Public - tem que inicializar caso contrário ele pede para por um init que buga a classe
 //    let continueButton = SKSpriteNode(imageNamed: "continue")
     let newGameButton = SKSpriteNode(imageNamed: "newGame")
+    let storeButton = SKSpriteNode(imageNamed: "storeButton")
 //    let settingsButton = SKSpriteNode(imageNamed: "options")
     var pigComendo = [SKTexture]()
     var bandeiraGrande = [SKTexture]()
@@ -69,45 +70,24 @@ class HomeOptionsScene: SKScene {
         addChild(colunaMeio)
         addChild(colunaDireita)
         
-        // -- Buttons --
-        
-        // A posição dos botão deve ser alterada caso o jogador não tenha nenhum dado salvo
-        // no BD pois não existirá o botão "Continue"
-        
-        //Continue
-//        continueButton.position = CGPoint(x: frame.midX ,y: frame.midY + 100)
-//        continueButton.zPosition = 1
-//        continueButton.size = CGSize(width: 350, height: 50)
-//
-//        addChild(continueButton)
-        
-        //New Game
-        newGameButton.position = CGPoint(x: frame.midX ,y: frame.midY)
-        newGameButton.zPosition = 1
-        newGameButton.size = CGSize(width: 350, height: 50)
-        
+        // New Game Button
+        newGameButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.569*screenHeight)
+        newGameButton.zPosition = 2.5
+        newGameButton.size = CGSize(width: 249/667*screenWidth , height: 39/375*screenHeight)
         addChild(newGameButton)
         
-        //Settings
-//        settingsButton.position = CGPoint(x: frame.midX ,y: frame.midY - 100)
-//        settingsButton.zPosition = 1
-//        settingsButton.size = CGSize(width: 350, height: 50)
-//
-//        addChild(settingsButton)
-        
-        // MARK: Animacoes dos porquinhos
+        // Store Button
+        storeButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.432*screenHeight)
+        storeButton.zPosition = 2.5
+        storeButton.size = CGSize(width: 249/667*screenWidth , height: 39/375*screenHeight)
+        addChild(storeButton)
         
         
-        //
-        //
+        // Texture Array
         for i in 1...2 {
             pigComendo.append(SKTexture(imageNamed:("porquinho-comendo\(i)")))
         }
-        //
-        //        for i in 1...2 {
-        //            pigAndando.append(SKTexture(imageNamed:("pigwalk\(i)")))
-        //        }
-        //
+
         for i in 1...6 {
             bandeiraGrande.append(SKTexture(imageNamed:("Bandeira1frame\(i)")))
         }
@@ -237,6 +217,11 @@ class HomeOptionsScene: SKScene {
         self.removeAllActions()
         let sceneOptions = GameScene(size: (self.scene?.size)!)
         self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.0))
+            } else if self.atPoint(location) == self.storeButton {
+                self.removeAllChildren()
+                self.removeAllActions()
+                let sceneOptions = StoreScene(size: (self.scene?.size)!)
+                self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.0))
             }
         }
     }

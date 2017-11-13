@@ -22,6 +22,7 @@ class HomeScene: SKScene {
     var velocityX:CGFloat = 0.0
     
     let newGameButton = SKSpriteNode(imageNamed: "newGame")
+    let storeButton = SKSpriteNode(imageNamed: "storeButton")
     var pigComendo = [SKTexture]()
     var bandeiraGrande = [SKTexture]()
     var primeiraNuvem = [SKTexture]()
@@ -40,6 +41,7 @@ class HomeScene: SKScene {
     var isNewGame = false
     
     override func sceneDidLoad() {
+        
         
         
         title = SKSpriteNode(imageNamed: "odessa")
@@ -240,14 +242,27 @@ class HomeScene: SKScene {
                 let nextScene = GameScene(size: frame.size)
                 self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
             default:
-                if isNewGame == false{
+                
+                if self.atPoint(location) == self.storeButton {
+                    
+                    let nextScene = StoreScene(size: frame.size)
+                    self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+                    
+                } else if isNewGame == false{
                     
                     title.removeFromParent()
                     tapLabel.removeFromParent()
-                    newGameButton.position = CGPoint(x: frame.midX ,y: frame.midY)
+                    newGameButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.569*screenHeight)
                     newGameButton.zPosition = 2.5
-                    newGameButton.size = CGSize(width: 350, height: 50)
+                    newGameButton.size = CGSize(width: 249/667*screenWidth , height: 39/375*screenHeight)
                     addChild(newGameButton)
+                    
+                    storeButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.432*screenHeight)
+                    storeButton.zPosition = 2.5
+                    storeButton.size = CGSize(width: 249/667*screenWidth , height: 39/375*screenHeight)
+                    addChild(storeButton)
+                    
+                    
                     isNewGame = true
                     
                 }
