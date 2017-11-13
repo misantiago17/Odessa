@@ -37,7 +37,7 @@ class HomeScene: SKScene {
     var nuvem3 = SKSpriteNode()
     var title = SKSpriteNode()
     var tapLabel = SKLabelNode()
-    var flagNewGame = false
+    var isNewGame = false
     
     override func sceneDidLoad() {
         
@@ -78,8 +78,6 @@ class HomeScene: SKScene {
         addChild(colunaEsquerda)
         addChild(colunaMeio)
         addChild(colunaDireita)
-        
-        print("Home")
         
         tapLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
         tapLabel.text = "Tap to play"
@@ -207,41 +205,28 @@ class HomeScene: SKScene {
         let repeatBandeira = SKAction.repeatForever(balancarAction)
         //     //   let repeatAndando = SKAction.repeat(group, count: 3)
         //
-        pig.run(repeatAction, withKey: "repeatAction")
+        pig.run(repeatAction)
         addChild(pig)
         //
-        pig2.run(groupAction, withKey: "repeatAction")
+        pig2.run(groupAction)
         addChild(pig2)
         //
-        bandeirao.run(repeatBandeira, withKey: "repeatBandeira")
+        bandeirao.run(repeatBandeira)
         addChild(bandeirao)
         //
-        bandeirao2.run(repeatBandeira, withKey: "repeatBandeira")
+        bandeirao2.run(repeatBandeira)
         addChild(bandeirao2)
         
-        nuvem1.run(groupNuvemAction, withKey: "nuvemAction")
+        nuvem1.run(groupNuvemAction)
         addChild(nuvem1)
         
+        nuvem2.run(groupNuvem2Action)
+        addChild(nuvem2)
+        
+        nuvem3.run(groupNuvem3Action)
+        addChild(nuvem3)
+        
     }
-    
-            
-//            switch touchedNode {
-//            case newGameButton:
-//                print("new game")
-//                let nextScene = GameScene(size: frame.size)
-//                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
-//                //            case continueButton:
-//                //                //print("Continue game")
-//                //
-//                //                let nextScene = GameScene(size: frame.size)
-//                //                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.3))
-//                //                //                view?.presentScene(nextScene)
-//
-//                //            case settingsButton:
-//            //                print("Settings")
-//            default:
-//                print("Not an avaliable button")
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
