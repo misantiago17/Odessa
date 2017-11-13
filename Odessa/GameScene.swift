@@ -12,26 +12,14 @@ import SwiftyJSON
 
 class GameScene: SKScene,  SKPhysicsContactDelegate {
     
-    
-    var modulesInitialPositions: [CGFloat] = []
-    //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
-    //falta fazer considção de derrota e game over
-    //delay no botão de movimentação
-    
-    
-    // pular mais baixo// repetir escudo no ar mais uma vez
-    //pular mais longe
-    
-    //Oraganização: precisa de coisa pra caralho
-    
     //Public
-    // - Fundo animado
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
-    var playerNode = SKSpriteNode(texture: SKTexture(imageNamed: "Odessa-idle-frame1"))
-    var enemyNode = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
     
-    var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
+    var playerNode = SKSpriteNode(texture: SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1"))
+    var enemyNode = SKSpriteNode(texture: SKTextureAtlas(named: "Inimigos").textureNamed("enemy1"))
+    var lancaNode = SKSpriteNode(texture: SKTextureAtlas(named: "Lanca-Attack").textureNamed("lanca-odessa-attackframe1"))
+    
     var hud = SKNode()
     var inimigosNode = [SKSpriteNode()]
     
@@ -41,14 +29,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var movements = Movimentacao()
     var parallax = ParallaxScene()
     
-    
-    // - Vida
-    // - Especial
-    // - BtnDeAtaque1
-    // - BtnDeAtaque2
-    // - Joystick
-    // - Moedas
-    
+    // Private
+    private var modules: [SKSpriteNode] = []
+    private var modulesInitialPositions: [CGFloat] = []
+    private var placedEnemies: [SKSpriteNode] = []
+
+    // Camera
     private let cam = SKCameraNode()
     
     //movimento
@@ -60,8 +46,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     // Time since last frame
     var deltaTime : TimeInterval = 0
-    
-    
     
     var location = CGPoint(x: 0, y: 0)
     
@@ -103,8 +87,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var ultimo = CGFloat()
     var posicaoBandeira = CGFloat()
     
-    
-    
     let MaxHealth = 250
     var playerHP = 250
     var enemyHP = 100
@@ -113,9 +95,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     let HealthBarHeight: CGFloat = 4
     let HealthBarHO: CGFloat = 7
     
-    
     let enemyHealthBar = SKSpriteNode()
-  
 
     var inimigol = 4
     
@@ -126,12 +106,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
 //    let moeda = SKSpriteNode(imageNamed: "moeda")
-   
     
     override func sceneDidLoad() {
         
-       
-
         // Mapa
         mapa = createMap()
         let floor = organizeMap()
@@ -146,12 +123,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //        parallax.setParallax()
      
         // Player
-        playerNode.size = CGSize(width: size.height/4, height: size.height/4)
+        playerNode.size = CGSize(width: size.height/2, height: size.height/2)
         playerNode.position = CGPoint(x: 100, y: 400)
-        
-        // criar uma função pra pegar a textura atual da odessa e mudar o physics body conforme ela no update
-        //playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
-        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 32.5, height: 60))
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.75))
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
@@ -160,49 +134,45 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(self.playerNode)
         idleOdessa()
         
+        // -------------------------- NA REAL TIRA ISSO DAQUI -------------------------------
         //hoplita
-       // enemyNode.setScale(0.34)
-        
-        for index in 0...300 {
-            print("AAAAAAAAA")
-            
-            var spriteEnemy = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
-            spriteEnemy.size = CGSize(width: size.height/4, height: size.height/4)
-            spriteEnemy.position = CGPoint(x: 500, y: 500)
-            spriteEnemy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+        for index in 0...10 {
+            let texture = SKTextureAtlas(named: "Inimigos").textureNamed("enemy1")
+            var spriteEnemy = SKSpriteNode(texture: texture, size: texture.size()*0.75)
+            spriteEnemy.position = CGPoint(x: 500, y: 2500)
+            spriteEnemy.zPosition = 1
+            spriteEnemy.anchorPoint = CGPoint(x: 0.5, y: 0.43)
+            spriteEnemy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
             spriteEnemy.physicsBody?.allowsRotation = false
             spriteEnemy.physicsBody?.usesPreciseCollisionDetection = true
-            // enemyNode.physicsBody?.affectedByGravity = false
             //spriteEnemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy
-            //  enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+            //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
             
             addChild(spriteEnemy)
-            
         }
-        
+        // -----------------------------------------------------------------------------------
         
         //Lança
         lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
         lancaNode.name = "lancaNode"
         
         // Background
-        background = SKSpriteNode(texture: SKTexture(imageNamed: "fundo"))
+        background = SKSpriteNode(texture: SKTextureAtlas(named: "Background").textureNamed("fundo"))
         background.zPosition = -6
         background.setScale(0.5)
         
         // Set gestures into HUD buttons
         HUDNode.buttonConfiguration(screenSize: UIScreen.main.bounds.size, camera: cam)
         hud = HUDNode.getHUDNode()
-        
-        //hud.addChild(HUDNode.HUDNode)
-        
-        //addChild(hud)
-        //view?.addSubview(hud.inputView!)
  
         ultimo = modulesInitialPositions.last!
         setFlag()
         
-        
+        // ------------------------------ DESCOMENTAR --------------------------------------
+        // Pegar o primeiro modulo e colocar os inimigos nas posições dele
+        //placeEnemies()
+        //modulesInitialPositions.remove(at: 0)
+        // ---------------------------------------------------------------------------------
     }
     
     override func didMove(to view: SKView) {
@@ -212,42 +182,27 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
         physicsWorld.contactDelegate = self
-        
-       
        
 //        moeda.position = CGPoint(x: 500 , y: 280)
 //        moeda.setScale(0.8)
-     
-       
-        
-        
    
         // MARK: Camera
-        let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
-        
-        //let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
-        //cam.position = center
-        //addChild(cam)
-        
         camera = cam
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
-      //  cam.addChild(parallax.frente)
-       // cam.addChild(parallax.meio)
+        // cam.addChild(parallax.frente)
+        // cam.addChild(parallax.meio)
         
-//        cam.addChild(playerHealthBar)
+        // cam.addChild(playerHealthBar)
         cam.addChild(enemyHealthBar)
-//        cam.addChild(moeda)
+        // cam.addChild(moeda)
         cam.addChild(enemyNode)
-    //    cam.addChild(pontosLabel)
+        // cam.addChild(pontosLabel)
         
+        // cam.addChild(ParallaxScene().parallaxNode)
+        // cam.addChild(ParallaxScene().parallaxNode)
         
-        
-     //   cam.addChild(ParallaxScene().parallaxNode)
-     //   cam.addChild(ParallaxScene().parallaxNode)
-
-        //cam.addChild(hud)
         
         // MARK: joystick
         let rect = view.frame
@@ -286,31 +241,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 
                 let leftScale = SKAction.scaleX(to: -1, duration: 0)
                 self.playerNode.run(leftScale)
-                
             }
-            
         }
         
         joystick?.stopHandler = {
             
-            
             self.joystickInUse = false
             self.stopTimer = false
             self.playerNode.removeAction(forKey: "repeatForever")
-            let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame1")
+            let playerTexture = SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1")
             self.playerNode.texture = playerTexture
             self.currentOdessaIdleSprite = 1
             //self.playerNode.physicsBody = SKPhysicsBody(texture: self.playerNode.texture! , size: CGSize(width: self.playerNode.size.width, height: self.playerNode.size.height))
             self.playerNode.removeAction(forKey: "runOdessa")
-            
-            
         }
-//
-        
-       
-        
-        
-        
     }
     
     // Handle Touches
@@ -445,13 +389,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 var puloBaixoArray = [SKTexture]()
                 
                 for i in 1...2 {
-                    impulsoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+                    impulsoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
                 }
                 
-                puloCimaArray.append(SKTexture(imageNamed: "odessaJumpframe3"))
+                puloCimaArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe3"))
                 
                 for i in 4...6 {
-                    puloBaixoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+                    puloBaixoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
                 }
                 
                 let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
@@ -547,6 +491,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
+    // -------------------------------- PAREI AQUI -----------------------------
     
     override func update(_ currentTime: TimeInterval) {
    
