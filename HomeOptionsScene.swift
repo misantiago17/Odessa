@@ -32,6 +32,8 @@ class HomeOptionsScene: SKScene {
     var nuvem2 = SKSpriteNode()
     var nuvem3 = SKSpriteNode()
     
+//    let myActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+    
     override func sceneDidLoad() {
         
         //print("Home Options")
@@ -225,6 +227,8 @@ class HomeOptionsScene: SKScene {
         nuvem3.run(groupNuvem3Action, withKey: "nuvemAction")
         addChild(nuvem3)
         
+       
+      
     }
     
 //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -258,13 +262,16 @@ class HomeOptionsScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in (touches) {
+
             let location = touch.location(in: self)
             
             if self.atPoint(location) == self.newGameButton {
+         
         self.removeAllChildren()
         self.removeAllActions()
         let sceneOptions = GameScene(size: (self.scene?.size)!)
         self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
+        
             }
         }
     }
