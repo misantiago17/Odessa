@@ -101,7 +101,7 @@ class HUD {
         
         suporteNode = SKSpriteNode(imageNamed: "SuporteHPSP")
         suporteNode.setScale(0.3)
-        suporteNode.position = CGPoint(x: screenSize.width/2 - 430, y: -(screenSize.height/2) + 290)
+        suporteNode.position = CGPoint(x: screenWidth*0.1 - screenWidth*0.4, y: screenHeight*0.45)
         suporteNode.zPosition = 2
         HUDNode.addChild(suporteNode)
         
