@@ -152,14 +152,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //        for index in 0...300 {
 //            print("AAAAAAAAA")
         
-//            var spriteEnemy = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
-            enemyNode.size = CGSize(width: size.height/4, height: size.height/4)
-            enemyNode.position = CGPoint(x: 500, y: 500)
-            enemyNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
-            enemyNode.physicsBody?.allowsRotation = false
-            enemyNode.physicsBody?.usesPreciseCollisionDetection = true
-          //  enemyNode.physicsBody?.affectedByGravity = false
-            enemyNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+////            var spriteEnemy = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
+//            enemyNode.size = CGSize(width: size.height/4, height: size.height/4)
+//            enemyNode.position = CGPoint(x: 500, y: 500)
+//            enemyNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
+//            enemyNode.physicsBody?.allowsRotation = false
+//            enemyNode.physicsBody?.usesPreciseCollisionDetection = true
+//          //  enemyNode.physicsBody?.affectedByGravity = false
+//            enemyNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             //  enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
         
          //   addChild(enemyNode)
@@ -188,11 +188,24 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         modulesInitialPositions.remove(at: 0)
     }
     
+    
     override func didMove(to view: SKView) {
         
 //        setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
         updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+        
+        
+        //
+//        for module in inimigosNode {
+//            for enemy in module {
+//                print(enemy.parent,"soy gay")
+//                self.addChild(enemyHealthBar)
+//
+//              //  enemyHealthBar.addChild(inimigosNode[0][0])
+//               // inimigosNode[0][0].addChild(enemyHealthBar)
+//            }
+//        }
         
         physicsWorld.contactDelegate = self
        
@@ -204,11 +217,15 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
+        cam.addChild(enemyHealthBar)
         // cam.addChild(parallax.frente)
         // cam.addChild(parallax.meio)
         
         // cam.addChild(playerHealthBar)
-        cam.addChild(enemyHealthBar)
+       // cam.addChild(enemyHealthBar)
+        
+        
+        
         // cam.addChild(moeda)
         // cam.addChild(pontosLabel)
         
@@ -518,6 +535,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
+        for enemy in placedEnemies {
+            
+            
+            
+            enemyHealthBar.position = CGPoint(
+                x: enemy.convert(enemy.position, to: self).x,
+                y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
+            )
+            
+//            print("\(enemyHealthBar.position), POSICAO DA BARRA")
+//            print(enemy.convert(enemy.position, to: self) , " POSICAO INIMIGO")
+            
+        }
+        
         // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
         for enemy in placedEnemies {
             if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
@@ -539,15 +570,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
         
-        for enemy in placedEnemies {
-            
-            enemyHealthBar.position = CGPoint(
-                x: enemy.position.x,
-                y: enemy.position.y + enemy.size.height / 2
-            )
-            
-            
-        }
+      
         
         
         
@@ -650,7 +673,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
             inimigoNode.physicsBody?.allowsRotation = false
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
-            //spriteEnemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
             
             enemiesInCurrentModule.append(inimigoNode)
@@ -874,16 +897,35 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             odessaAttackedEnemy(enemy: firstBody.node as! SKSpriteNode, odessa: secondBody.node as! SKSpriteNode)
         }
+        
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+//        switch contactMask {
+        
+//        case PhysicsCategory.enemy | PhysicsCategory.odessa :
+        //apply damage
+            
+//            let enemy = (contact.bodyA.categoryBitMask == enemyCategory) ? contact.bodyA.node! : contact.bodyB.node!
+//            enemy.setHitPoints(setPoints: enemy.getHitPoints() - pistol.getDamage())
+            
+//        default :
+//            //Some other contact has occurred
+//            print("Some other contact")
+////        }
     }
     
     func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
         print("aaaaa")
+        print("\(inimigol)")
         
         enemyHP = max(0, enemyHP - 25)
         updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
 
         //  updateHealthBar(node: playerHealthBar, withHealthPoints: playerHP)
+        
+       
+
 
         print("atacou inimigo")
 
@@ -891,10 +933,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         if (inimigol == 0){
 
-
             print("inimigo morreu")
+            
+            inimigol = 4
 
-            enemyNode.removeFromParent()
+            //remover o cara que a odessa ta tocando
 
             pontos += 100
 
@@ -908,7 +951,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
   
     
     func updateHealthBar(node: SKSpriteNode, withHealthPoints hp: Int) {
-        
         
         if (node == enemyHealthBar){
             
@@ -939,6 +981,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             // set sprite texture and size
             node.texture = SKTexture(image: spriteImage!)
             node.size = barSize
+
         }
             
         else {
