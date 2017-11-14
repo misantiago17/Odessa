@@ -12,6 +12,18 @@ import SwiftyJSON
 
 class GameScene: SKScene,  SKPhysicsContactDelegate {
     
+    
+
+    //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
+    //falta fazer considção de derrota e game over
+    //delay no botão de movimentação
+    
+    
+    // pular mais baixo// repetir escudo no ar mais uma vez
+    //pular mais longe
+    
+    //Oraganização: precisa de coisa pra caralho
+    
     //Public
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
@@ -178,25 +190,35 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
+//        setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
         updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
         physicsWorld.contactDelegate = self
-        
-
+       
+//        moeda.position = CGPoint(x: 500 , y: 280)
+//        moeda.setScale(0.8)
+   
         // MARK: Camera
         camera = cam
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
-      // cam.addChild(parallax.frente)
-       // cam.addChild(parallax.meio)
+        // cam.addChild(parallax.frente)
+        // cam.addChild(parallax.meio)
         
-
+        // cam.addChild(playerHealthBar)
         cam.addChild(enemyHealthBar)
-        cam.addChild(enemyNode)
-
-    
+        // cam.addChild(moeda)
+        // cam.addChild(pontosLabel)
+        
+        let zoomOutAction = SKAction.scale(to: 2.0, duration: 0)
+        cam.run(zoomOutAction)
+        
+        // cam.addChild(ParallaxScene().parallaxNode)
+        // cam.addChild(ParallaxScene().parallaxNode)
+        
+        
         // MARK: joystick
         let rect = view.frame
         let size = CGSize(width: 80.0, height: 80.0)
@@ -516,10 +538,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         }
         
-        enemyHealthBar.position = CGPoint(
-            x: enemyNode.position.x,
-            y: enemyNode.position.y + enemyNode.size.height / 2
-        )
+        
+        for enemy in placedEnemies {
+            
+            enemyHealthBar.position = CGPoint(
+                x: enemy.position.x,
+                y: enemy.position.y + enemy.size.height / 2
+            )
+            
+            
+        }
+        
+        
+        
+      
         
         
         // Tempo
@@ -534,8 +566,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         lastFrameTime = currentTime
         
         
-        self.moveSprite(sprite: parallax.frente, nextSprite: parallax.frenteNext, speed: 10.0)
-        self.moveSprite(sprite: parallax.meio, nextSprite: parallax.frenteNext, speed: 5.0)
+      //  self.moveSprite(sprite: parallax.frente, nextSprite: parallax.frenteNext, speed: 10.0)
+      //  self.moveSprite(sprite: parallax.meio, nextSprite: parallax.frenteNext, speed: 5.0)
         
         
         if (self.angle >= 60 && self.angle <= 120) && joystickInUse == true && longBlock == false {
@@ -695,7 +727,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             i+=1
         }
-        
         return floor
     }
     
@@ -781,6 +812,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 idleArray.append(SKTexture(imageNamed: "Odessa-idle-frame\(i)"))
             }
         
+        
         let animateOdessa = SKAction.animate(with: idleArray, timePerFrame: 0.15, resize: false, restore: false)
         
         let repeatForever = SKAction.repeatForever(animateOdessa)
@@ -789,6 +821,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         self.playerNode.run(repeatForever, withKey: "idleOdessa")
             
     }
+    
     
     func runOdessa(){
         var runArray = [SKTexture]()
@@ -865,12 +898,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
             pontos += 100
 
-            //  inimigoLabel.removeFromParent()
+            //        inimigoLabel.removeFromParent()
             enemyHealthBar.removeFromParent()
         }
         
     }
 
+    
+  
     
     func updateHealthBar(node: SKSpriteNode, withHealthPoints hp: Int) {
         
@@ -930,6 +965,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
         }
     }
+    
+  
 
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
@@ -938,6 +975,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         static let odessa: UInt32 = 0b10      // 2
         static let chao    : UInt32 = 3
     }
+    
+    
+
+    
     
 }
 

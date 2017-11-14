@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5530411FA3860800CFE572 /* VictoryScene.swift */; };
 		0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
+		0BC7293E1FA8A081005A835F /* ParallaxScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7293D1FA8A081005A835F /* ParallaxScene.swift */; };
 		56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
 		56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
 		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
@@ -43,11 +44,14 @@
 		8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */; };
 		8AB71B851F8406B600726E14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71B841F8406B600726E14 /* Assets.xcassets */; };
 		8AE806561F7D305100AE71A0 /* JsonFile.json in Resources */ = {isa = PBXBuildFile; fileRef = 8AE806551F7D305100AE71A0 /* JsonFile.json */; };
+		BEC134F81FBA215000AA094C /* StoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC134F71FBA215000AA094C /* StoreScene.swift */; };
+		BEC134FA1FBA37EE00AA094C /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC134F91FBA37EE00AA094C /* StoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0B5530411FA3860800CFE572 /* VictoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryScene.swift; sourceTree = "<group>"; };
 		0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		0BC7293D1FA8A081005A835F /* ParallaxScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxScene.swift; sourceTree = "<group>"; };
 		0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
 		56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 		8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reader_JSON.swift; sourceTree = "<group>"; };
 		8AB71B841F8406B600726E14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Odessa/Assets.xcassets; sourceTree = "<group>"; };
 		8AE806551F7D305100AE71A0 /* JsonFile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JsonFile.json; sourceTree = "<group>"; };
+		BEC134F71FBA215000AA094C /* StoreScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScene.swift; sourceTree = "<group>"; };
+		BEC134F91FBA37EE00AA094C /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,7 @@
 				8A5C63E51F6C061400271379 /* Products */,
 				D56E158A60FBF0C0616472C5 /* Pods */,
 				4149374C4372F449CAA502E6 /* Frameworks */,
+				8AA610681FBB1099008BE7D3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -169,6 +176,7 @@
 				0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */,
 				8A5C642E1F71775700271379 /* PauseGameScene.swift */,
 				0B5530411FA3860800CFE572 /* VictoryScene.swift */,
+				BEC134F71FBA215000AA094C /* StoreScene.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -181,8 +189,17 @@
 				8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */,
 				8A5C63EF1F6C061400271379 /* GameViewController.swift */,
 				8A5C64281F71771600271379 /* PauseGameViewController.swift */,
+				BEC134F91FBA37EE00AA094C /* StoreViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		8AA610681FBB1099008BE7D3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0BC7293D1FA8A081005A835F /* ParallaxScene.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		D56E158A60FBF0C0616472C5 /* Pods */ = {
@@ -327,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEC134FA1FBA37EE00AA094C /* StoreViewController.swift in Sources */,
 				8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */,
 				8A5C64171F6C0B5600271379 /* DAO.swift in Sources */,
 				8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */,
@@ -340,6 +358,7 @@
 				0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */,
 				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
 				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
+				0BC7293E1FA8A081005A835F /* ParallaxScene.swift in Sources */,
 				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
 				8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */,
 				8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */,
@@ -349,6 +368,7 @@
 				8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */,
 				8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */,
 				8A5C642B1F71772E00271379 /* HomeOptionsScene.swift in Sources */,
+				BEC134F81FBA215000AA094C /* StoreScene.swift in Sources */,
 				8A5C64231F71766800271379 /* HomeViewController.swift in Sources */,
 				0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */,
 				8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */,

@@ -78,12 +78,24 @@ class HUD {
         
         // Barras
         
+        
+        
+//        // Barras
+        
         suporteNode = SKSpriteNode(imageNamed: "SuporteHPSP")
         suporteNode.setScale(0.3)
         suporteNode.position = CGPoint(x: screenWidth*0.1 - screenWidth*0.4, y: screenHeight*0.45)
         suporteNode.zPosition = 2
         HUDNode.addChild(suporteNode)
-
+        
+        
+        
+//        barrasNode = SKSpriteNode(imageNamed: "Barras")
+//        barrasNode.zPosition = 2
+//        barrasNode.setScale(0.4)
+//        barrasNode.size = CGSize(width: (UIImage(named: "Barras")?.size.width)!/2, height: (UIImage(named: "Barras")?.size.height)!/2)
+//        barrasNode.position = CGPoint(x: screenSize.width - 120, y: screenSize.height + 130)
+//
         
         // Contador de Moedas
         
@@ -105,7 +117,9 @@ class HUD {
         playerHealthBar.zPosition = 3
         playerHealthBar.position = CGPoint(x: marginSuporte, y: suporteHeight)
         HUDNode.addChild(playerHealthBar)
-
+        
+     
+        
     }
     
 }
