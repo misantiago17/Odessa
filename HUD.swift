@@ -101,7 +101,7 @@ class HUD {
         
         suporteNode = SKSpriteNode(imageNamed: "SuporteHPSP")
         suporteNode.setScale(0.3)
-        suporteNode.position = CGPoint(x: screenSize.width/2 - 430, y: -(screenSize.height/2) + 290)
+        suporteNode.position = CGPoint(x: screenWidth*0.1 - screenWidth*0.4, y: screenHeight*0.45)
         suporteNode.zPosition = 2
         HUDNode.addChild(suporteNode)
         
@@ -119,7 +119,7 @@ class HUD {
         pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
         pontosLabel.text = "0"
         pontosLabel.horizontalAlignmentMode = .right
-        pontosLabel.position = CGPoint(x: marginAButton * 1.3, y: -(screenSize.height/2) + 290)
+        pontosLabel.position = CGPoint(x: screenWidth*0.45, y: screenHeight*0.44)
         pontosLabel.fontSize = 15
         pontosLabel.zPosition = 2
         pontosLabel.color = UIColor.white
@@ -127,10 +127,12 @@ class HUD {
         HUDNode.addChild(pontosLabel)
         
         // Hp Odessa
+        let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.013
+        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.07
         
         playerHealthBar.setScale(0.3)
         playerHealthBar.zPosition = 3
-        playerHealthBar.position = CGPoint(x: screenSize.width/2 - 421, y: -(screenSize.height/2) + 288)
+        playerHealthBar.position = CGPoint(x: marginSuporte, y: suporteHeight)
         HUDNode.addChild(playerHealthBar)
         
      
