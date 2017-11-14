@@ -242,8 +242,7 @@ class HomeOptionsScene: SKScene {
         self.removeAllChildren()
         self.removeAllActions()
         let sceneOptions = GameScene(size: (self.scene?.size)!)
-        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.3))
-        
+        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.0))
             }
         }
     }

@@ -207,21 +207,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-//        setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
         updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
         physicsWorld.contactDelegate = self
         
-       
-       
-//        moeda.position = CGPoint(x: 500 , y: 280)
-//        moeda.setScale(0.8)
-     
-       
-        
-        
-   
+
         // MARK: Camera
         let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
         
@@ -233,22 +224,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
-      //  cam.addChild(parallax.frente)
+      // cam.addChild(parallax.frente)
        // cam.addChild(parallax.meio)
         
-//        cam.addChild(playerHealthBar)
-        cam.addChild(enemyHealthBar)
-//        cam.addChild(moeda)
-        cam.addChild(enemyNode)
-    //    cam.addChild(pontosLabel)
-        
-        
-        
-     //   cam.addChild(ParallaxScene().parallaxNode)
-     //   cam.addChild(ParallaxScene().parallaxNode)
 
-        //cam.addChild(hud)
-        
+        cam.addChild(enemyHealthBar)
+        cam.addChild(enemyNode)
+
+    
         // MARK: joystick
         let rect = view.frame
         let size = CGSize(width: 80.0, height: 80.0)

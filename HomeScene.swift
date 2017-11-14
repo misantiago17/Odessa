@@ -230,11 +230,31 @@ class HomeScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        self.removeAllChildren()
-        self.removeAllActions()
-        let sceneOptions = HomeOptionsScene(size: (self.scene?.size)!)
-         self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 0.5))
-        //        view?.presentScene(sceneOptions)
+        if let location = touches.first?.location(in: self) {
+            let touchedNode = atPoint(location)
+            
+            switch touchedNode {
+            case newGameButton:
+                removeAllActions()
+                removeAllChildren()
+                let nextScene = GameScene(size: frame.size)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+            default:
+                if isNewGame == false{
+                    
+                    title.removeFromParent()
+                    tapLabel.removeFromParent()
+                    newGameButton.position = CGPoint(x: frame.midX ,y: frame.midY)
+                    newGameButton.zPosition = 2.5
+                    newGameButton.size = CGSize(width: 350, height: 50)
+                    addChild(newGameButton)
+                    isNewGame = true
+                    
+                }
+            }
+            
+        }
+        
     }
     
 }
