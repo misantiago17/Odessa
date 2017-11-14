@@ -11,7 +11,7 @@ import UIKit
 
 class ModuloMapa {
     
-    var imagemCenario: UIImage
+    var imagemCenario: String
     var IDModulo: Int
     //Waves aparecem por tempo
     var waves: [Waves]?
@@ -22,7 +22,7 @@ class ModuloMapa {
     
     init(imagemCenario: String, IDModulo: Int, waves: [Waves]/*, inimigos: [Inimigo], numInimigos: [String: Int]*/){
         
-        self.imagemCenario = UIImage(named: imagemCenario)!
+        self.imagemCenario = imagemCenario
         self.IDModulo = IDModulo
         self.waves = waves
         //self.inimigos = inimigos

@@ -17,7 +17,7 @@ class VictoryScene: SKScene {
     
     
     override func sceneDidLoad() {
-        print("GameOver")
+        print("Vitória")
         
         
         let winLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
