@@ -31,7 +31,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     private var modules: [SKSpriteNode] = []
     private var modulesInitialPositions: [CGFloat] = []
     private var placedEnemies: [SKSpriteNode] = []
-    private var inimigosNode: [SKSpriteNode] = []
+    private var enemiesInCurrentModule: [SKSpriteNode] = []
+    private var inimigosNode: [[SKSpriteNode]] = []
 
     // Camera
     private let cam = SKCameraNode()
@@ -570,26 +571,29 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
     }
     
-    // Place Enemies in module -- VERIFICAR
+    // Place Enemies in module
     func placeEnemies(){
-        var i: Int = 0
         
-        while(i < 3){
+        for enemy in inimigosNode[0] {
             
-            modules[0].addChild(inimigosNode[0])
-            placedEnemies.append(inimigosNode[0])
+            modules[0].addChild(enemy)
+            placedEnemies.append(enemy)
+            inimigosNode[0].remove(at: 0)
+        }
+        
+        if (inimigosNode[0].isEmpty){
             inimigosNode.remove(at: 0)
-            i += 1
         }
         
         modules.remove(at: 0)
     }
     
     
-    // Get Enemies from all modules -- REVER PQ MUDOU TUDO DE ENEMY
+    // Get Enemies from all modules
     func getModulesEnemy(modulo: ModuloMapa) {
         var moduleWaves = Reader().GetModuleSets(ModuleID: modulo.IDModulo)
         let item = Int(arc4random_uniform(UInt32(moduleWaves.count) - 1))
+        var i = 0
         
         for inimigo in moduleWaves[item].inimigos {
             
@@ -606,8 +610,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             //spriteEnemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
             
-            inimigosNode.append(inimigoNode)
+            enemiesInCurrentModule.append(inimigoNode)
+            i += 1
             
+            if (i == moduleWaves[item].inimigos.count){
+                inimigosNode.append(enemiesInCurrentModule)
+                enemiesInCurrentModule.removeAll()
+            }
         }
     }
     

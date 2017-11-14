@@ -123,6 +123,7 @@
 				8A5C63E51F6C061400271379 /* Products */,
 				D56E158A60FBF0C0616472C5 /* Pods */,
 				4149374C4372F449CAA502E6 /* Frameworks */,
+				8AA610681FBB1099008BE7D3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -153,9 +154,9 @@
 				8A980C1C1F90099C00483B59 /* Movimentacao.swift */,
 				8A5C64141F6C0B3E00271379 /* HUD.swift */,
 				8A5C64161F6C0B5600271379 /* DAO.swift */,
-				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
 				56105E651FA388C8002D3832 /* JoyStickView.swift */,
 				56105E671FA38934002D3832 /* CoreGraphics.swift */,
+				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
 				8AE806551F7D305100AE71A0 /* JsonFile.json */,
 			);
 			name = Model;
@@ -191,6 +192,14 @@
 				BEC134F91FBA37EE00AA094C /* StoreViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		8AA610681FBB1099008BE7D3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0BC7293D1FA8A081005A835F /* ParallaxScene.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		D56E158A60FBF0C0616472C5 /* Pods */ = {
