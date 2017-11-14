@@ -12,17 +12,17 @@ import GameplayKit
 class ParallaxScene: SKScene {
     
     
-    let parallaxNode = SKNode()
-   // let frenteNode = SKNode()
+//    let parallaxNode = SKNode()
+//   // let frenteNode = SKNode()
+//
+//    var meio = SKSpriteNode()
+//    var meioNext = SKSpriteNode()
+//
+//    var frente  = SKSpriteNode()
+//    var frenteNext  = SKSpriteNode()
+//
+//    override func sceneDidLoad() {
     
-    var meio = SKSpriteNode()
-    var meioNext = SKSpriteNode()
-    
-    var frente  = SKSpriteNode()
-    var frenteNext  = SKSpriteNode()
-    
-    override func sceneDidLoad() {
-        
 //        meio = SKSpriteNode(imageNamed: "mid")
 //        meioNext = meio.copy() as! SKSpriteNode
 //        
@@ -41,7 +41,7 @@ class ParallaxScene: SKScene {
 //        frenteNext = frente.copy() as! SKSpriteNode
 //        frenteNext.position = CGPoint(x: frente.position.x + frente.size.width, y: frente.position.y)
 
-    }
+//    }
     
 
     
