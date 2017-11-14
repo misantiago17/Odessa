@@ -12,43 +12,29 @@ import SwiftyJSON
 
 class GameScene: SKScene,  SKPhysicsContactDelegate {
     
-    
-    var modulesInitialPositions: [CGFloat] = []
-    //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
-    //falta fazer considção de derrota e game over
-    //delay no botão de movimentação
-    
-    
-    // pular mais baixo// repetir escudo no ar mais uma vez
-    //pular mais longe
-    
-    //Oraganização: precisa de coisa pra caralho
-    
     //Public
-    // - Fundo animado
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
-    var playerNode = SKSpriteNode(texture: SKTexture(imageNamed: "Odessa-idle-frame1"))
-    var enemyNode = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
     
-    var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
+    var playerNode = SKSpriteNode(texture: SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1"))
+    var enemyNode = SKSpriteNode(texture: SKTextureAtlas(named: "Inimigos").textureNamed("enemy1"))
+    var lancaNode = SKSpriteNode(texture: SKTextureAtlas(named: "Lanca-Attack").textureNamed("lanca-odessa-attackframe1"))
+    
     var hud = SKNode()
-    var inimigosNode = [SKSpriteNode()]
-    
     
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
     var parallax = ParallaxScene()
     
-    
-    // - Vida
-    // - Especial
-    // - BtnDeAtaque1
-    // - BtnDeAtaque2
-    // - Joystick
-    // - Moedas
-    
+    // Private
+    private var modules: [SKSpriteNode] = []
+    private var modulesInitialPositions: [CGFloat] = []
+    private var placedEnemies: [SKSpriteNode] = []
+    private var enemiesInCurrentModule: [SKSpriteNode] = []
+    private var inimigosNode: [[SKSpriteNode]] = []
+
+    // Camera
     private let cam = SKCameraNode()
     
     //movimento
@@ -60,8 +46,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     // Time since last frame
     var deltaTime : TimeInterval = 0
-    
-    
     
     var location = CGPoint(x: 0, y: 0)
     
@@ -103,8 +87,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var ultimo = CGFloat()
     var posicaoBandeira = CGFloat()
     
-    
-    
     let MaxHealth = 250
     var playerHP = 250
     var enemyHP = 100
@@ -113,9 +95,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     let HealthBarHeight: CGFloat = 4
     let HealthBarHO: CGFloat = 7
     
-    
     let enemyHealthBar = SKSpriteNode()
-  
 
     var inimigol = 4
     
@@ -126,12 +106,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
 //    let moeda = SKSpriteNode(imageNamed: "moeda")
-   
     
     override func sceneDidLoad() {
         
-       
-
         // Mapa
         mapa = createMap()
         let floor = organizeMap()
@@ -146,12 +123,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //        parallax.setParallax()
      
         // Player
-        playerNode.size = CGSize(width: size.height/4, height: size.height/4)
+        playerNode.size = CGSize(width: size.height/2, height: size.height/2)
         playerNode.position = CGPoint(x: 100, y: 400)
-        
-        // criar uma função pra pegar a textura atual da odessa e mudar o physics body conforme ela no update
-        //playerNode.physicsBody = SKPhysicsBody(texture: playerNode.texture! , size: CGSize(width: playerNode.size.width, height: playerNode.size.height))
-        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 32.5, height: 60))
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.75))
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
@@ -186,23 +160,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         lancaNode.name = "lancaNode"
         
         // Background
-        background = SKSpriteNode(texture: SKTexture(imageNamed: "fundo"))
+        background = SKSpriteNode(texture: SKTextureAtlas(named: "Background").textureNamed("fundo"))
         background.zPosition = -6
         background.setScale(0.5)
         
         // Set gestures into HUD buttons
         HUDNode.buttonConfiguration(screenSize: UIScreen.main.bounds.size, camera: cam)
         hud = HUDNode.getHUDNode()
-        
-        //hud.addChild(HUDNode.HUDNode)
-        
-        //addChild(hud)
-        //view?.addSubview(hud.inputView!)
  
         ultimo = modulesInitialPositions.last!
         setFlag()
         
-        
+        // Pegar o primeiro modulo e colocar os inimigos nas posições dele
+        placeEnemies()
+        modulesInitialPositions.remove(at: 0)
     }
     
     override func didMove(to view: SKView) {
@@ -214,12 +185,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
 
         // MARK: Camera
-        let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
-        
-        //let center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
-        //cam.position = center
-        //addChild(cam)
-        
         camera = cam
         addChild(cam)
         cam.addChild(hud)
@@ -269,31 +234,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 
                 let leftScale = SKAction.scaleX(to: -1, duration: 0)
                 self.playerNode.run(leftScale)
-                
             }
-            
         }
         
         joystick?.stopHandler = {
             
-            
             self.joystickInUse = false
             self.stopTimer = false
             self.playerNode.removeAction(forKey: "repeatForever")
-            let playerTexture = SKTexture(imageNamed: "Odessa-idle-frame1")
+            let playerTexture = SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1")
             self.playerNode.texture = playerTexture
             self.currentOdessaIdleSprite = 1
             //self.playerNode.physicsBody = SKPhysicsBody(texture: self.playerNode.texture! , size: CGSize(width: self.playerNode.size.width, height: self.playerNode.size.height))
             self.playerNode.removeAction(forKey: "runOdessa")
-            
-            
         }
-//
-        
-       
-        
-        
-        
     }
     
     // Handle Touches
@@ -418,8 +372,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     
                 }
                 
-                //                self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
-                //                self.jumpStartTime = Date().timeIntervalSinceReferenceDate
+                //self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
+                //self.jumpStartTime = Date().timeIntervalSinceReferenceDate
                 
                 jump = true
                 
@@ -428,13 +382,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 var puloBaixoArray = [SKTexture]()
                 
                 for i in 1...2 {
-                    impulsoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+                    impulsoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
                 }
                 
-                puloCimaArray.append(SKTexture(imageNamed: "odessaJumpframe3"))
+                puloCimaArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe3"))
                 
                 for i in 4...6 {
-                    puloBaixoArray.append(SKTexture(imageNamed: "odessaJumpframe\(i)"))
+                    puloBaixoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
                 }
                 
                 let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
@@ -458,7 +412,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 
                 let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
                 
-                //                self.playerNode.removeAction(forKey: "runOdessa")
+                //self.playerNode.removeAction(forKey: "runOdessa")
                 self.playerNode.run(jumpAction, withKey: "jumpAction")
                 
             }
@@ -533,6 +487,25 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
    
+        // Põe inimigos na tela conforme a Odessa anda -- DESBLOQUEAR ISSO
+        if (!modulesInitialPositions.isEmpty){
+            if ((cam.position.x + self.size.width) >= modulesInitialPositions[0]){
+
+                placeEnemies()
+                modulesInitialPositions.remove(at: 0)
+            }
+        }
+        
+        // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
+        for enemy in placedEnemies {
+            if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
+                enemy.removeAllActions()
+                enemy.removeFromParent()
+                placedEnemies.remove(at: placedEnemies.index(of: enemy)!)
+            }
+        }
+        
+        
         if (playerNode.position.x > 6862 ){
 
             let nextScene = VictoryScene(size: self.scene!.size)
@@ -549,11 +522,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         )
         
         
-        
-        // First, update the delta time values:
-        
-        // If we don't have a last frame time value, this is the first frame,
-        // so delta time will be zero.
+        // Tempo
         if lastFrameTime <= 0 {
             lastFrameTime = currentTime
         }
@@ -569,10 +538,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         self.moveSprite(sprite: parallax.meio, nextSprite: parallax.frenteNext, speed: 5.0)
         
         
-        
-    
-//        HUDNode.blockButtonNode.frame.contains(location)
-        
         if (self.angle >= 60 && self.angle <= 120) && joystickInUse == true && longBlock == false {
             
             self.playerNode.position.x += self.displacement*3
@@ -585,20 +550,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         
         // Camera
-       // cam.position = playerNode.position
         cam.position = CGPoint(x: playerNode.position.x, y: 120)
         
-        //self.playerNode.position.x += velocityX
         
         // Game Over
         if (playerNode.position.y < -239){
-            
-            let nextScene = GameOverScene(size: self.scene!.size)
-            // let nextScene = VictoryScene(size: self.size)
-            nextScene.scaleMode = self.scaleMode
-            nextScene.backgroundColor = UIColor.black
-            joystick?.removeFromSuperview()
-            self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
+            GameOverHandler()
         }
         
         if (fingerIsTouching == true) && (longBlock == false){
@@ -614,33 +571,67 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
-    // Place Enemies in modules
+    // Game Over
+    func GameOverHandler(){
+        
+        let nextScene = GameOverScene(size: self.scene!.size)
+        // let nextScene = VictoryScene(size: self.size)
+        nextScene.scaleMode = self.scaleMode
+        nextScene.backgroundColor = UIColor.black
+        joystick?.removeFromSuperview()
+        self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
+    }
     
-    func placeEnemy(modulo: ModuloMapa, spriteMod: SKSpriteNode) {
-
-        var moduleWaves = Reader().GetModuleSets(ModuleID: modulo.IDModulo)
-        var item = Int(arc4random_uniform(UInt32(moduleWaves.count) - 1))
-
-        for inimigo in moduleWaves[item].inimigos {
-
-            let texture = SKTexture(image: UIImage(named: inimigo.imgName)!)
-
-            var inimigoNode = SKSpriteNode(texture: texture)
-            inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!))
-            inimigoNode.zPosition = 1
-            inimigoNode.setScale(0.34)
-            inimigoNode.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
-            inimigoNode.physicsBody?.allowsRotation = false
-
-            inimigosNode.append(inimigoNode)
-            //spriteMod.addChild(inimigoNode)
-
+    // Place Enemies in module
+    func placeEnemies(){
+        
+        for enemy in inimigosNode[0] {
+            
+            modules[0].addChild(enemy)
+            placedEnemies.append(enemy)
+            inimigosNode[0].remove(at: 0)
         }
-
+        
+        if (inimigosNode[0].isEmpty){
+            inimigosNode.remove(at: 0)
+        }
+        
+        modules.remove(at: 0)
+    }
+    
+    
+    // Get Enemies from all modules
+    func getModulesEnemy(modulo: ModuloMapa) {
+        var moduleWaves = Reader().GetModuleSets(ModuleID: modulo.IDModulo)
+        let item = Int(arc4random_uniform(UInt32(moduleWaves.count) - 1))
+        var i = 0
+        
+        for inimigo in moduleWaves[item].inimigos {
+            
+            let texture = SKTextureAtlas(named: "Inimigos").textureNamed(inimigo.imgName)
+            
+            let inimigoNode = SKSpriteNode(texture: texture, size: texture.size()*0.75)
+            inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height))
+            inimigoNode.zPosition = 1
+            inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
+            //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
+            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
+            inimigoNode.physicsBody?.allowsRotation = false
+            inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
+            //spriteEnemy.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+            //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+            
+            enemiesInCurrentModule.append(inimigoNode)
+            i += 1
+            
+            if (i == moduleWaves[item].inimigos.count){
+                inimigosNode.append(enemiesInCurrentModule)
+                enemiesInCurrentModule.removeAll()
+            }
+        }
     }
     
     // Cria Mapa
-    
     func createMap() -> Mapa {
         
         let modulosIDs: [Int] = randomizeModules()
@@ -658,11 +649,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //modulo pode repetir mas não pode se repetir em sequência
     func randomizeModules() -> [Int] {
-        
         var sequenciaModulos: [Int] = []
         
         for i in 0...9 {
-            
             var item = Int(arc4random_uniform(9))
             
             if (!sequenciaModulos.isEmpty) {
@@ -670,51 +659,43 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     item = Int(arc4random_uniform(9))
                 }
             }
-            
             sequenciaModulos.append(item + 1)
         }
-        
         return sequenciaModulos
     }
     
-    // Arruma os sprites do mapa
+    // Arruma os sprites do mapa -- Se der merda tá tudo aqui
     
     func organizeMap() -> SKNode {
         
-        var floor = SKNode()
+        let floor = SKNode()
         var floorSegments: [SKSpriteNode] = []
         var i: Int = 0
         
         for module in (mapa?.Modulos)! {
             
-            let floorModule = SKSpriteNode(texture: SKTexture(image: module.imagemCenario))
+            let floorModule = SKSpriteNode(texture: SKTextureAtlas(named: "Floor").textureNamed(module.imagemCenario))
             floorModule.position.x = floor.calculateAccumulatedFrame().size.width + (floorModule.size.width/2)
             floorModule.position.y = SetYFloorPosition(floor: floorModule)
-            //floorModule.position = CGPoint(x: floor.calculateAccumulatedFrame().size.width + (floorModule.size.width/2), y: 200)
-            //floorModule.position = CGPoint(x: 200 + offSet, y: 200)
             floorModule.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: floorModule.frame.width, height: floorModule.frame.height))
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false
             
-            // aqui
-            modulesInitialPositions.append(floor.calculateAccumulatedFrame().size.width - floorModule.size.width)
-      //      print("\(modulesInitialPositions)")
-            
-            
-            
-            placeEnemy(modulo: module, spriteMod: floorModule)
-            
             floorSegments.append(floorModule)
             floor.addChild(floorModule)
+            
+            modulesInitialPositions.append(floor.calculateAccumulatedFrame().size.width - floorModule.size.width)
+            getModulesEnemy(modulo: module)
+            modules.append(floorModule)
+            
             if (i > 0){
-                //SKPhysicsJointPin.joint(withBodyA: floorSegments[i-1].physicsBody!, bodyB: floorSegments[i].physicsBody!, anchor: CGPoint(x: 1.0, y: 1.0))
-                // SKPhysicsJointPin.joint(withBodyA: floorSegments[i].physicsBody!, bodyB: floorSegments[i-1].physicsBody!, anchor: CGPoint(x: 0.0, y: 1.0))
                 SKPhysicsJointFixed.joint(withBodyA: floorSegments[i-1].physicsBody!, bodyB: floorSegments[i].physicsBody!, anchor: CGPoint(x: 0.5, y: 0.5))
             }
-            //floor.addChild(floorModule)
+            
             i+=1
         }
+        
         return floor
     }
     
@@ -731,8 +712,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             newPosition = yPosition
         }
         
-        //print(newPosition)
-        
         return CGFloat(newPosition)
     }
     
@@ -747,11 +726,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         var lancaLongBlock = [SKTexture]() //Lança long Block
         
         for i in 1...3 {
-            longBlockArray.append(SKTexture(imageNamed: "Odessa-block-hold-frame\(i)"))
+            longBlockArray.append(SKTextureAtlas(named: "Odessa-Block").textureNamed("Odessa-block-hold-frame\(i)"))
         }
         
         for i in 1...3 {
-            lancaLongBlock.append(SKTexture(imageNamed: "Lanca-Odessa-block-hold-frame\(i)"))
+            lancaLongBlock.append(SKTextureAtlas(named: "Lanca-Block").textureNamed("Lanca-Odessa-block-hold-frame\(i)"))
         }
         
         let animateOdessa = SKAction.animate(with: longBlockArray, timePerFrame: 0.10, resize: false, restore: false)
@@ -786,14 +765,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             newPosition.x -= CGFloat(speed * Float(deltaTime))
             spriteToMove.position = newPosition
             
-            // If this sprite is now offscreen (i.e., its rightmost edge is
-            // farther left than the scene's leftmost edge):
             if (spriteToMove.frame.maxX < self.frame.minX) {
                 
-                // Shift it over so that it's now to the immediate right
-                // of the other sprite.
-                // This means that the two sprites are effectively
-                // leap-frogging each other as they both move.
                 spriteToMove.position = CGPoint(x: spriteToMove.position.x - spriteToMove.size.width * 2, y: spriteToMove.position.y)
             }
             
@@ -801,14 +774,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
         
         
-        func idleOdessa(){
-            
+    func idleOdessa(){
             var idleArray = [SKTexture]()
             
             for i in 1...4 {
                 idleArray.append(SKTexture(imageNamed: "Odessa-idle-frame\(i)"))
             }
-        
         
         let animateOdessa = SKAction.animate(with: idleArray, timePerFrame: 0.15, resize: false, restore: false)
         
@@ -817,13 +788,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         self.playerNode.run(repeatForever, withKey: "idleOdessa")
             
-        }
-        
-        
-    
+    }
     
     func runOdessa(){
-        
         var runArray = [SKTexture]()
         
         for i in 1...9 {
@@ -833,11 +800,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         let animateOdessa = SKAction.animate(with: runArray, timePerFrame: 0.13, resize: false, restore: false)
         
         let repeatForever = SKAction.repeatForever(animateOdessa)
-        
-        
+
         self.playerNode.run(repeatForever, withKey: "runOdessa")
-        
-        
     }
     
     func setFlag(){
@@ -851,9 +815,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         let balancarAction = SKAction.animate(with: bandeiraGrande, timePerFrame: 0.26, resize: true, restore: false)
         let repeatBandeira = SKAction.repeatForever(balancarAction)
         
-        
-        
-        
         bandeirao.run(repeatBandeira, withKey: "repeatBandeira")
         bandeirao.position = CGPoint(x: 6862, y: 150)
         bandeirao.zPosition = -2
@@ -861,8 +822,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(bandeirao)
         
         posicaoBandeira = bandeirao.position.x
-        
-        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -882,11 +841,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             odessaAttackedEnemy(enemy: firstBody.node as! SKSpriteNode, odessa: secondBody.node as! SKSpriteNode)
         }
-        
-        
     }
     
-    func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa einimigo
+    func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
         print("aaaaa")
         
@@ -981,10 +938,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         static let odessa: UInt32 = 0b10      // 2
         static let chao    : UInt32 = 3
     }
-    
-    
-
-    
     
 }
 
