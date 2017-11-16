@@ -90,10 +90,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     let MaxHealth = 250
     var playerHP = 250
     var enemyHP = 100
-    let HealthBarWidth: CGFloat = 250
+    let HealthBarWidth: CGFloat = screenWidth*0.346
     let HealthBarWE: CGFloat = 40
     let HealthBarHeight: CGFloat = 4
-    let HealthBarHO: CGFloat = 7
+    let HealthBarHO: CGFloat = screenHeight*0.02
     
     let enemyHealthBar = SKSpriteNode()
 
