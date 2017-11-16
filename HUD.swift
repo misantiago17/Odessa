@@ -100,10 +100,13 @@ class HUD {
 //        // Barras
         
         suporteNode = SKSpriteNode(imageNamed: "SuporteHPSP")
-        suporteNode.setScale(0.3)
-        suporteNode.position = CGPoint(x: screenWidth*0.1 - screenWidth*0.4, y: screenHeight*0.45)
+        suporteNode.size.width = screenWidth*0.42
+        suporteNode.size.height = screenWidth*0.09
+//        suporteNode.setScale(0.3)
+        suporteNode.position = CGPoint(x: -screenWidth*0.3, y: screenHeight*0.45)
         suporteNode.zPosition = 2
         HUDNode.addChild(suporteNode)
+        
         
         
         
@@ -127,8 +130,8 @@ class HUD {
         HUDNode.addChild(pontosLabel)
         
         // Hp Odessa
-        let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.013
-        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.07
+        let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.004
+        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.065
         
         playerHealthBar.setScale(0.3)
         playerHealthBar.zPosition = 3
