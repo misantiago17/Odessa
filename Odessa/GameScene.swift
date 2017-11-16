@@ -193,7 +193,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
 //        setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
-        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+//        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
         
         //
@@ -217,7 +217,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
-        cam.addChild(enemyHealthBar)
+     //   self.addChild(enemyHealthBar)
+        
+        
+     //   self.enemyNode.addChild(enemyHealthBar)
+        
+    //    cam.addChild(enemyHealthBar)
         // cam.addChild(parallax.frente)
         // cam.addChild(parallax.meio)
         
@@ -536,7 +541,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
         for enemy in placedEnemies {
-            
+        
             
             
             enemyHealthBar.position = CGPoint(
@@ -544,6 +549,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
             )
             
+//            self.addChild(enemyHealthBar)
+        
 //            print("\(enemyHealthBar.position), POSICAO DA BARRA")
 //            print(enemy.convert(enemy.position, to: self) , " POSICAO INIMIGO")
             
@@ -674,7 +681,22 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody?.allowsRotation = false
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
             inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+            
+            inimigoNode.addChild(enemyHealthBar)
+            
+//            let inimigoHealthBar = SKSpriteNode()
+//            updateHealthBar(node: inimigoHealthBar, withHealthPoints: enemyHP)
+//
+            
+            //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+            
             //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+            
+//            inimigoHealthBar.position = CGPoint(
+//                x: inimigoNode.convert(inimigoNode.position, to: self).x,
+//                y: inimigoNode.convert(inimigoNode.position, to: self).y + inimigoNode.size.height / 2
+//            )
+//            self.addChild(inimigoHealthBar)
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
