@@ -687,7 +687,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            let inimigoHealthBar = SKSpriteNode()
 //            updateHealthBar(node: inimigoHealthBar, withHealthPoints: enemyHP)
 //
-            
+//
             //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
             
             //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
