@@ -37,7 +37,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
-    var parallax = ParallaxScene()
+ //   var parallax = ParallaxView()
     
     // Private
     private var modules: [SKSpriteNode] = []
@@ -682,7 +682,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
             inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             
-            inimigoNode.addChild(enemyHealthBar)
+          //  inimigoNode.addChild(enemyHealthBar)
             
 //            let inimigoHealthBar = SKSpriteNode()
 //            updateHealthBar(node: inimigoHealthBar, withHealthPoints: enemyHP)
