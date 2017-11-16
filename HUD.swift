@@ -23,9 +23,7 @@ class HUD {
     public var pontosLabel: SKLabelNode!
    
     let playerHealthBar = SKSpriteNode() // hp da Odessa
-    
-    
-    
+
     var attackButton = UIButton() // botão de ataque
     var blockButton = UIButton() // botão de block
     var jumpButton = UIButton() // botão pulo
@@ -76,24 +74,9 @@ class HUD {
         specialButtonNode.position = CGPoint(x: marginAButton + 18, y: -(screenSize.height/2 * 0.42))
         
         HUDNode.addChild(specialButtonNode)
+    
         
-//        // Seta esquerda
-//        setaEsqButtonNode = SKSpriteNode(imageNamed: "esq")
-//        setaEsqButtonNode.zPosition = 2
-//        setaEsqButtonNode.size = CGSize(width: 70, height: 50)
-//        setaEsqButtonNode.position = CGPoint(x: -(screenSize.width * 0.4), y: aButtonHeight - 35)
-//        
-//        HUDNode.addChild(setaEsqButtonNode)
-//        
-//        let margiSetaEsquerda = self.setaEsqButtonNode.frame.origin.x + self.setaEsqButtonNode.frame.size.width
-//        
-//        // Seta direita
-//        setaDirButtonNode = SKSpriteNode(imageNamed: "dir")
-//        setaDirButtonNode.zPosition = 2
-//        setaDirButtonNode.size = CGSize(width: 70, height: 50)
-//        setaDirButtonNode.position = CGPoint(x: margiSetaEsquerda + 75, y: aButtonHeight - 35)
-//        
-//        HUDNode.addChild(setaDirButtonNode)
+        // Barras
         
         
         
