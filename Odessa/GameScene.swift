@@ -934,7 +934,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //
 //
 //    }
-    
+// commit 
     
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
@@ -946,4 +946,4 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
 }
 
-
+//
