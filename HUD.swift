@@ -108,8 +108,7 @@ class HUD {
         HUDNode.addChild(suporteNode)
         
         
-        
-        
+//
 //        barrasNode = SKSpriteNode(imageNamed: "Barras")
 //        barrasNode.zPosition = 2
 //        barrasNode.setScale(0.4)
