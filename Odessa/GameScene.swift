@@ -1031,22 +1031,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
     }
     
-//    func setScore(){
-//
-//        pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
-//        pontosLabel.text = "0"
-//        pontosLabel.horizontalAlignmentMode = .right
-//        pontosLabel.position = CGPoint(x: 545 , y: 265)
-//        pontosLabel.fontSize = 15
-//        pontosLabel.zPosition = 50
-//        pontosLabel.color = UIColor.white
-//
-//        cam.addChild(pontosLabel)
-//
-//
-//    }
-// commit 
-    
+  
+
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
