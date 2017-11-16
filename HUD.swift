@@ -130,8 +130,8 @@ class HUD {
         HUDNode.addChild(pontosLabel)
         
         // Hp Odessa
-        let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.004
-        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.065
+        let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.0038
+        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.076
         
         playerHealthBar.setScale(0.3)
         playerHealthBar.zPosition = 3
