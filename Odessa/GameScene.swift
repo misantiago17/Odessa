@@ -922,34 +922,31 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
-//        switch contactMask {
+        switch contactMask {
         
-//        case PhysicsCategory.enemy | PhysicsCategory.odessa :
-        //apply damage
+        case PhysicsCategory.enemy | PhysicsCategory.odessa :
             
-//            let enemy = (contact.bodyA.categoryBitMask == enemyCategory) ? contact.bodyA.node! : contact.bodyB.node!
-//            enemy.setHitPoints(setPoints: enemy.getHitPoints() - pistol.getDamage())
+            print("odessa ataco")
             
-//        default :
-//            //Some other contact has occurred
-//            print("Some other contact")
-////        }
+            break
+            
+        case PhysicsCategory.odessa | PhysicsCategory.enemy :
+            
+            print("inimigo ataco")
+            
+            break
+        
+            
+        default :
+            
+            print("Some other contact")
+        }
     }
     
     func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
-        
-        print("aaaaa")
-        print("\(inimigol)")
-        
+
         enemyHP = max(0, enemyHP - 25)
         updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
-
-        //  updateHealthBar(node: playerHealthBar, withHealthPoints: playerHP)
-        
-       
-
-
-        print("atacou inimigo")
 
         inimigol -= 1
 
@@ -963,7 +960,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
             pontos += 100
 
-            //        inimigoLabel.removeFromParent()
             enemyHealthBar.removeFromParent()
         }
         
