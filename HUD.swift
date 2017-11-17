@@ -22,6 +22,7 @@ class HUD {
     var suporteNode = SKSpriteNode() // suporte
     public var pontosLabel: SKLabelNode!
    
+    var moedaNode = SKSpriteNode()
     let playerHealthBar = SKSpriteNode() // hp da Odessa
 
     var attackButton = UIButton() // botão de ataque
@@ -74,18 +75,12 @@ class HUD {
         specialButtonNode.position = CGPoint(x: marginAButton + 18, y: -(screenSize.height/2 * 0.42))
         
         HUDNode.addChild(specialButtonNode)
-    
-        
-        // Barras
-        
-        
-        
+
 //        // Barras
         
         suporteNode = SKSpriteNode(imageNamed: "SuporteHPSP")
         suporteNode.size.width = screenWidth*0.42
         suporteNode.size.height = screenWidth*0.09
-//        suporteNode.setScale(0.3)
         suporteNode.position = CGPoint(x: -screenWidth*0.3, y: screenHeight*0.45)
         suporteNode.zPosition = 2
         HUDNode.addChild(suporteNode)
@@ -97,8 +92,17 @@ class HUD {
 //        barrasNode.setScale(0.4)
 //        barrasNode.size = CGSize(width: (UIImage(named: "Barras")?.size.width)!/2, height: (UIImage(named: "Barras")?.size.height)!/2)
 //        barrasNode.position = CGPoint(x: screenSize.width - 120, y: screenSize.height + 130)
-//
+
+        // Moedas
+        moedaNode = SKSpriteNode(imageNamed: "moeda")
+        moedaNode.size.width = screenWidth*0.11
+        moedaNode.size.height = screenWidth*0.11
+        moedaNode.setScale(0.3)
+        moedaNode.position = CGPoint(x:screenWidth*0.38, y: screenHeight*0.46) //0.45  //0.44
+        moedaNode.zPosition = 2
+        HUDNode.addChild(moedaNode)
         
+
         // Contador de Moedas
         
         pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
