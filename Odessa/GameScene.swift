@@ -139,7 +139,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         //Incializa Parallax
 //        parallax.setParallax()
-     
+        
+      
         // Player
         playerNode.size = CGSize(width: size.height/2, height: size.height/2)
         playerNode.position = CGPoint(x: 100, y: 400)
