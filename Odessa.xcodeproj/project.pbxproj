@@ -10,7 +10,6 @@
 		0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5530411FA3860800CFE572 /* VictoryScene.swift */; };
 		0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
 		0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */; };
-		0BC7293E1FA8A081005A835F /* ParallaxScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7293D1FA8A081005A835F /* ParallaxScene.swift */; };
 		56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
 		56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
 		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
@@ -53,7 +52,6 @@
 		0B5530411FA3860800CFE572 /* VictoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryScene.swift; sourceTree = "<group>"; };
 		0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
-		0BC7293D1FA8A081005A835F /* ParallaxScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxScene.swift; sourceTree = "<group>"; };
 		0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
 		56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 		8AA610681FBB1099008BE7D3 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				0BC7293D1FA8A081005A835F /* ParallaxScene.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -362,7 +359,6 @@
 				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
 				0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */,
 				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
-				0BC7293E1FA8A081005A835F /* ParallaxScene.swift in Sources */,
 				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
 				8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */,
 				8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */,
