@@ -13,17 +13,6 @@ import SwiftyJSON
 class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     
-
-    //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
-    //falta fazer considção de derrota e game over
-    //delay no botão de movimentação
-    
-    
-    // pular mais baixo// repetir escudo no ar mais uma vez
-    //pular mais longe
-    
-    //Oraganização: precisa de coisa pra caralho
-    
     //Public
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
@@ -117,7 +106,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
     }
     
-//    let moeda = SKSpriteNode(imageNamed: "moeda")
+    //let moeda = SKSpriteNode(imageNamed: "moeda")
     
     override func sceneDidLoad() {
         
@@ -132,7 +121,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         movements.setAction(player: playerNode, velocity: velocityX)
         
         //Incializa Parallax
-//        parallax.setParallax()
+        //parallax.setParallax()
      
         // Player
         playerNode.size = CGSize(width: size.height/2, height: size.height/2)
@@ -170,7 +159,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-//        setScore()
+        //setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
         //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
@@ -519,22 +508,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
-     //   for enemy in placedEnemies {
-        
-            
-//
-//            enemyHealthBar.position = CGPoint(
-//                x: enemy.convert(enemy.position, to: self).x,
-//                y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
-//            )
-//
-//            self.addChild(enemyHealthBar)
-        
-//            print("\(enemyHealthBar.position), POSICAO DA BARRA")
-//            print(enemy.convert(enemy.position, to: self) , " POSICAO INIMIGO")
-            
- //       }
-        
         // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
         for enemy in placedEnemies {
             if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
@@ -554,14 +527,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 0.5))
 
         }
-        
-        
-      
-        
-        
-        
-      
-        
         
         // Tempo
         if lastFrameTime <= 0 {
@@ -742,7 +707,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         return sequenciaModulos
     }
     
-    // Arruma os sprites do mapa -- Se der merda tá tudo aqui
+    // Arruma os sprites do mapa
     
     func organizeMap() -> SKNode {
         
@@ -941,21 +906,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
-        //enemyHP = max(0, enemyHP - 25)
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
-        //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
-
-        //  updateHealthBar(node: playerHealthBar, withHealthPoints: playerHP)
         
         print("atacou inimigo")
-
-        //inimigol -= 1
 
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
 
             print("inimigo morreu")
-            
-            //inimigol = 4
             
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
@@ -967,8 +924,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             placedEnemies.remove(at: i!)
 
             pontos += 100
-
-            //        inimigoLabel.removeFromParent()
             
         }
         
