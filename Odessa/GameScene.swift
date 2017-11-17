@@ -107,7 +107,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     let HealthBarHeight: CGFloat = 4
     let HealthBarHO: CGFloat = screenHeight*0.02
     
-    let enemyHealthBar = SKSpriteNode()
+    //let enemyHealthBar = SKSpriteNode()
 
     var inimigol = 4
     
@@ -137,7 +137,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         // Player
         playerNode.size = CGSize(width: size.height/2, height: size.height/2)
         playerNode.position = CGPoint(x: 100, y: 400)
-        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.75))
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.85))
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
@@ -145,28 +145,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         playerNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
         addChild(self.playerNode)
         idleOdessa()
-        
-        //hoplita
-       // enemyNode.setScale(0.34)
-        
-//        for index in 0...300 {
-//            print("AAAAAAAAA")
-        
-////            var spriteEnemy = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
-//            enemyNode.size = CGSize(width: size.height/4, height: size.height/4)
-//            enemyNode.position = CGPoint(x: 500, y: 500)
-//            enemyNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
-//            enemyNode.physicsBody?.allowsRotation = false
-//            enemyNode.physicsBody?.usesPreciseCollisionDetection = true
-//          //  enemyNode.physicsBody?.affectedByGravity = false
-//            enemyNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
-            //  enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
-        
-         //   addChild(enemyNode)
-        
-//        }
-        
-        
+
         //Lança
         lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
         lancaNode.name = "lancaNode"
@@ -193,7 +172,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
 //        setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
-//        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+        //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
         
         //
@@ -540,21 +519,21 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
-        for enemy in placedEnemies {
+     //   for enemy in placedEnemies {
         
             
-            
-            enemyHealthBar.position = CGPoint(
-                x: enemy.convert(enemy.position, to: self).x,
-                y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
-            )
-            
+//
+//            enemyHealthBar.position = CGPoint(
+//                x: enemy.convert(enemy.position, to: self).x,
+//                y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
+//            )
+//
 //            self.addChild(enemyHealthBar)
         
 //            print("\(enemyHealthBar.position), POSICAO DA BARRA")
 //            print(enemy.convert(enemy.position, to: self) , " POSICAO INIMIGO")
             
-        }
+ //       }
         
         // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
         for enemy in placedEnemies {
@@ -682,21 +661,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
             inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             
-//            inimigoNode.addChild(enemyHealthBar)
+            let HealthBar = createEnemyHealthBar()
+            HealthBar.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height)/4)
             
-//            let inimigoHealthBar = SKSpriteNode()
-//            updateHealthBar(node: inimigoHealthBar, withHealthPoints: enemyHP)
-//
-//
-            //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+            inimigoNode.addChild(HealthBar)
             
-            //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
-            
-//            inimigoHealthBar.position = CGPoint(
-//                x: inimigoNode.convert(inimigoNode.position, to: self).x,
-//                y: inimigoNode.convert(inimigoNode.position, to: self).y + inimigoNode.size.height / 2
-//            )
-//            self.addChild(inimigoHealthBar)
+            inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
@@ -706,6 +676,37 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 enemiesInCurrentModule.removeAll()
             }
         }
+    }
+    
+    func createEnemyHealthBar() -> SKSpriteNode {
+        
+        //Barra Inimigo
+        let enemyHealthBar = SKSpriteNode()
+        
+        let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
+        let fillColor = UIColor(red: 113.0/255, green: 202.0/255, blue: 53.0/255, alpha:1)
+        let borderColor = UIColor(red: 35.0/255, green: 28.0/255, blue: 40.0/255, alpha:1)
+        
+        UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
+        let context = UIGraphicsGetCurrentContext()
+        borderColor.setStroke()
+        
+        let borderRect = CGRect(origin: CGPoint(x:0, y:0), size: barSize)
+        context!.stroke(borderRect, width: 1)
+        fillColor.setFill()
+        
+        let barWidth = (barSize.width - 1) * CGFloat(100) / CGFloat(100)
+        let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
+        context!.fill(barRect)
+        
+        let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        enemyHealthBar.texture = SKTexture(image: spriteImage!)
+        enemyHealthBar.size = barSize
+        enemyHealthBar.name = "HealthBar"
+        
+        return enemyHealthBar
     }
     
     // Cria Mapa
@@ -858,7 +859,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         
         
-        let animateOdessa = SKAction.animate(with: idleArray, timePerFrame: 0.15, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: idleArray, timePerFrame: 0.25, resize: false, restore: false)
         
         let repeatForever = SKAction.repeatForever(animateOdessa)
         
@@ -914,6 +915,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
+        
         if ((firstBody.categoryBitMask & PhysicsCategory.enemy != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.odessa != 0)) {
             
@@ -938,76 +940,76 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
-        print("aaaaa")
-        print("\(inimigol)")
-        
-        enemyHP = max(0, enemyHP - 25)
-        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+        enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
+        //enemyHP = max(0, enemyHP - 25)
+        updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
+        //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
 
         //  updateHealthBar(node: playerHealthBar, withHealthPoints: playerHP)
         
-       
-
-
         print("atacou inimigo")
 
-        inimigol -= 1
+        //inimigol -= 1
 
-        if (inimigol == 0){
+        if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
 
             print("inimigo morreu")
             
-            inimigol = 4
+            //inimigol = 4
+            
+            let healthBar = enemy.childNode(withName: "HealthBar")
+            healthBar?.removeFromParent()
 
-            //remover o cara que a odessa ta tocando
+            enemy.removeAllActions()
+            enemy.removeAllChildren()
+            enemy.removeFromParent()
+            let i = placedEnemies.index(of: enemy)
+            placedEnemies.remove(at: i!)
 
             pontos += 100
 
             //        inimigoLabel.removeFromParent()
-            enemyHealthBar.removeFromParent()
+            
         }
         
     }
 
+    func updateEnemyLife(enemyBar: SKSpriteNode,withHealthPoints hp: Float){
+        
+        let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
+        
+        let fillColor = UIColor(red: 113.0/255, green: 202.0/255, blue: 53.0/255, alpha:1)
+        let borderColor = UIColor(red: 35.0/255, green: 28.0/255, blue: 40.0/255, alpha:1)
+        
+        UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
+        let context = UIGraphicsGetCurrentContext()
+        
+        borderColor.setStroke()
+        let borderRect = CGRect(origin: CGPoint(x:0, y:0), size: barSize)
+        context!.stroke(borderRect, width: 1)
+        
+        // draw the health bar with a colored rectangle
+        fillColor.setFill()
+        let barWidth = (barSize.width - 1) * CGFloat(hp) / CGFloat(100)
+        let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
+        context!.fill(barRect)
+        
+        // extract image
+        let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // set sprite texture and size
+        enemyBar.texture = SKTexture(image: spriteImage!)
+        enemyBar.size = barSize
+
+        
+    }
     
   
     
     func updateHealthBar(node: SKSpriteNode, withHealthPoints hp: Int) {
         
-        if (node == enemyHealthBar){
-            
-            let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
-            
-            let fillColor = UIColor(red: 113.0/255, green: 202.0/255, blue: 53.0/255, alpha:1)
-            let borderColor = UIColor(red: 35.0/255, green: 28.0/255, blue: 40.0/255, alpha:1)
-            
-            // create drawing context
-            UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
-            let context = UIGraphicsGetCurrentContext()
-            
-            // draw the outline for the health bar
-            borderColor.setStroke()
-            let borderRect = CGRect(origin: CGPoint(x:0, y:0), size: barSize)
-            context!.stroke(borderRect, width: 1)
-            
-            // draw the health bar with a colored rectangle
-            fillColor.setFill()
-            let barWidth = (barSize.width - 1) * CGFloat(hp) / CGFloat(100)
-            let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
-            context!.fill(barRect)
-            
-            // extract image
-            let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            // set sprite texture and size
-            node.texture = SKTexture(image: spriteImage!)
-            node.size = barSize
-
-        }
-            
-        else {
-            
+       
             let barSize = CGSize(width: HealthBarWidth, height: HealthBarHO);
             let fillColor = UIColor(red: 197.0/255, green: 76.0/255, blue: 91.0/255, alpha:1)
             // create drawing context
@@ -1027,8 +1029,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             // set sprite texture and size
             node.texture = SKTexture(image: spriteImage!)
             node.size = barSize
-            
-        }
+
     }
     
   
