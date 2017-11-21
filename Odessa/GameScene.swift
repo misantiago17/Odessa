@@ -556,6 +556,52 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         }
         
+        
+      
+        //Hoplita Attack
+        
+        for enemy in placedEnemies {
+            //Hoplita Movimentação
+            
+            if walkHoplita == false {
+                hoplitaWalkAnimation(enemy: enemy)
+            }
+            
+            var enemyPosition = enemy.convert(enemy.position, to: self).x
+            var playerPosition = playerNode.convert(enemy.position, to: self).x
+            distancia = abs(playerPosition - enemyPosition)
+            
+            print("distancia:\(distancia)")
+            print(playerNode.size.width/2)
+            print("Enemy:\(enemy.size.width/2)")
+            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
+            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
+            
+            if (distancia! > playerNode.size.width/2) {
+                playerNode.position.x = playerNode.position.x
+                if hoplitaAttack == false{
+                    hoplitaAttackAnimation(enemy: enemy)
+                }
+                print("attack")
+            } else if enemy.position.x < playerNode.position.x {
+                let leftScale = SKAction.scaleX(to: 1, duration: 0)
+                enemy.run(leftScale)
+                enemy.position.x -= 0.7*3
+                print("left")
+                hoplitaAttack = false
+            } else {
+                let rightScale = SKAction.scaleX(to: -1, duration: 0)
+                enemy.run(rightScale)
+                enemy.position.x += 0.7*3
+                hoplitaAttack = false
+                print("direita")
+            }
+        }
+        
+        
+      
+        
+        
         // Tempo
         if lastFrameTime <= 0 {
             lastFrameTime = currentTime
@@ -912,6 +958,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
+//        print(firstBody.node?.name)
+//        print(secondBody.node?.name)
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
             switch attacking {
