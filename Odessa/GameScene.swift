@@ -98,10 +98,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     var attacking = false
     
+    //Booelan Hoplita Attack
+    var hoplitaAttack = false
+    var walkHoplita = false
+    
+    //Distância
+    var distancia: CGFloat?
     
 
-   
-    
     //let enemyHealthBar = SKSpriteNode()
 
     var inimigol = 4
@@ -913,7 +917,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             switch attacking {
             case false:  //odessa n ta atacano
 
-                print("odessa ta morreno")
+//                print("odessa ta morreno")
                 enemyAttackedOdessa(odessa:  firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
 
 
@@ -921,7 +925,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
             case true:  //odessa ta atacano
 
-                print("inimigo ta morreno")
+//                print("inimigo ta morreno")
                 odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
 
                 break
@@ -930,7 +934,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
          if  secondBody.node?.name == "lancaNode" && firstBody.node?.name == "inimigo"{
-              print("inimigo ta morreno")
+//              print("inimigo ta morreno")
             
         }
         
@@ -1092,6 +1096,74 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         static let enemy     :   UInt32 = 0b10      // 2
         static let lanca     : UInt32 = 3
       
+    }
+    
+    // Hoplita Animation
+    
+    func hoplitaWalkAnimation(enemy: SKSpriteNode){
+        
+        print("walk")
+        
+        walkHoplita = true
+        
+        var walkArray = [SKTexture]()
+        
+        for i in 1...8 {
+            walkArray.append(SKTexture(imageNamed: "hoplita_walk-frame\(i)"))
+        }
+        
+        let animateOdessa = SKAction.animate(with: walkArray, timePerFrame: 0.15, resize: false, restore: false)
+        let repeatForever = SKAction.repeatForever(animateOdessa)
+        let positionX: CGFloat
+        
+        if enemy.position.x > playerNode.position.x {
+            let leftScale = SKAction.scaleX(to: 1, duration: 0)
+            enemy.run(leftScale)
+            positionX = playerNode.position.x + playerNode.size.width/2
+        } else {
+            let rightScale = SKAction.scaleX(to: -1, duration: 0)
+            enemy.run(rightScale)
+            positionX = playerNode.position.x - playerNode.size.width/2
+        }
+        
+        var sub = enemy.position.x - playerNode.position.x
+        
+        if sub < 0 {
+            sub = playerNode.position.x - enemy.position.x
+        }
+        
+        let move = SKAction.moveTo(x: positionX, duration: TimeInterval(sub/70))
+        let group = SKAction.group([repeatForever, move])
+        
+        
+        enemy.run(repeatForever, withKey: "repeatAction")
+        
+        
+    }
+    
+    func hoplitaAttackAnimation(enemy: SKSpriteNode){
+        
+        hoplitaAttack = true
+        
+        var attackArray = [SKTexture]()
+//        var lancaAttack = [SKTexture]()
+        
+        for i in 1...4 {
+            attackArray.append(SKTexture(imageNamed: "soldier_attack-frame\(i)"))
+        }
+        
+//        for i in 1...7 {
+//            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
+//        }
+        
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        
+        let end = SKAction.run ({
+            self.hoplitaAttack = false
+        })
+        
+        let sequence = SKAction.sequence([animateOdessa, end])
+        enemy.run(sequence, withKey: "attack")
     }
     
     
