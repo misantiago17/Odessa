@@ -908,8 +908,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        print(firstBody.node?.name)
-        print(secondBody.node?.name)
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
             switch attacking {
