@@ -57,7 +57,7 @@ class HUD {
         blockButtonNode.size = CGSize(width: 70, height: 70)
         blockButtonNode.position = CGPoint(x: marginAButton + 75, y: -(screenSize.height/2 * 0.62))
         
-        HUDNode.addChild(blockButtonNode)
+      //  HUDNode.addChild(blockButtonNode)
         
         // Jump Button
         jumpButtonNode = SKSpriteNode(imageNamed: "jButton")
@@ -74,7 +74,7 @@ class HUD {
         specialButtonNode.size = CGSize(width: 60, height: 60)
         specialButtonNode.position = CGPoint(x: marginAButton + 18, y: -(screenSize.height/2 * 0.42))
         
-        HUDNode.addChild(specialButtonNode)
+   //     HUDNode.addChild(specialButtonNode)
 
 //        // Barras
         
@@ -119,9 +119,9 @@ class HUD {
         let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.0038
         let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.076
         
-        playerHealthBar.setScale(0.3)
+       // playerHealthBar.setScale(0.1)
         playerHealthBar.zPosition = 3
-        playerHealthBar.position = CGPoint(x: marginSuporte, y: suporteHeight)
+        playerHealthBar.position = CGPoint(x: marginSuporte, y: suporteHeight - 5)
         HUDNode.addChild(playerHealthBar)
         
      

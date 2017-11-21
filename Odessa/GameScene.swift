@@ -93,10 +93,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var enemyHP = 100
     let HealthBarWidth: CGFloat = screenWidth*0.346
     let HealthBarWE: CGFloat = 40
-    let HealthBarHeight: CGFloat = 4
+    let HealthBarHeight: CGFloat = 7
     let HealthBarHO: CGFloat = screenHeight*0.02
     
     var attacking = false
+    var atacou = false
     
     //Booelan Hoplita Attack
     var hoplitaAttack = false
@@ -296,8 +297,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             if (HUDNode.attackButtonNode.frame.contains(location)) && attack == false && block == false {
                 
                 attack = true
-                print("ataaque")
+            
                 attacking = true
+                atacou = true
                 
                // verificaColisao()
                 
@@ -312,7 +314,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     self.playerNode.addChild(self.lancaNode)
                     self.lancaNode.position = CGPoint(x: 20, y: 0)
                     self.lancaNode.zPosition = -1
-                    
+                    self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
+                   
                     
                     self.lancaNode.run(animateLanca)
                     
@@ -327,15 +330,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     for child in self.playerNode.children{
                         if child.name == "lancaNode"{
                             
-                            self.lancaNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
-                            self.lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.odessa
+                        
                             
                             child.removeFromParent()
                         }
                     }
                     
-                    
                     self.attacking = false
+                  
                     
                     
                 })
@@ -362,7 +364,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     self.playerNode.addChild(self.lancaNode)
                     self.lancaNode.position = CGPoint(x: 20, y: 0)
                     self.lancaNode.zPosition = -1
-                    
+                    self.lancaNode.size = CGSize(width: 240 / 2, height: 250 / 2)//
                     self.lancaNode.run(animateLanca)
                     
                 })
@@ -472,7 +474,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             fingerIsTouching = false
             
-            attacking = false
+    
             
             if (HUDNode.blockButtonNode.frame.contains(location)) && longBlock == true{
                 
@@ -571,11 +573,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             var playerPosition = playerNode.convert(enemy.position, to: self).x
             distancia = abs(playerPosition - enemyPosition)
             
-            print("distancia:\(distancia)")
-            print(playerNode.size.width/2)
-            print("Enemy:\(enemy.size.width/2)")
-            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
-            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
+//            print("distancia:\(distancia)")
+//            print(playerNode.size.width/2)
+//            print("Enemy:\(enemy.size.width/2)")
+//            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
+//            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
             
             if (distancia! > playerNode.size.width/2) {
                 playerNode.position.x = playerNode.position.x
@@ -698,8 +700,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
             inimigoNode.physicsBody?.allowsRotation = false
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
-            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
-            inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+//            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+//            inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
             inimigoNode.name = "inimigo"
             
             let HealthBar = createEnemyHealthBar()
@@ -945,6 +947,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         posicaoBandeira = bandeirao.position.x
     }
     
+    //MARK: Colisao
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
         var firstBody: SKPhysicsBody
@@ -961,30 +965,33 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //        print(firstBody.node?.name)
 //        print(secondBody.node?.name)
         
+//        print("\(attacking)")
+        
+       
+        
         if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
+//         if (( firstBody.categoryBitMask == PhysicsCategory.odessa) && (secondBody.categoryBitMask == PhysicsCategory.enemy)){
             switch attacking {
-            case false:  //odessa n ta atacano
+            case false:
 
-//                print("odessa ta morreno")
+
                 enemyAttackedOdessa(odessa:  firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
 
 
                 break
 
-            case true:  //odessa ta atacano
+            case true:
 
-//                print("inimigo ta morreno")
-                odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-
+                if (atacou == true){
+                    odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
+                    atacou = false
+                }
                 break
 
             }
         }
-        
-         if  secondBody.node?.name == "lancaNode" && firstBody.node?.name == "inimigo"{
-//              print("inimigo ta morreno")
-            
-        }
+       
+       
         
     }
     
@@ -1042,11 +1049,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
-        print("atacou inimigo")
+//        print("atacou inimigo")
 
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
 
-            print("inimigo morreu")
+//            print("inimigo morreu")
             
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
@@ -1065,7 +1072,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func enemyAttackedOdessa(odessa:SKSpriteNode, enemy:SKSpriteNode) {
         
-        playerHP = max(0, playerHP - 25)
+        playerHP = max(0, playerHP - 5)//25
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
         if (playerHP == 0){
@@ -1150,7 +1157,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func hoplitaWalkAnimation(enemy: SKSpriteNode){
         
-        print("walk")
+//        print("walk")
         
         walkHoplita = true
         
