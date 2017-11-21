@@ -108,6 +108,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     let HealthBarHO: CGFloat = screenHeight*0.02
     
     var attacking = false
+    var atacou = false
     
     //Booelan Hoplita Attack
     var hoplitaAttack = false
@@ -309,6 +310,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 attack = true
             
                 attacking = true
+                atacou = true
                 
                // verificaColisao()
                 
@@ -345,8 +347,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                         }
                     }
                     
-                    
                     self.attacking = false
+                  
                     
                     
                 })
@@ -483,7 +485,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             fingerIsTouching = false
             
-            attacking = false
+    
             
             if (HUDNode.blockButtonNode.frame.contains(location)) && longBlock == true{
                 
@@ -547,6 +549,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
+        print("\(attacking)")
+        
     //    attacking = true
 //
         
@@ -601,11 +605,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             var playerPosition = playerNode.convert(enemy.position, to: self).x
             distancia = abs(playerPosition - enemyPosition)
             
-            print("distancia:\(distancia)")
-            print(playerNode.size.width/2)
-            print("Enemy:\(enemy.size.width/2)")
-            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
-            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
+//            print("distancia:\(distancia)")
+//            print(playerNode.size.width/2)
+//            print("Enemy:\(enemy.size.width/2)")
+//            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
+//            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
             
             if (distancia! > playerNode.size.width/2) {
                 playerNode.position.x = playerNode.position.x
@@ -990,10 +994,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        print(firstBody.node?.name)
-        print(secondBody.node?.name)
+//        print(firstBody.node?.name)
+//        print(secondBody.node?.name)
         
-        print("\(attacking)")
+//        print("\(attacking)")
+        
+       
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
 //         if (( firstBody.categoryBitMask == PhysicsCategory.odessa) && (secondBody.categoryBitMask == PhysicsCategory.enemy)){
@@ -1008,14 +1014,15 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
             case true:
 
-
-                odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-
+                if (atacou == true){
+                    odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
+                    atacou = false
+                }
                 break
 
             }
         }
-        
+       
        
         
     }
@@ -1078,13 +1085,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         //  updateHealthBar(node: playerHealthBar, withHealthPoints: playerHP)
         
-        print("atacou inimigo")
+//        print("atacou inimigo")
 
         //inimigol -= 1
 
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
 
-            print("inimigo morreu")
+//            print("inimigo morreu")
             
             //inimigol = 4
             
@@ -1192,7 +1199,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func hoplitaWalkAnimation(enemy: SKSpriteNode){
         
-        print("walk")
+//        print("walk")
         
         walkHoplita = true
         
