@@ -98,6 +98,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     var attacking = false
     var atacou = false
+    var isTouchingEnemy = false
+    var inimigoSendoTocado = SKSpriteNode()
     
     //Booelan Hoplita Attack
     var hoplitaAttack = false
@@ -138,7 +140,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         playerNode.size = CGSize(width: size.height/2, height: size.height/2)
         playerNode.position = CGPoint(x: 100, y: 400)
         playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.85))
-        playerNode.physicsBody?.usesPreciseCollisionDetection = true
+        //playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
         playerNode.physicsBody?.categoryBitMask = PhysicsCategory.odessa
@@ -538,6 +540,26 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
+        
+    //    attacking = true
+//
+        
+     //   for enemy in placedEnemies {
+        
+            
+//
+//            enemyHealthBar.position = CGPoint(
+//                x: enemy.convert(enemy.position, to: self).x,
+//                y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
+//            )
+//
+//            self.addChild(enemyHealthBar)
+        
+//            print("\(enemyHealthBar.position), POSICAO DA BARRA")
+//            print(enemy.convert(enemy.position, to: self) , " POSICAO INIMIGO")
+            
+ //       }
+        
         // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
         for enemy in placedEnemies {
             if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
@@ -558,7 +580,15 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         }
         
-        
+        if (attacking == true){
+            if (atacou == true && isTouchingEnemy == true){
+                odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
+                atacou = false
+            }
+        }
+       
+        // Ajeitar a "caixa" de colisão entre um objeto e outro (deixar maior)
+        // movimento por posição
       
         //Hoplita Attack
         
@@ -579,24 +609,28 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
 //            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
             
-            if (distancia! > playerNode.size.width/2) {
-                playerNode.position.x = playerNode.position.x
+            if (isTouchingEnemy){
                 if hoplitaAttack == false{
                     hoplitaAttackAnimation(enemy: enemy)
                 }
-                print("attack")
+            }
+            if (distancia! > playerNode.size.width/2) {
+                playerNode.position.x = playerNode.position.x
+                if hoplitaAttack == false{
+                    //hoplitaAttackAnimation(enemy: enemy)
+                }
             } else if enemy.position.x < playerNode.position.x {
                 let leftScale = SKAction.scaleX(to: 1, duration: 0)
                 enemy.run(leftScale)
                 enemy.position.x -= 0.7*3
-                print("left")
+                //print("left")
                 hoplitaAttack = false
             } else {
                 let rightScale = SKAction.scaleX(to: -1, duration: 0)
                 enemy.run(rightScale)
                 enemy.position.x += 0.7*3
                 hoplitaAttack = false
-                print("direita")
+                //print("direita")
             }
         }
         
@@ -699,7 +733,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
             inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
             inimigoNode.physicsBody?.allowsRotation = false
-            inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
+            //inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
 //            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
 //            inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
             inimigoNode.name = "inimigo"
@@ -949,6 +983,16 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //MARK: Colisao
     
+    func didEnd(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "inimigo") {
+            isTouchingEnemy = false
+            
+            //print("naum to tocano naum")
+            
+            // execute code to respond to object hitting ground
+        }
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
         var firstBody: SKPhysicsBody
@@ -970,25 +1014,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
        
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
+            
+            isTouchingEnemy = true
+            inimigoSendoTocado = secondBody.node as! SKSpriteNode
+
 //         if (( firstBody.categoryBitMask == PhysicsCategory.odessa) && (secondBody.categoryBitMask == PhysicsCategory.enemy)){
-            switch attacking {
-            case false:
-
-
-                enemyAttackedOdessa(odessa:  firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-
-
-                break
-
-            case true:
-
-                if (atacou == true){
-                    odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-                    atacou = false
-                }
-                break
-
-            }
+            
         }
        
        
@@ -1214,6 +1245,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
         
         let end = SKAction.run ({
+            if (self.isTouchingEnemy == true){
+                self.enemyAttackedOdessa(odessa:  self.playerNode, enemy: self.inimigoSendoTocado)
+            }
             self.hoplitaAttack = false
         })
         
