@@ -111,7 +111,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //Booelan Hoplita Attack
     var hoplitaAttack = false
-    var walkHoplita = false
+//    var walkHoplita = false
     
     //Distância
     var distancia: CGFloat?
@@ -593,39 +593,60 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         for enemy in placedEnemies {
             //Hoplita Movimentação
             
-            if walkHoplita == false {
-                hoplitaWalkAnimation(enemy: enemy)
-            }
+//            if  enemy.value(forAttributeNamed: "walk") == false {
+//                hoplitaWalkAnimation(enemy: enemy)
+//            }
             
-            var enemyPosition = enemy.convert(enemy.position, to: self).x
-            var playerPosition = playerNode.convert(enemy.position, to: self).x
-            distancia = abs(playerPosition - enemyPosition)
+            print(enemy.value(forAttributeNamed: "walk"))
             
-            print("distancia:\(distancia)")
-            print(playerNode.size.width/2)
-            print("Enemy:\(enemy.size.width/2)")
-            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
-            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
+            let enemyPosition = enemy.convert(enemy.position, to: self).x
+            let playerPosition = playerNode.position.x/*playerNode.convert(playerNode.position, to: self)*/
             
-            if (distancia! > playerNode.size.width/2) {
-                playerNode.position.x = playerNode.position.x
-                if hoplitaAttack == false{
-                    hoplitaAttackAnimation(enemy: enemy)
-                }
-                print("attack")
-            } else if enemy.position.x < playerNode.position.x {
-                let leftScale = SKAction.scaleX(to: 1, duration: 0)
-                enemy.run(leftScale)
+            distancia = abs(enemyPosition - playerPosition)
+            
+            //let odessa = self.playerNode.position.x
+            //let inimigo = enemy.convert(enemy.position, to: cam).x
+            
+            //print("distancia:\(distancia)")
+            
+            print("Odessa:\(playerPosition)")
+            print("Enemy:\(enemyPosition)")
+            print("Distancia:\(distancia)")
+            
+//            if (distancia! > playerNode.size.width/2) {
+//                playerNode.position.x = playerNode.position.x
+////                if hoplitaAttack == false{
+////                    hoplitaAttackAnimation(enemy: enemy)
+////                }
+////                print("attack")
+//            } else
+            
+            if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
+//                let leftScale = SKAction.scaleX(to: 1, duration: 0)
+//                enemy.run(leftScale)
                 enemy.position.x -= 0.7*3
-                print("left")
-                hoplitaAttack = false
-            } else {
-                let rightScale = SKAction.scaleX(to: -1, duration: 0)
-                enemy.run(rightScale)
+                print("esqerda")
+//                hoplitaAttack = false
+            } else if enemy.convert(enemy.position, to: self).x < playerNode.position.x {
+//                let rightScale = SKAction.scaleX(to: -1, duration: 0)
+//                enemy.run(rightScale)
                 enemy.position.x += 0.7*3
-                hoplitaAttack = false
                 print("direita")
+//                hoplitaAttack = false
             }
+            
+//            let positionX: CGFloat
+//
+//            if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
+//                let leftScale = SKAction.scaleX(to: 1, duration: 0)
+//                enemy.run(leftScale)
+//                positionX = playerNode.position.x + playerNode.size.width/2
+//            } else {
+//                let rightScale = SKAction.scaleX(to: -1, duration: 0)
+//                enemy.run(rightScale)
+//                positionX = playerNode.position.x - playerNode.size.width/2
+//            }
+            
         }
         
         
@@ -699,6 +720,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             modules[0].addChild(enemy)
             placedEnemies.append(enemy)
+            hoplitaWalkAnimation(enemy: enemy)
             inimigosNode[0].remove(at: 0)
         }
         
@@ -1192,7 +1214,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         print("walk")
         
-        walkHoplita = true
+//        enemy.value(forAttributeNamed: "walkBool") = true
+        
+        //walkHoplita = true
         
         var walkArray = [SKTexture]()
         
@@ -1202,26 +1226,28 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         let animateOdessa = SKAction.animate(with: walkArray, timePerFrame: 0.15, resize: false, restore: false)
         let repeatForever = SKAction.repeatForever(animateOdessa)
-        let positionX: CGFloat
+//        let positionX: CGFloat
+        //let enemyPosition = enemy.convert(enemy.position, to: self)
         
-        if enemy.position.x > playerNode.position.x {
-            let leftScale = SKAction.scaleX(to: 1, duration: 0)
-            enemy.run(leftScale)
-            positionX = playerNode.position.x + playerNode.size.width/2
-        } else {
-            let rightScale = SKAction.scaleX(to: -1, duration: 0)
-            enemy.run(rightScale)
-            positionX = playerNode.position.x - playerNode.size.width/2
-        }
+//        if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
+//            let leftScale = SKAction.scaleX(to: 1, duration: 0)
+//            enemy.run(leftScale)
+//            positionX = playerNode.position.x + playerNode.size.width/2
+//        } else {
+//            let rightScale = SKAction.scaleX(to: -1, duration: 0)
+//            enemy.run(rightScale)
+//            positionX = playerNode.position.x - playerNode.size.width/2
+//        }
         
-        var sub = enemy.position.x - playerNode.position.x
+//        var sub = abs(enemy.convert(enemy.position, to: self).x - playerNode.position.x)
+
+//        if sub < 0 {
+//            sub = playerNode.position.x - enemy.convert(enemy.position, to: self).x
+//        }
         
-        if sub < 0 {
-            sub = playerNode.position.x - enemy.position.x
-        }
-        
-        let move = SKAction.moveTo(x: positionX, duration: TimeInterval(sub/70))
-        let group = SKAction.group([repeatForever, move])
+//        let move = SKAction.moveTo(x: positionX, duration: TimeInterval(sub/70))
+//        let group = SKAction.group([repeatForever, move])
+//        let group = SKAction.run(repeatForever)
         
         
         enemy.run(repeatForever, withKey: "repeatAction")

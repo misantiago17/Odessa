@@ -24,6 +24,7 @@ class Inimigo {
     var posInModuleX: Float?
     var posInModuleY: Float?
     
+    
     init(nome:String, vida:Int, velocidade:Float, defesa:Int, dano: Int, tipo: String, imgName: String, X: Float?, Y: Float?){
         
         self.nome = nome
