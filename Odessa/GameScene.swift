@@ -121,6 +121,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //let moeda = SKSpriteNode(imageNamed: "moeda")
     
+    var PosInicialInimigo: [CGFloat] = []
     
     override func sceneDidLoad() {
         
@@ -562,13 +563,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
  //       }
         
         // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
-        for enemy in placedEnemies {
-            if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
-                enemy.removeAllActions()
-                enemy.removeFromParent()
-                placedEnemies.remove(at: placedEnemies.index(of: enemy)!)
-            }
-        }
+//        for enemy in placedEnemies {
+//            if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
+//                enemy.removeAllActions()
+//                enemy.removeAllChildren()
+//                enemy.removeFromParent()
+//                placedEnemies.remove(at: placedEnemies.index(of: enemy)!)
+//            }
+//        }
         
         
         if (playerNode.position.x > 6862 ){
@@ -583,8 +585,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         if (attacking == true){
             if (atacou == true && isTouchingEnemy == true){
-                odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
-                atacou = false
+                for enemies in placedEnemies{
+                    if (enemies == inimigoSendoTocado) {
+                        odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
+                        atacou = false
+                    }
+                }
             }
         }
        
@@ -594,10 +600,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Hoplita Attack
         
         for enemy in placedEnemies {
-            
-            let enemyPosition = enemy.convert(enemy.position, to: self).x/2 + enemy.size.width*0.93
-            let playerPosition = playerNode.position.x
         
+            let index = CGFloat(placedEnemies.index(of: enemy)! + 1)
+            let enemyPosition = enemy.convert(enemy.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemy)!]/2
+            let playerPosition = playerNode.position.x
+            //let playerPosition = playerNode.convert(playerNode.position, to: enemy.parent!).x
+            //let enemyPosition = enemy.position.x
+            
+            print(enemy.convert(enemy.position, from: self).x, "ASASF")
+            enemy.convert(enemy.position, to: self)
+
+            print(enemyPosition, "INIMIGO")
+            print(placedEnemies.index(of: enemy))
+            print(playerPosition, "PLAYER")
+            
             distancia = enemyPosition - playerPosition
 
             if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || isTouchingEnemy){
@@ -745,6 +761,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
             placedEnemies.append(enemy)
+            PosInicialInimigo.append(enemy.convert(enemy.position, to: self).x)
             //hoplitaWalkAnimation(enemy: enemy)
             inimigosNode[0].remove(at: 0)
         }
@@ -1136,6 +1153,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             enemy.removeFromParent()
             let i = placedEnemies.index(of: enemy)
             placedEnemies.remove(at: i!)
+            PosInicialInimigo.remove(at: i!)
 
             pontos += 100
             
