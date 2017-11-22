@@ -31,6 +31,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var playerNode = SKSpriteNode(texture: SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1"))
     var enemyNode = SKSpriteNode(texture: SKTextureAtlas(named: "Inimigos").textureNamed("enemy1"))
     var lancaNode = SKSpriteNode(texture: SKTextureAtlas(named: "Lanca-Attack").textureNamed("lanca-odessa-attackframe1"))
+    //var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
     
     var hud = SKNode()
     
@@ -159,7 +160,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         idleOdessa()
 
         //Lança
-        lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
+        lancaNode.size = CGSize(width: size.height/2, height: size.height/2)
         lancaNode.name = "lancaNode"
         lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.lanca
         lancaNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
@@ -597,56 +598,50 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            if  enemy.value(forAttributeNamed: "walk") == false {
 //                hoplitaWalkAnimation(enemy: enemy)
 //            }
-            
-            print(enemy.value(forAttributeNamed: "walk"))
-            
             let enemyPosition = enemy.convert(enemy.position, to: self).x
-            let playerPosition = playerNode.position.x/*playerNode.convert(playerNode.position, to: self)*/
+//            let playerPosition = playerNode.position.x/*playerNode.convert(playerNode.position, to: self)*/
+//
+//            distancia = abs(enemyPosition - playerPosition)
+//
+            let odessa = self.playerNode.position.x
             
-            distancia = abs(enemyPosition - playerPosition)
-            
-            //let odessa = self.playerNode.position.x
-            //let inimigo = enemy.convert(enemy.position, to: cam).x
-            
-            //print("distancia:\(distancia)")
-            
-            print("Odessa:\(playerPosition)")
-            print("Enemy:\(enemyPosition)")
-            print("Distancia:\(distancia)")
-            
-//            if (distancia! > playerNode.size.width/2) {
-//                playerNode.position.x = playerNode.position.x
-////                if hoplitaAttack == false{
-////                    hoplitaAttackAnimation(enemy: enemy)
-////                }
-////                print("attack")
-//            } else
-            
-            if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
-//                let leftScale = SKAction.scaleX(to: 1, duration: 0)
-//                enemy.run(leftScale)
-                enemy.position.x -= 0.7*3
-                print("esqerda")
-//                hoplitaAttack = false
-            } else if enemy.convert(enemy.position, to: self).x < playerNode.position.x {
-//                let rightScale = SKAction.scaleX(to: -1, duration: 0)
-//                enemy.run(rightScale)
-                enemy.position.x += 0.7*3
-                print("direita")
-//                hoplitaAttack = false
-            }
-            
-//            let positionX: CGFloat
+//            //let inimigo = enemy.convert(enemy.position, to: cam).x
+//
+//            //print("distancia:\(distancia)")
+//
+//            print("Odessa:\(playerPosition)")
+//            print("Enemy:\(enemyPosition)")
+//            print("Distancia:\(distancia)")
+//
+////            if (distancia! > playerNode.size.width/2) {
+////                playerNode.position.x = playerNode.position.x
+//////                if hoplitaAttack == false{
+//////                    hoplitaAttackAnimation(enemy: enemy)
+//////                }
+//////                print("attack")
+////            } else
 //
 //            if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
-//                let leftScale = SKAction.scaleX(to: 1, duration: 0)
-//                enemy.run(leftScale)
-//                positionX = playerNode.position.x + playerNode.size.width/2
-//            } else {
-//                let rightScale = SKAction.scaleX(to: -1, duration: 0)
-//                enemy.run(rightScale)
-//                positionX = playerNode.position.x - playerNode.size.width/2
+////                let leftScale = SKAction.scaleX(to: 1, duration: 0)
+////                enemy.run(leftScale)
+//                enemy.position.x -= 0.7*3
+//                print("esqerda")
+////                hoplitaAttack = false
+//            } else if enemy.convert(enemy.position, to: self).x < playerNode.position.x {
+////                let rightScale = SKAction.scaleX(to: -1, duration: 0)
+////                enemy.run(rightScale)
+//                enemy.position.x += 0.7*3
+//                print("direita")
+////                hoplitaAttack = false
 //            }
+            
+            if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
+                let leftScale = SKAction.scaleX(to: 1, duration: 0)
+                enemy.run(leftScale)
+            } else {
+                let rightScale = SKAction.scaleX(to: -1, duration: 0)
+                enemy.run(rightScale)
+            }
             
         }
         

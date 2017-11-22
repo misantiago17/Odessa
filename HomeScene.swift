@@ -252,17 +252,18 @@ class HomeScene: SKScene {
                     
                     title.removeFromParent()
                     tapLabel.removeFromParent()
-                    newGameButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.6*screenHeight)
+//                    newGameButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.6*screenHeight)
+                    newGameButton.position = CGPoint(x: 0.52*screenWidth ,y: 0.45*screenHeight)
                     newGameButton.zPosition = 2.5
                     newGameButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
                     addChild(newGameButton)
                     
-                    let marginFromNewGame = self.newGameButton.frame.origin.y - newGameButton.size.height*0.8
+//                    let marginFromNewGame = self.newGameButton.frame.origin.y - newGameButton.size.height*0.8
                     
-                    storeButton.position = CGPoint(x: 0.5*screenWidth ,y: marginFromNewGame)
-                    storeButton.zPosition = 2.5
-                    storeButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
-                    addChild(storeButton)
+//                    storeButton.position = CGPoint(x: 0.5*screenWidth ,y: marginFromNewGame)
+//                    storeButton.zPosition = 2.5
+//                    storeButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
+//                    addChild(storeButton)
                     
                     
                     isNewGame = true
