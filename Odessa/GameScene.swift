@@ -55,6 +55,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var angle = CGFloat(0)
     var displacement = CGFloat(0)
     
+    
     //Current Frame
     var currentOdessaRunSprite = 0
     var currentOdessaIdleSprite = 0
@@ -108,7 +109,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     //Distância
     var distancia: CGFloat?
     
-
     //let enemyHealthBar = SKSpriteNode()
 
     var inimigol = 4
@@ -120,6 +120,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
     //let moeda = SKSpriteNode(imageNamed: "moeda")
+    
     
     override func sceneDidLoad() {
         
@@ -593,58 +594,85 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Hoplita Attack
         
         for enemy in placedEnemies {
-            //Hoplita Movimentação
             
-//            if  enemy.value(forAttributeNamed: "walk") == false {
-//                hoplitaWalkAnimation(enemy: enemy)
-//            }
-            
-            print(enemy.value(forAttributeNamed: "walk"))
-            
-            let enemyPosition = enemy.convert(enemy.position, to: self).x
-            let playerPosition = playerNode.position.x/*playerNode.convert(playerNode.position, to: self)*/
-            
-            if (isTouchingEnemy){
-                if hoplitaAttack == false{
+            let enemyPosition = enemy.convert(enemy.position, to: self).x/2 + enemy.size.width*0.93
+            let playerPosition = playerNode.position.x
+        
+            distancia = enemyPosition - playerPosition
+
+            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || isTouchingEnemy){
+                
+                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatForeverInvertido")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+                    hoplitaAttackAnimationInvertida(enemy: enemy)
+                } else if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatActionAnimation")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
                     hoplitaAttackAnimation(enemy: enemy)
                 }
-            }
-            if (distancia! > playerNode.size.width/2) {
-                playerNode.position.x = playerNode.position.x
-                if hoplitaAttack == false{
-                    //hoplitaAttackAnimation(enemy: enemy)
+                if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
+                    enemy.removeAction(forKey: "Attack")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+                    hoplitaAttackAnimation(enemy: enemy)
+                } else if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
+                    enemy.removeAction(forKey: "AttackInvertida")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+                    hoplitaAttackAnimationInvertida(enemy: enemy)
                 }
-            } else if enemy.position.x < playerNode.position.x {
-                let leftScale = SKAction.scaleX(to: 1, duration: 0)
-                enemy.run(leftScale)
+                
+                print("Entre odessa")
+        
+            } else if (enemyPosition > playerPosition + (playerNode.size.width*0.4/2)) {
+
+                enemy.texture = SKTexture(image: UIImage(named: "enemy1")!)
+                
+                if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
+                    enemy.removeAction(forKey: "Attack")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+                }
+                if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
+                    enemy.removeAction(forKey: "AttackInvertida")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+                }
+                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatForeverInvertido")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+                }
+                if (enemy.value(forAttributeNamed: "animation")?.floatValue == 0){
+                    hoplitaWalkAnimation(enemy: enemy)
+                    print("EntrouEsquerda")
+                }
+
                 enemy.position.x -= 0.7*3
-                //print("left")
-                hoplitaAttack = false
-            } else {
-                let rightScale = SKAction.scaleX(to: -1, duration: 0)
-                enemy.run(rightScale)
+                print("esquerda")
+
+            } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
+
+                enemy.texture = SKTexture(image: UIImage(named: "hoplitaInvertido")!)
+                
+                if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
+                    enemy.removeAction(forKey: "Attack")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+                }
+                if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
+                    enemy.removeAction(forKey: "AttackInvertida")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+                }
+                if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatActionAnimation")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+                }
+                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 0){
+                    hoplitaWalkAnimationInvertido(enemy: enemy)
+                    print("EntrouDireita")
+
+                }
+
                 enemy.position.x += 0.7*3
-                hoplitaAttack = false
-                //print("direita")
+                print("direita")
             }
-            
-//            let positionX: CGFloat
-//
-//            if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
-//                let leftScale = SKAction.scaleX(to: 1, duration: 0)
-//                enemy.run(leftScale)
-//                positionX = playerNode.position.x + playerNode.size.width/2
-//            } else {
-//                let rightScale = SKAction.scaleX(to: -1, duration: 0)
-//                enemy.run(rightScale)
-//                positionX = playerNode.position.x - playerNode.size.width/2
-//            }
-            
         }
-        
-        
-      
-        
         
         // Tempo
         if lastFrameTime <= 0 {
@@ -712,8 +740,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         for enemy in inimigosNode[0] {
             
             modules[0].addChild(enemy)
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
             placedEnemies.append(enemy)
-            hoplitaWalkAnimation(enemy: enemy)
+            //hoplitaWalkAnimation(enemy: enemy)
             inimigosNode[0].remove(at: 0)
         }
         
@@ -1087,6 +1119,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     func odessaAttackedEnemy(odessa:SKSpriteNode, enemy:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
+        print(enemy)
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
 //        print("atacou inimigo")
@@ -1195,13 +1228,22 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     // Hoplita Animation
     
+    func hoplitaWalkAnimationInvertido(enemy: SKSpriteNode){
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "animationInvertida")
+        var walkArray = [SKTexture]()
+        
+        for i in 1...5 {
+            walkArray.append(SKTexture(imageNamed: "hoplitaCorrendoInvertido-\(i)"))
+        }
+        
+        let animateOdessa = SKAction.animate(with: walkArray, timePerFrame: 0.15, resize: false, restore: false)
+        let repeatForeverInvertido = SKAction.repeatForever(animateOdessa)
+        
+        enemy.run(repeatForeverInvertido, withKey: "repeatForeverInvertido")
+    }
+    
     func hoplitaWalkAnimation(enemy: SKSpriteNode){
-        
-//        print("walk")
-        
-//        enemy.value(forAttributeNamed: "walkBool") = true
-        
-        //walkHoplita = true
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "animation")
         
         var walkArray = [SKTexture]()
         
@@ -1210,45 +1252,27 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
         let animateOdessa = SKAction.animate(with: walkArray, timePerFrame: 0.15, resize: false, restore: false)
-        let repeatForever = SKAction.repeatForever(animateOdessa)
-//        let positionX: CGFloat
-        //let enemyPosition = enemy.convert(enemy.position, to: self)
-        
-//        if enemy.convert(enemy.position, to: self).x > playerNode.position.x {
-//            let leftScale = SKAction.scaleX(to: 1, duration: 0)
-//            enemy.run(leftScale)
-//            positionX = playerNode.position.x + playerNode.size.width/2
-//        } else {
-//            let rightScale = SKAction.scaleX(to: -1, duration: 0)
-//            enemy.run(rightScale)
-//            positionX = playerNode.position.x - playerNode.size.width/2
-//        }
-        
-//        var sub = abs(enemy.convert(enemy.position, to: self).x - playerNode.position.x)
-
-//        if sub < 0 {
-//            sub = playerNode.position.x - enemy.convert(enemy.position, to: self).x
-//        }
-        
-//        let move = SKAction.moveTo(x: positionX, duration: TimeInterval(sub/70))
-//        let group = SKAction.group([repeatForever, move])
-//        let group = SKAction.run(repeatForever)
+        let repeatActionAnimation = SKAction.repeatForever(animateOdessa)
         
         
-        enemy.run(repeatForever, withKey: "repeatAction")
+        enemy.run(repeatActionAnimation, withKey: "repeatActionAnimation")
+        
+        let end = SKAction.run {
+            enemy.removeAction(forKey: "repeatActionAnimation")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+        }
         
         
     }
     
-    func hoplitaAttackAnimation(enemy: SKSpriteNode){
-        
-        hoplitaAttack = true
+    func hoplitaAttackAnimationInvertida(enemy: SKSpriteNode){
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "AttackInvertida")
         
         var attackArray = [SKTexture]()
 //        var lancaAttack = [SKTexture]()
         
         for i in 1...4 {
-            attackArray.append(SKTexture(imageNamed: "soldier_attack-frame\(i)"))
+            attackArray.append(SKTexture(imageNamed: "soldier_attack-invertido-frame\(i)"))
         }
         
 //        for i in 1...7 {
@@ -1261,7 +1285,34 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             if (self.isTouchingEnemy == true){
                 self.enemyAttackedOdessa(odessa:  self.playerNode, enemy: self.inimigoSendoTocado)
             }
-            self.hoplitaAttack = false
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+        })
+        
+        let sequence = SKAction.sequence([animateOdessa, end])
+        enemy.run(sequence, withKey: "attack")
+    }
+    
+    func hoplitaAttackAnimation(enemy: SKSpriteNode){
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "Attack")
+        
+        var attackArray = [SKTexture]()
+        //        var lancaAttack = [SKTexture]()
+        
+        for i in 1...4 {
+            attackArray.append(SKTexture(imageNamed: "soldier_attack-frame\(i)"))
+        }
+        
+        //        for i in 1...7 {
+        //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
+        //        }
+        
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        
+        let end = SKAction.run ({
+            if (self.isTouchingEnemy == true){
+                self.enemyAttackedOdessa(odessa:  self.playerNode, enemy: self.inimigoSendoTocado)
+            }
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
         })
         
         let sequence = SKAction.sequence([animateOdessa, end])
