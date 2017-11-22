@@ -20,6 +20,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var playerNode = SKSpriteNode(texture: SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1"))
     var enemyNode = SKSpriteNode(texture: SKTextureAtlas(named: "Inimigos").textureNamed("enemy1"))
     var lancaNode = SKSpriteNode(texture: SKTextureAtlas(named: "Lanca-Attack").textureNamed("lanca-odessa-attackframe1"))
+    //var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
     
     var hud = SKNode()
     
@@ -152,7 +153,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         idleOdessa()
 
         //Lança
-        lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
+        lancaNode.size = CGSize(width: size.height/2, height: size.height/2)
         lancaNode.name = "lancaNode"
         lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.lanca
         lancaNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
@@ -688,6 +689,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 enemy.position.x += 0.7*3
                 print("direita")
             }
+            
         }
         
         // Tempo
