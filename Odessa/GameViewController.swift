@@ -17,11 +17,11 @@ class GameViewController: UIViewController {
 
         
         if let sceneNode = GameScene(size: view.frame.size) as! GameScene? {
-            
+
             sceneNode.scaleMode = .aspectFill
 
             if let view = self.view as! SKView? {
-                
+
                 view.showsFPS = true
                 view.showsNodeCount = true
                 view.showsPhysics = true
@@ -31,6 +31,8 @@ class GameViewController: UIViewController {
             }
 
         }
+        
+        
         
     }
 
@@ -45,6 +47,12 @@ class GameViewController: UIViewController {
             return .all
         }
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Release any cached data, images, etc that aren't in use.
+    }
+
 
     override var prefersStatusBarHidden: Bool {
         return true
