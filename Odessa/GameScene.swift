@@ -601,11 +601,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             print(enemy.value(forAttributeNamed: "walk"))
             
-//            print("distancia:\(distancia)")
-//            print(playerNode.size.width/2)
-//            print("Enemy:\(enemy.size.width/2)")
-//            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
-//            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
+            let enemyPosition = enemy.convert(enemy.position, to: self).x
+            let playerPosition = playerNode.position.x/*playerNode.convert(playerNode.position, to: self)*/
             
             if (isTouchingEnemy){
                 if hoplitaAttack == false{
