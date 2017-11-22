@@ -610,16 +610,16 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            print("Odessa:\(enemy.convert(enemy.position, to: self).x)")
 //            print("Enemy:\(enemy.convert(enemy.position, to: self).x)")
             
-            distancia = abs(enemyPosition - playerPosition)
+//            distancia = abs(enemyPosition - playerPosition)
             
             //let odessa = self.playerNode.position.x
             //let inimigo = enemy.convert(enemy.position, to: cam).x
             
             //print("distancia:\(distancia)")
             
-            print("Odessa:\(playerPosition)")
-            print("Enemy:\(enemyPosition)")
-            print("Distancia:\(distancia)")
+//            print("Odessa:\(playerPosition)")
+//            print("Enemy:\(enemyPosition)")
+//            print("Distancia:\(distancia)")
             
 //            if (distancia! > playerNode.size.width/2) {
 //                playerNode.position.x = playerNode.position.x
