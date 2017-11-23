@@ -162,7 +162,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Lança
         lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
         lancaNode.name = "lancaNode"
-        lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.lanca
+      //  lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.lanca
         lancaNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
         
         // Background
@@ -333,6 +333,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     
                 })
                 
+             
                 
                 let end = SKAction.run({
                     
@@ -550,7 +551,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
-        print("\(attacking)")
+     //   print("\(attacking)")
         
     //    attacking = true
 //
@@ -602,7 +603,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //                hoplitaWalkAnimation(enemy: enemy)
 //            }
             
-            print(enemy.value(forAttributeNamed: "walk"))
+         //   print(enemy.value(forAttributeNamed: "walk"))
             
 //            print("distancia:\(distancia)")
 //            print(playerNode.size.width/2)
@@ -633,13 +634,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //                let leftScale = SKAction.scaleX(to: 1, duration: 0)
 //                enemy.run(leftScale)
                 enemy.position.x -= 0.7*3
-                print("esqerda")
+        //        print("esqerda")
 //                hoplitaAttack = false
             } else if enemy.convert(enemy.position, to: self).x < playerNode.position.x {
 //                let rightScale = SKAction.scaleX(to: -1, duration: 0)
 //                enemy.run(rightScale)
                 enemy.position.x += 0.7*3
-                print("direita")
+        //        print("direita")
 //                hoplitaAttack = false
             }
             
@@ -860,10 +861,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false
-        //    floorModule.physicsBody?.categoryBitMask = PhysicsCategory.chao
-            
+            floorModule.physicsBody?.categoryBitMask = PhysicsCategory.chao
+            floorModule.name = "chao"
             floorSegments.append(floorModule)
             floor.addChild(floorModule)
+          
             
             modulesInitialPositions.append(floor.calculateAccumulatedFrame().size.width - floorModule.size.width)
             getModulesEnemy(modulo: module)
@@ -1048,6 +1050,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
             }
         }
+        
+ 
        
        
         
@@ -1216,8 +1220,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
         static let odessa    : UInt32 = 0b1       // 1
-        static let enemy     :   UInt32 = 0b10      // 2
-        static let lanca     : UInt32 = 3
+        static let enemy     : UInt32 = 0b10      // 2
+        static let chao      : UInt32 = 3          //3
       
     }
     
