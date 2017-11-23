@@ -777,7 +777,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
             //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
-            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
+            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.5))
+            //TALVEZ FIQUE BOM NO SE COM SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.48))
             inimigoNode.physicsBody?.allowsRotation = false
             //inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
 //            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
@@ -790,6 +791,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.addChild(HealthBar)
             
             inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
+            
+            //Inimigo Size
+            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
