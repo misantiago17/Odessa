@@ -117,7 +117,7 @@ class HUD {
         
         // Hp Odessa
         let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.0038
-        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.076
+        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.06
         
        // playerHealthBar.setScale(0.1)
         playerHealthBar.zPosition = 3
