@@ -9,10 +9,6 @@
 import UIKit
 import GameplayKit
 
-let screenSize = UIScreen.main.bounds
-let screenWidth = screenSize.width
-let screenHeight = screenSize.height
-
 class HomeScene: SKScene {
     
     //Fundo animado

@@ -11,8 +11,6 @@ import GameplayKit
 import SwiftyJSON
 
 class GameScene: SKScene,  SKPhysicsContactDelegate {
-    
-    
     //Public
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
@@ -173,6 +171,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         // Pegar o primeiro modulo e colocar os inimigos nas posições dele
         placeEnemies()
         modulesInitialPositions.remove(at: 0)
+        
     }
     
     
@@ -616,7 +615,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             print(playerPosition, "PLAYER")
             
             distancia = enemyPosition - playerPosition
-
+            
             if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || isTouchingEnemy){
                 
                 if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
@@ -804,6 +803,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.addChild(HealthBar)
             
             inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
+            
+            //Inimigo Size
+//            inimigoNode.size = CGSize(width: 26/24*size.height/2, height: 26/24*size.height/2)
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
