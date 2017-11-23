@@ -12,7 +12,7 @@ import UIKit
 class ModuloMapa {
     
     var imagemCenario: String
-    var IDModulo: Int
+    var IDModulo: Int           // ID do mod inicial = -1 // ID do mod final = -2
     //Waves aparecem por tempo
     var waves: [Waves]?
     //  Os inimigos são posicionados ao longo do módulo
