@@ -107,7 +107,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var hoplitaAttack = false
 //    var walkHoplita = false
     
-
+    //Distância
+    var distancia: CGFloat?
     
     //let enemyHealthBar = SKSpriteNode()
 
@@ -203,7 +204,22 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
+     //   self.addChild(enemyHealthBar)
         
+        
+     //   self.enemyNode.addChild(enemyHealthBar)
+        
+    //    cam.addChild(enemyHealthBar)
+        // cam.addChild(parallax.frente)
+        // cam.addChild(parallax.meio)
+        
+        // cam.addChild(playerHealthBar)
+       // cam.addChild(enemyHealthBar)
+        
+        
+        
+        // cam.addChild(moeda)
+        // cam.addChild(pontosLabel)
         
         let zoomOutAction = SKAction.scale(to: 2.0, duration: 0)
         cam.run(zoomOutAction)
@@ -528,16 +544,34 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
         
-// Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO COM CUIDADO
-/*        for enemy in placedEnemies {
-            if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
-                enemy.removeAllActions()
-                enemy.removeAllChildren()
-                enemy.removeFromParent()
-                placedEnemies.remove(at: placedEnemies.index(of: enemy)!)
-            }
-        }
- */
+    //    attacking = true
+//
+        
+     //   for enemy in placedEnemies {
+        
+            
+//
+//            enemyHealthBar.position = CGPoint(
+//                x: enemy.convert(enemy.position, to: self).x,
+//                y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
+//            )
+//
+//            self.addChild(enemyHealthBar)
+        
+//            print("\(enemyHealthBar.position), POSICAO DA BARRA")
+//            print(enemy.convert(enemy.position, to: self) , " POSICAO INIMIGO")
+            
+ //       }
+        
+        // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
+//        for enemy in placedEnemies {
+//            if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
+//                enemy.removeAllActions()
+//                enemy.removeAllChildren()
+//                enemy.removeFromParent()
+//                placedEnemies.remove(at: placedEnemies.index(of: enemy)!)
+//            }
+//        }
         
         
         if (playerNode.position.x > 6862 ){
@@ -561,142 +595,95 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
        
+        // Ajeitar a "caixa" de colisão entre um objeto e outro (deixar maior)
+        // movimento por posição
       
-        //Enemy Attack
+        //Hoplita Attack
         
         for enemy in placedEnemies {
         
+            let index = CGFloat(placedEnemies.index(of: enemy)! + 1)
             let enemyPosition = enemy.convert(enemy.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemy)!]/2
             let playerPosition = playerNode.position.x
+            //let playerPosition = playerNode.convert(playerNode.position, to: enemy.parent!).x
+            //let enemyPosition = enemy.position.x
             
-            // Entre a Odessa
-            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || (isTouchingEnemy && enemy == inimigoSendoTocado)){
+            print(enemy.convert(enemy.position, from: self).x, "ASASF")
+            enemy.convert(enemy.position, to: self)
+
+            print(enemyPosition, "INIMIGO")
+            print(placedEnemies.index(of: enemy))
+            print(playerPosition, "PLAYER")
+            
+            distancia = enemyPosition - playerPosition
+
+            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || isTouchingEnemy){
                 
-                    // Estava a direita da Odessa
                 if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
                     enemy.removeAction(forKey: "repeatForeverInvertido")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
-
-                    if (enemy.name == "hoplita"){
-                        hoplitaAttackAnimationInvertida(enemy: enemy)
-                    } else if (enemy.name == "tanque"){
-                        // animação ataque invertida do tanque
-                    } else if (enemy.name == "arqueiro"){
-                        // animação ataque invertida do arqueiro
-                    }
-                    
-                    // Estava a esquerda da Odessa
+                    hoplitaAttackAnimationInvertida(enemy: enemy)
                 } else if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
                     enemy.removeAction(forKey: "repeatActionAnimation")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
-
-                    if (enemy.name == "hoplita"){
-                        hoplitaAttackAnimation(enemy: enemy)
-                    } else if (enemy.name == "tanque"){
-                        // animação ataque do tanque
-                    } else if (enemy.name == "arqueiro"){
-                        // animação ataque do arqueiro
-                    }
+                    hoplitaAttackAnimation(enemy: enemy)
                 }
-                
-                // Estava atacando virado para a esquerda - continua atacando
                 if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
                     enemy.removeAction(forKey: "Attack")
-
-                    // Não está no meio de uma animação a esquerda
-                    if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue != 1){
-                        if (enemy.name == "hoplita"){
-                            hoplitaAttackAnimation(enemy: enemy)
-                        } else if (enemy.name == "tanque"){
-                            // animação ataque do tanque
-                        } else if (enemy.name == "arqueiro"){
-                            // animação ataque do arqueiro
-                        }
-                    }
-                    
-                    // Estava atacando virada para a direita - continua atancando
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+                    hoplitaAttackAnimation(enemy: enemy)
                 } else if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
                     enemy.removeAction(forKey: "AttackInvertida")
-
-                    // Não está no meio de uma animação a esquerda
-                    if (enemy.value(forAttributeNamed: "Attack")?.floatValue != 1){
-                        if (enemy.name == "hoplita"){
-                            hoplitaAttackAnimationInvertida(enemy: enemy)
-                        } else if (enemy.name == "tanque"){
-                            // animação ataque invertida do tanque
-                        } else if (enemy.name == "arqueiro"){
-                            // animação ataque invertida do arqueiro
-                        }
-                    }
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+                    hoplitaAttackAnimationInvertida(enemy: enemy)
                 }
                 
                 print("Entre odessa")
-                
-            // A esquerda da Odessa
+        
             } else if (enemyPosition > playerPosition + (playerNode.size.width*0.4/2)) {
 
                 enemy.texture = SKTexture(image: UIImage(named: "enemy1")!)
                 
-                // Estava atacando a esquerda antes - para action
                 if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
                     enemy.removeAction(forKey: "Attack")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
                 }
-                // Estava atacando a direita antes - para action
                 if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
                     enemy.removeAction(forKey: "AttackInvertida")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
                 }
-                // Estava andando a direita antes - para action
                 if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
                     enemy.removeAction(forKey: "repeatForeverInvertido")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
                 }
-                // Não terminou de andar a esquerda - repete animação
                 if (enemy.value(forAttributeNamed: "animation")?.floatValue == 0){
-                    
-                    if (enemy.name == "hoplita"){
-                        hoplitaWalkAnimation(enemy: enemy)
-                    } else if (enemy.name == "tanque"){
-                        // animação andar esquerda do tanque
-                    } else if (enemy.name == "arqueiro"){
-                        // animação andar esquerda do arqueiro
-                    }
+                    hoplitaWalkAnimation(enemy: enemy)
+                    print("EntrouEsquerda")
                 }
 
                 enemy.position.x -= 0.7*3
                 print("esquerda")
-                
-            // A direita da Odessa
+
             } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
 
                 enemy.texture = SKTexture(image: UIImage(named: "hoplitaInvertido")!)
                 
-                // Estava atacando a esquerda antes - para action
                 if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
                     enemy.removeAction(forKey: "Attack")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
                 }
-                // Estava atacando a direita antes - para action
                 if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
                     enemy.removeAction(forKey: "AttackInvertida")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
                 }
-                // Estava andando a esquerda antes - para action
                 if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
                     enemy.removeAction(forKey: "repeatActionAnimation")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
                 }
-                // Não terminou de andar a direita - repete animação
                 if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 0){
-                    
-                    if (enemy.name == "hoplita"){
-                        hoplitaWalkAnimationInvertido(enemy: enemy)
-                    } else if (enemy.name == "tanque"){
-                        // animação andar direita do tanque
-                    } else if (enemy.name == "arqueiro"){
-                        // animação andar direita do arqueiro
-                    }
+                    hoplitaWalkAnimationInvertido(enemy: enemy)
+                    print("EntrouDireita")
+
                 }
 
                 enemy.position.x += 0.7*3
@@ -803,16 +790,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height))
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
+            //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
             inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
             inimigoNode.physicsBody?.allowsRotation = false
-            
-            if (inimigo.imgName == "enemy1"){
-                inimigoNode.name = "hoplita"
-            } else if (inimigo.imgName == "enemy2"){
-                inimigoNode.name = "tanque"
-            } else if (inimigo.imgName == "enemy3"){
-                inimigoNode.name = "arqueiro"
-            }
+            //inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
+//            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+//            inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+            inimigoNode.name = "inimigo"
             
             let HealthBar = createEnemyHealthBar()
             HealthBar.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height)/4)
@@ -1060,14 +1044,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     //MARK: Colisao
     
     func didEnd(_ contact: SKPhysicsContact) {
-        if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "hoplita") {
+        if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "inimigo") {
             isTouchingEnemy = false
-        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "tanque") {
-            isTouchingEnemy = false
-        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "arqueiro") {
-            isTouchingEnemy = false
+            
+            //print("naum to tocano naum")
+            
+            // execute code to respond to object hitting ground
         }
-        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -1083,18 +1066,74 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "hoplita") {
+//        print(firstBody.node?.name)
+//        print(secondBody.node?.name)
+        
+//        print("\(attacking)")
+        
+       
+        
+        if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
+            
             isTouchingEnemy = true
             inimigoSendoTocado = secondBody.node as! SKSpriteNode
-        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "tanque") {
-            isTouchingEnemy = true
-            inimigoSendoTocado = secondBody.node as! SKSpriteNode
-        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "arqueiro") {
-            isTouchingEnemy = true
-            inimigoSendoTocado = secondBody.node as! SKSpriteNode
+
+//         if (( firstBody.categoryBitMask == PhysicsCategory.odessa) && (secondBody.categoryBitMask == PhysicsCategory.enemy)){
+            
         }
+       
+       
         
     }
+    
+   // contact
+    
+//        func verificaColisao () {
+//
+//            if (( firstBody.categoryBitMask == PhysicsCategory.odessa) && (secondBody.categoryBitMask == PhysicsCategory.enemy)){
+//
+//                switch attacking {
+//                case false:  //odessa n ta atacano
+//
+//                    print("odessa ta morreno")
+//                    enemyAttackedOdessa(odessa:  firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
+//
+//
+//                    break
+//
+//                case true:  //odessa ta atacano
+//
+//                    print("inimigo ta morreno")
+//                    odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
+//
+//                    break
+//
+//                }
+//
+//
+//
+//        }
+    
+//        if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
+//            switch attacking {
+//            case false:  //odessa n ta atacano
+//
+//                print("odessa ta morreno")
+//                enemyAttackedOdessa(odessa:  firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
+//
+//
+//                break
+//
+//            case true:  //odessa ta atacano
+//
+//                print("inimigo ta morreno")
+//                odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
+//
+//                break
+//
+//            }
+//        }
+  //  }
     
     func odessaAttackedEnemy(odessa:SKSpriteNode, enemy:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
@@ -1102,7 +1141,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         print(enemy)
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
+//        print("atacou inimigo")
+
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
+
+//            print("inimigo morreu")
             
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
