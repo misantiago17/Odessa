@@ -290,9 +290,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 atacou = true
                 
                
-                let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.1, resize: false, restore: false)
+                let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.08, resize: false, restore: false)
                 
-                let animateLanca = SKAction.animate(with: self.movements.lancaAttack, timePerFrame: 0.1, resize: false, restore: false)
+                let animateLanca = SKAction.animate(with: self.movements.lancaAttack, timePerFrame: 0.08, resize: false, restore: false)
                 
                 
                 let addLanca = SKAction.run({
@@ -341,16 +341,16 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 block = true
                 fingerIsTouching = true
                 
-                let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.20, resize: false, restore: false)
+                let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.2, resize: false, restore: false)
                 
-                let animateLanca = SKAction.animate(with: self.movements.lancaBlock, timePerFrame: 0.20, resize: false, restore: false)
+                let animateLanca = SKAction.animate(with: self.movements.lancaBlock, timePerFrame: 0.2, resize: false, restore: false)
                 
                 let addLanca = SKAction.run({
                     
                     self.playerNode.addChild(self.lancaNode)
                     self.lancaNode.position = CGPoint(x: 20, y: 0)
                     self.lancaNode.zPosition = -1
-                    self.lancaNode.size = CGSize(width: 240 / 2, height: 250 / 2)//
+                    self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
                     self.lancaNode.run(animateLanca)
                     
                 })
@@ -1299,7 +1299,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
 //        }
         
-        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.2, resize: false, restore: false)
         
         let end = SKAction.run ({
             if (self.isTouchingEnemy == true){
@@ -1326,7 +1326,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
         //        }
         
-        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.2, resize: false, restore: false)
         
         let end = SKAction.run ({
             if (self.isTouchingEnemy == true){
