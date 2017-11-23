@@ -14,22 +14,25 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
+        
         if let sceneNode = GameScene(size: view.frame.size) as! GameScene? {
-            
+
             sceneNode.scaleMode = .aspectFill
-            
+
             if let view = self.view as! SKView? {
-                
-//                view.ignoresSiblingOrder = true
-//                view.showsFPS = true
+
+                view.showsFPS = true
                 view.showsNodeCount = true
-//                view.showsPhysics = true
-                
+                view.showsPhysics = true
+
+
                 view.presentScene(sceneNode)
-            }   
-            
+            }
+
         }
+        
+        
         
     }
 
@@ -44,6 +47,12 @@ class GameViewController: UIViewController {
             return .all
         }
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Release any cached data, images, etc that aren't in use.
+    }
+
 
     override var prefersStatusBarHidden: Bool {
         return true

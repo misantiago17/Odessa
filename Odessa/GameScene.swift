@@ -13,17 +13,6 @@ import SwiftyJSON
 class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     
-
-    //falta fazer pulo conforme a movimentação da odessa. Por enquanto tem soh pulo para direita
-    //falta fazer considção de derrota e game over
-    //delay no botão de movimentação
-    
-    
-    // pular mais baixo// repetir escudo no ar mais uma vez
-    //pular mais longe
-    
-    //Oraganização: precisa de coisa pra caralho
-    
     //Public
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
@@ -31,6 +20,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var playerNode = SKSpriteNode(texture: SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1"))
     var enemyNode = SKSpriteNode(texture: SKTextureAtlas(named: "Inimigos").textureNamed("enemy1"))
     var lancaNode = SKSpriteNode(texture: SKTextureAtlas(named: "Lanca-Attack").textureNamed("lanca-odessa-attackframe1"))
+    //var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
     
     var hud = SKNode()
     
@@ -65,6 +55,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var joystick: JoyStickView?
     var angle = CGFloat(0)
     var displacement = CGFloat(0)
+    
     
     //Current Frame
     var currentOdessaRunSprite = 0
@@ -104,10 +95,21 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var enemyHP = 100
     let HealthBarWidth: CGFloat = screenWidth*0.346
     let HealthBarWE: CGFloat = 40
-    let HealthBarHeight: CGFloat = 4
+    let HealthBarHeight: CGFloat = 7
     let HealthBarHO: CGFloat = screenHeight*0.02
     
-    let enemyHealthBar = SKSpriteNode()
+    var attacking = false
+    var atacou = false
+    var isTouchingEnemy = false
+    var inimigoSendoTocado = SKSpriteNode()
+    
+    //Booelan Hoplita Attack
+    var hoplitaAttack = false
+//    var walkHoplita = false
+    
+
+    
+    //let enemyHealthBar = SKSpriteNode()
 
     var inimigol = 4
     
@@ -117,7 +119,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
     }
     
-//    let moeda = SKSpriteNode(imageNamed: "moeda")
+    //let moeda = SKSpriteNode(imageNamed: "moeda")
+    
+    var PosInicialInimigo: [CGFloat] = []
     
     override func sceneDidLoad() {
         
@@ -132,44 +136,26 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         movements.setAction(player: playerNode, velocity: velocityX)
         
         //Incializa Parallax
-//        parallax.setParallax()
+        //parallax.setParallax()
      
         // Player
         playerNode.size = CGSize(width: size.height/2, height: size.height/2)
         playerNode.position = CGPoint(x: 100, y: 400)
-        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.75))
-        playerNode.physicsBody?.usesPreciseCollisionDetection = true
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.85))
+        //playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
         playerNode.physicsBody?.allowsRotation = false
         playerNode.physicsBody?.categoryBitMask = PhysicsCategory.odessa
         playerNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
+        playerNode.name = "player"
         addChild(self.playerNode)
         idleOdessa()
-        
-        //hoplita
-       // enemyNode.setScale(0.34)
-        
-//        for index in 0...300 {
-//            print("AAAAAAAAA")
-        
-////            var spriteEnemy = SKSpriteNode(texture: SKTexture(imageNamed: "hoplita_walk-frame1"))
-//            enemyNode.size = CGSize(width: size.height/4, height: size.height/4)
-//            enemyNode.position = CGPoint(x: 500, y: 500)
-//            enemyNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
-//            enemyNode.physicsBody?.allowsRotation = false
-//            enemyNode.physicsBody?.usesPreciseCollisionDetection = true
-//          //  enemyNode.physicsBody?.affectedByGravity = false
-//            enemyNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
-            //  enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
-        
-         //   addChild(enemyNode)
-        
-//        }
-        
-        
+
         //Lança
-        lancaNode.size = CGSize(width: 25/24*size.height/4, height: size.height/4)
+        lancaNode.size = CGSize(width: size.height/2, height: size.height/2)
         lancaNode.name = "lancaNode"
+        lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.lanca
+        lancaNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
         
         // Background
         background = SKSpriteNode(texture: SKTextureAtlas(named: "Background").textureNamed("fundo"))
@@ -191,9 +177,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-//        setScore()
+        //setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
-//        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+        //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
         
         
         //
@@ -217,22 +203,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(cam)
         cam.addChild(hud)
         cam.addChild(background)
-     //   self.addChild(enemyHealthBar)
         
-        
-     //   self.enemyNode.addChild(enemyHealthBar)
-        
-    //    cam.addChild(enemyHealthBar)
-        // cam.addChild(parallax.frente)
-        // cam.addChild(parallax.meio)
-        
-        // cam.addChild(playerHealthBar)
-       // cam.addChild(enemyHealthBar)
-        
-        
-        
-        // cam.addChild(moeda)
-        // cam.addChild(pontosLabel)
         
         let zoomOutAction = SKAction.scale(to: 2.0, duration: 0)
         cam.run(zoomOutAction)
@@ -315,7 +286,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             if (HUDNode.attackButtonNode.frame.contains(location)) && attack == false && block == false {
                 
                 attack = true
+            
+                attacking = true
+                atacou = true
                 
+               // verificaColisao()
+                
+               
                 let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.1, resize: false, restore: false)
                 
                 let animateLanca = SKAction.animate(with: self.movements.lancaAttack, timePerFrame: 0.1, resize: false, restore: false)
@@ -326,6 +303,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     self.playerNode.addChild(self.lancaNode)
                     self.lancaNode.position = CGPoint(x: 20, y: 0)
                     self.lancaNode.zPosition = -1
+                    self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
+                   
                     
                     self.lancaNode.run(animateLanca)
                     
@@ -339,9 +318,15 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     
                     for child in self.playerNode.children{
                         if child.name == "lancaNode"{
+                            
+                        
+                            
                             child.removeFromParent()
                         }
                     }
+                    
+                    self.attacking = false
+                  
                     
                     
                 })
@@ -368,7 +353,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     self.playerNode.addChild(self.lancaNode)
                     self.lancaNode.position = CGPoint(x: 20, y: 0)
                     self.lancaNode.zPosition = -1
-                    
+                    self.lancaNode.size = CGSize(width: 240 / 2, height: 250 / 2)//
                     self.lancaNode.run(animateLanca)
                     
                 })
@@ -478,6 +463,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             fingerIsTouching = false
             
+    
+            
             if (HUDNode.blockButtonNode.frame.contains(location)) && longBlock == true{
                 
                 for child in self.playerNode.children{
@@ -540,30 +527,17 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
-        for enemy in placedEnemies {
         
-            
-            
-            enemyHealthBar.position = CGPoint(
-                x: enemy.convert(enemy.position, to: self).x,
-                y: enemy.convert(enemy.position, to: self).y + enemy.size.height / 2
-            )
-            
-//            self.addChild(enemyHealthBar)
-        
-//            print("\(enemyHealthBar.position), POSICAO DA BARRA")
-//            print(enemy.convert(enemy.position, to: self) , " POSICAO INIMIGO")
-            
-        }
-        
-        // Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO
-        for enemy in placedEnemies {
+// Retira inimigos da tela quando a Odessa se afasta muito -- DESBLOQUEAR ISSO COM CUIDADO
+/*        for enemy in placedEnemies {
             if (enemy.convert(enemy.position, to: self).x < (cam.position.x - 2*self.size.width)) && !cam.contains(enemy) {
                 enemy.removeAllActions()
+                enemy.removeAllChildren()
                 enemy.removeFromParent()
                 placedEnemies.remove(at: placedEnemies.index(of: enemy)!)
             }
         }
+ */
         
         
         if (playerNode.position.x > 6862 ){
@@ -576,13 +550,160 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         }
         
-        
+        if (attacking == true){
+            if (atacou == true && isTouchingEnemy == true){
+                for enemies in placedEnemies{
+                    if (enemies == inimigoSendoTocado) {
+                        odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
+                        atacou = false
+                    }
+                }
+            }
+        }
+       
       
+        //Enemy Attack
         
+        for enemy in placedEnemies {
         
-        
-      
-        
+            let enemyPosition = enemy.convert(enemy.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemy)!]/2
+            let playerPosition = playerNode.position.x
+            
+            // Entre a Odessa
+            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || (isTouchingEnemy && enemy == inimigoSendoTocado)){
+                
+                    // Estava a direita da Odessa
+                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatForeverInvertido")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+
+                    if (enemy.name == "hoplita"){
+                        hoplitaAttackAnimationInvertida(enemy: enemy)
+                    } else if (enemy.name == "tanque"){
+                        // animação ataque invertida do tanque
+                    } else if (enemy.name == "arqueiro"){
+                        // animação ataque invertida do arqueiro
+                    }
+                    
+                    // Estava a esquerda da Odessa
+                } else if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatActionAnimation")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+
+                    if (enemy.name == "hoplita"){
+                        hoplitaAttackAnimation(enemy: enemy)
+                    } else if (enemy.name == "tanque"){
+                        // animação ataque do tanque
+                    } else if (enemy.name == "arqueiro"){
+                        // animação ataque do arqueiro
+                    }
+                }
+                
+                // Estava atacando virado para a esquerda - continua atacando
+                if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
+                    enemy.removeAction(forKey: "Attack")
+
+                    // Não está no meio de uma animação a esquerda
+                    if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue != 1){
+                        if (enemy.name == "hoplita"){
+                            hoplitaAttackAnimation(enemy: enemy)
+                        } else if (enemy.name == "tanque"){
+                            // animação ataque do tanque
+                        } else if (enemy.name == "arqueiro"){
+                            // animação ataque do arqueiro
+                        }
+                    }
+                    
+                    // Estava atacando virada para a direita - continua atancando
+                } else if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
+                    enemy.removeAction(forKey: "AttackInvertida")
+
+                    // Não está no meio de uma animação a esquerda
+                    if (enemy.value(forAttributeNamed: "Attack")?.floatValue != 1){
+                        if (enemy.name == "hoplita"){
+                            hoplitaAttackAnimationInvertida(enemy: enemy)
+                        } else if (enemy.name == "tanque"){
+                            // animação ataque invertida do tanque
+                        } else if (enemy.name == "arqueiro"){
+                            // animação ataque invertida do arqueiro
+                        }
+                    }
+                }
+                
+                print("Entre odessa")
+                
+            // A esquerda da Odessa
+            } else if (enemyPosition > playerPosition + (playerNode.size.width*0.4/2)) {
+
+                enemy.texture = SKTexture(image: UIImage(named: "enemy1")!)
+                
+                // Estava atacando a esquerda antes - para action
+                if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
+                    enemy.removeAction(forKey: "Attack")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+                }
+                // Estava atacando a direita antes - para action
+                if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
+                    enemy.removeAction(forKey: "AttackInvertida")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+                }
+                // Estava andando a direita antes - para action
+                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatForeverInvertido")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+                }
+                // Não terminou de andar a esquerda - repete animação
+                if (enemy.value(forAttributeNamed: "animation")?.floatValue == 0){
+                    
+                    if (enemy.name == "hoplita"){
+                        hoplitaWalkAnimation(enemy: enemy)
+                    } else if (enemy.name == "tanque"){
+                        // animação andar esquerda do tanque
+                    } else if (enemy.name == "arqueiro"){
+                        // animação andar esquerda do arqueiro
+                    }
+                }
+
+                enemy.position.x -= 0.7*3
+                print("esquerda")
+                
+            // A direita da Odessa
+            } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
+
+                enemy.texture = SKTexture(image: UIImage(named: "hoplitaInvertido")!)
+                
+                // Estava atacando a esquerda antes - para action
+                if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
+                    enemy.removeAction(forKey: "Attack")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+                }
+                // Estava atacando a direita antes - para action
+                if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
+                    enemy.removeAction(forKey: "AttackInvertida")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+                }
+                // Estava andando a esquerda antes - para action
+                if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatActionAnimation")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+                }
+                // Não terminou de andar a direita - repete animação
+                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 0){
+                    
+                    if (enemy.name == "hoplita"){
+                        hoplitaWalkAnimationInvertido(enemy: enemy)
+                    } else if (enemy.name == "tanque"){
+                        // animação andar direita do tanque
+                    } else if (enemy.name == "arqueiro"){
+                        // animação andar direita do arqueiro
+                    }
+                }
+
+                enemy.position.x += 0.7*3
+                print("direita")
+            }
+            
+        }
         
         // Tempo
         if lastFrameTime <= 0 {
@@ -650,7 +771,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         for enemy in inimigosNode[0] {
             
             modules[0].addChild(enemy)
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
             placedEnemies.append(enemy)
+            PosInicialInimigo.append(enemy.convert(enemy.position, to: self).x)
+            //hoplitaWalkAnimation(enemy: enemy)
             inimigosNode[0].remove(at: 0)
         }
         
@@ -676,27 +803,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height))
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
-            //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
             inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
             inimigoNode.physicsBody?.allowsRotation = false
-            inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
-            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             
-//            inimigoNode.addChild(enemyHealthBar)
+            if (inimigo.imgName == "enemy1"){
+                inimigoNode.name = "hoplita"
+            } else if (inimigo.imgName == "enemy2"){
+                inimigoNode.name = "tanque"
+            } else if (inimigo.imgName == "enemy3"){
+                inimigoNode.name = "arqueiro"
+            }
             
-//            let inimigoHealthBar = SKSpriteNode()
-//            updateHealthBar(node: inimigoHealthBar, withHealthPoints: enemyHP)
-//
+            let HealthBar = createEnemyHealthBar()
+            HealthBar.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height)/4)
             
-            //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
+            inimigoNode.addChild(HealthBar)
             
-            //enemyNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
-            
-//            inimigoHealthBar.position = CGPoint(
-//                x: inimigoNode.convert(inimigoNode.position, to: self).x,
-//                y: inimigoNode.convert(inimigoNode.position, to: self).y + inimigoNode.size.height / 2
-//            )
-//            self.addChild(inimigoHealthBar)
+            inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
@@ -706,6 +829,37 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 enemiesInCurrentModule.removeAll()
             }
         }
+    }
+    
+    func createEnemyHealthBar() -> SKSpriteNode {
+        
+        //Barra Inimigo
+        let enemyHealthBar = SKSpriteNode()
+        
+        let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
+        let fillColor = UIColor(red: 113.0/255, green: 202.0/255, blue: 53.0/255, alpha:1)
+        let borderColor = UIColor(red: 35.0/255, green: 28.0/255, blue: 40.0/255, alpha:1)
+        
+        UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
+        let context = UIGraphicsGetCurrentContext()
+        borderColor.setStroke()
+        
+        let borderRect = CGRect(origin: CGPoint(x:0, y:0), size: barSize)
+        context!.stroke(borderRect, width: 1)
+        fillColor.setFill()
+        
+        let barWidth = (barSize.width - 1) * CGFloat(100) / CGFloat(100)
+        let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
+        context!.fill(barRect)
+        
+        let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        enemyHealthBar.texture = SKTexture(image: spriteImage!)
+        enemyHealthBar.size = barSize
+        enemyHealthBar.name = "HealthBar"
+        
+        return enemyHealthBar
     }
     
     // Cria Mapa
@@ -741,7 +895,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         return sequenciaModulos
     }
     
-    // Arruma os sprites do mapa -- Se der merda tá tudo aqui
+    // Arruma os sprites do mapa
     
     func organizeMap() -> SKNode {
         
@@ -758,6 +912,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false
+        //    floorModule.physicsBody?.categoryBitMask = PhysicsCategory.chao
             
             floorSegments.append(floorModule)
             floor.addChild(floorModule)
@@ -858,7 +1013,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         
         
-        let animateOdessa = SKAction.animate(with: idleArray, timePerFrame: 0.15, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: idleArray, timePerFrame: 0.25, resize: false, restore: false)
         
         let repeatForever = SKAction.repeatForever(animateOdessa)
         
@@ -902,10 +1057,24 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         posicaoBandeira = bandeirao.position.x
     }
     
+    //MARK: Colisao
+    
+    func didEnd(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "hoplita") {
+            isTouchingEnemy = false
+        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "tanque") {
+            isTouchingEnemy = false
+        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "arqueiro") {
+            isTouchingEnemy = false
+        }
+        
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
+
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
@@ -914,100 +1083,93 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        if ((firstBody.categoryBitMask & PhysicsCategory.enemy != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.odessa != 0)) {
-            
-            odessaAttackedEnemy(enemy: firstBody.node as! SKSpriteNode, odessa: secondBody.node as! SKSpriteNode)
+        if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "hoplita") {
+            isTouchingEnemy = true
+            inimigoSendoTocado = secondBody.node as! SKSpriteNode
+        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "tanque") {
+            isTouchingEnemy = true
+            inimigoSendoTocado = secondBody.node as! SKSpriteNode
+        } else if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "arqueiro") {
+            isTouchingEnemy = true
+            inimigoSendoTocado = secondBody.node as! SKSpriteNode
         }
         
-        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        
-//        switch contactMask {
-        
-//        case PhysicsCategory.enemy | PhysicsCategory.odessa :
-        //apply damage
-            
-//            let enemy = (contact.bodyA.categoryBitMask == enemyCategory) ? contact.bodyA.node! : contact.bodyB.node!
-//            enemy.setHitPoints(setPoints: enemy.getHitPoints() - pistol.getDamage())
-            
-//        default :
-//            //Some other contact has occurred
-//            print("Some other contact")
-////        }
     }
     
-    func odessaAttackedEnemy(enemy:SKSpriteNode, odessa:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
+    func odessaAttackedEnemy(odessa:SKSpriteNode, enemy:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
-        print("aaaaa")
-        print("\(inimigol)")
+        enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
+        print(enemy)
+        updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
-        enemyHP = max(0, enemyHP - 25)
-        updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
-
-        //  updateHealthBar(node: playerHealthBar, withHealthPoints: playerHP)
-        
-       
-
-
-        print("atacou inimigo")
-
-        inimigol -= 1
-
-        if (inimigol == 0){
-
-            print("inimigo morreu")
+        if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
             
-            inimigol = 4
+            let healthBar = enemy.childNode(withName: "HealthBar")
+            healthBar?.removeFromParent()
 
-            //remover o cara que a odessa ta tocando
+            enemy.removeAllActions()
+            enemy.removeAllChildren()
+            enemy.removeFromParent()
+            let i = placedEnemies.index(of: enemy)
+            placedEnemies.remove(at: i!)
+            PosInicialInimigo.remove(at: i!)
 
             pontos += 100
-
-            //        inimigoLabel.removeFromParent()
-            enemyHealthBar.removeFromParent()
+            
         }
         
     }
+    
+    func enemyAttackedOdessa(odessa:SKSpriteNode, enemy:SKSpriteNode) {
+        
+        playerHP = max(0, playerHP - 5)//25
+        updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
+        if (playerHP == 0){
+            
+            playerNode.removeFromParent()
+            GameOverHandler()
+            
+            
+        }
+    }
+
+    func updateEnemyLife(enemyBar: SKSpriteNode,withHealthPoints hp: Float){
+        
+        let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
+        
+        let fillColor = UIColor(red: 113.0/255, green: 202.0/255, blue: 53.0/255, alpha:1)
+        let borderColor = UIColor(red: 35.0/255, green: 28.0/255, blue: 40.0/255, alpha:1)
+        
+        UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
+        let context = UIGraphicsGetCurrentContext()
+        
+        borderColor.setStroke()
+        let borderRect = CGRect(origin: CGPoint(x:0, y:0), size: barSize)
+        context!.stroke(borderRect, width: 1)
+        
+        // draw the health bar with a colored rectangle
+        fillColor.setFill()
+        let barWidth = (barSize.width - 1) * CGFloat(hp) / CGFloat(100)
+        let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
+        context!.fill(barRect)
+        
+        // extract image
+        let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // set sprite texture and size
+        enemyBar.texture = SKTexture(image: spriteImage!)
+        enemyBar.size = barSize
+
+        
+    }
     
   
     
     func updateHealthBar(node: SKSpriteNode, withHealthPoints hp: Int) {
         
-        if (node == enemyHealthBar){
-            
-            let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
-            
-            let fillColor = UIColor(red: 113.0/255, green: 202.0/255, blue: 53.0/255, alpha:1)
-            let borderColor = UIColor(red: 35.0/255, green: 28.0/255, blue: 40.0/255, alpha:1)
-            
-            // create drawing context
-            UIGraphicsBeginImageContextWithOptions(barSize, false, 0)
-            let context = UIGraphicsGetCurrentContext()
-            
-            // draw the outline for the health bar
-            borderColor.setStroke()
-            let borderRect = CGRect(origin: CGPoint(x:0, y:0), size: barSize)
-            context!.stroke(borderRect, width: 1)
-            
-            // draw the health bar with a colored rectangle
-            fillColor.setFill()
-            let barWidth = (barSize.width - 1) * CGFloat(hp) / CGFloat(100)
-            let barRect = CGRect(x: 0.5, y: 0.5, width: barWidth, height: barSize.height - 1)
-            context!.fill(barRect)
-            
-            // extract image
-            let spriteImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            // set sprite texture and size
-            node.texture = SKTexture(image: spriteImage!)
-            node.size = barSize
-
-        }
-            
-        else {
-            
+       
             let barSize = CGSize(width: HealthBarWidth, height: HealthBarHO);
             let fillColor = UIColor(red: 197.0/255, green: 76.0/255, blue: 91.0/255, alpha:1)
             // create drawing context
@@ -1027,8 +1189,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             // set sprite texture and size
             node.texture = SKTexture(image: spriteImage!)
             node.size = barSize
-            
-        }
+
     }
     
   
@@ -1036,9 +1197,103 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
-        static let enemy   : UInt32 = 0b1       // 1
-        static let odessa: UInt32 = 0b10      // 2
-        static let chao    : UInt32 = 3
+        static let odessa    : UInt32 = 0b1       // 1
+        static let enemy     :   UInt32 = 0b10      // 2
+        static let lanca     : UInt32 = 3
+      
+    }
+    
+    // Hoplita Animation
+    
+    func hoplitaWalkAnimationInvertido(enemy: SKSpriteNode){
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "animationInvertida")
+        var walkArray = [SKTexture]()
+        
+        for i in 1...5 {
+            walkArray.append(SKTexture(imageNamed: "hoplitaCorrendoInvertido-\(i)"))
+        }
+        
+        let animateOdessa = SKAction.animate(with: walkArray, timePerFrame: 0.15, resize: false, restore: false)
+        let repeatForeverInvertido = SKAction.repeatForever(animateOdessa)
+        
+        enemy.run(repeatForeverInvertido, withKey: "repeatForeverInvertido")
+    }
+    
+    func hoplitaWalkAnimation(enemy: SKSpriteNode){
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "animation")
+        
+        var walkArray = [SKTexture]()
+        
+        for i in 1...8 {
+            walkArray.append(SKTexture(imageNamed: "hoplita_walk-frame\(i)"))
+        }
+        
+        let animateOdessa = SKAction.animate(with: walkArray, timePerFrame: 0.15, resize: false, restore: false)
+        let repeatActionAnimation = SKAction.repeatForever(animateOdessa)
+        
+        
+        enemy.run(repeatActionAnimation, withKey: "repeatActionAnimation")
+        
+        let end = SKAction.run {
+            enemy.removeAction(forKey: "repeatActionAnimation")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+        }
+        
+        
+    }
+    
+    func hoplitaAttackAnimationInvertida(enemy: SKSpriteNode){
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "AttackInvertida")
+        
+        var attackArray = [SKTexture]()
+//        var lancaAttack = [SKTexture]()
+        
+        for i in 1...4 {
+            attackArray.append(SKTexture(imageNamed: "soldier_attack-invertido-frame\(i)"))
+        }
+        
+//        for i in 1...7 {
+//            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
+//        }
+        
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        
+        let end = SKAction.run ({
+            if (self.isTouchingEnemy == true){
+                self.enemyAttackedOdessa(odessa:  self.playerNode, enemy: self.inimigoSendoTocado)
+            }
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
+        })
+        
+        let sequence = SKAction.sequence([animateOdessa, end])
+        enemy.run(sequence, withKey: "attack")
+    }
+    
+    func hoplitaAttackAnimation(enemy: SKSpriteNode){
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "Attack")
+        
+        var attackArray = [SKTexture]()
+        //        var lancaAttack = [SKTexture]()
+        
+        for i in 1...4 {
+            attackArray.append(SKTexture(imageNamed: "soldier_attack-frame\(i)"))
+        }
+        
+        //        for i in 1...7 {
+        //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
+        //        }
+        
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        
+        let end = SKAction.run ({
+            if (self.isTouchingEnemy == true){
+                self.enemyAttackedOdessa(odessa:  self.playerNode, enemy: self.inimigoSendoTocado)
+            }
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+        })
+        
+        let sequence = SKAction.sequence([animateOdessa, end])
+        enemy.run(sequence, withKey: "attack")
     }
     
     
