@@ -178,7 +178,7 @@ class HomeScene: SKScene {
         pig.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.075)
         pig2.position = CGPoint(x: screenWidth*0.6, y: screenHeight*0.075)
         //
-        bandeirao.position = CGPoint(x: screenWidth*0.15, y: screenHeight*0.287)
+        bandeirao.position = CGPoint(x: screenWidth*0.15, y: screenHeight*0.127)
         bandeirao2.position = CGPoint(x: screenWidth*0.90, y: screenHeight*0.257)
         //
         nuvem1.position = CGPoint(x: screenWidth*0.01 - 100, y: screenHeight*0.8)

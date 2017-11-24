@@ -1303,7 +1303,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
 //        }
         
-        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.2, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.145, resize: false, restore: false)
         
         let end = SKAction.run ({
             if (self.isTouchingEnemy == true){
@@ -1330,7 +1330,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
         //        }
         
-        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.2, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.145, resize: false, restore: false)
         
         let end = SKAction.run ({
             if (self.isTouchingEnemy == true){
@@ -1357,10 +1357,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 print("é maior")
                 print("atualiza bd")
                 updateData (context: context, score: score)
+                score = 0
 
             }
             else {
                 print("n moeda é maior")
+                score = 0
             }
 
 
@@ -1368,6 +1370,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         else {  // só entra quando n tem user no bd
             print("saved")
             storeData(context: context, moeda: score)
+            score = 0
 
         }
 
