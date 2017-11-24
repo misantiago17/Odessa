@@ -765,31 +765,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     
     func VictoryHandler(){
-        
-        score += pontos
-        print("\(pontos)")
-        print("\(score)")
-        print("\(temUser)")
-        
-        if (temUser == true){
-            if (score > nMoeda){
-                print("é maior")
-                print("atualiza bd")
-                updateData (context: context, score: score)
-                
-            }
-            else {
-                print("n moeda é maior")
-            }
-            
-            
-        }
-        else {  // só entra quando n tem user no bd
-            print("saved")
-            storeData(context: context, moeda: score)
-            
-        }
-    
+       atualizaBanco()
+  
         let nextScene = VictoryScene(size: self.scene!.size)
         nextScene.scaleMode = self.scaleMode
         nextScene.backgroundColor = UIColor.black
@@ -1188,31 +1165,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
         if (playerHP == 0){
-            score += pontos
-            print("\(pontos)")
-            print("\(score)")
-            print("\(temUser)")
-            
-            
-            if (temUser == true){
-                if (score > nMoeda){
-                    print("é maior")
-                    print("atualiza bd")
-                    updateData (context: context, score: score)
-          
-                }
-                else {
-                   print("n moeda é maior")
-                }
-                
- 
-            }
-            else {  // só entra quando n tem user no bd
-                print("saved")
-               storeData(context: context, moeda: score)
- 
-            }
-
+            atualizaBanco()
             playerNode.removeFromParent()
             GameOverHandler()
             
@@ -1387,10 +1340,39 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
     //MARK: Core Data
+
+    func atualizaBanco(){
+
+        score += pontos
+        print("\(pontos)")
+        print("\(score)")
+        print("\(temUser)")
+
+        if (temUser == true){
+            if (score > nMoeda){
+                print("é maior")
+                print("atualiza bd")
+                updateData (context: context, score: score)
+
+            }
+            else {
+                print("n moeda é maior")
+            }
+
+
+        }
+        else {  // só entra quando n tem user no bd
+            print("saved")
+            storeData(context: context, moeda: score)
+
+        }
+
+    }
+    
   
     func storeData(context: NSManagedObjectContext, moeda: Int){
 
-        if (temUser == false){
+        if (temUser == nil){
             let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: context)
             newUser.setValue(moeda, forKey: "coins")
             //  newUser.setValue("123", forKey: "password")
