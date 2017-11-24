@@ -599,7 +599,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             distancia = enemyPosition - playerPosition
             
-            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || isTouchingEnemy){
+            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || (isTouchingEnemy && inimigoSendoTocado == enemy)){
                 
                 if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
                     enemy.removeAction(forKey: "repeatForeverInvertido")
