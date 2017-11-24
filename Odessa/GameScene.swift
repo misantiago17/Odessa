@@ -11,6 +11,7 @@ import GameplayKit
 import SwiftyJSON
 
 class GameScene: SKScene,  SKPhysicsContactDelegate {
+    
     //Public
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
@@ -25,7 +26,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
-//    var parallax = ParallaxScene()
     
     // Private
     private var modules: [SKSpriteNode] = []
@@ -104,7 +104,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //Booelan Hoplita Attack
     var hoplitaAttack = false
-//    var walkHoplita = false
     
     //Distância
     var distancia: CGFloat?
@@ -119,9 +118,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
     }
     
-    //let moeda = SKSpriteNode(imageNamed: "moeda")
-    
     var PosInicialInimigo: [CGFloat] = []
+    
+    //Devices
+    let modelName = UIDevice.current.modelName
+    
     
     override func sceneDidLoad() {
         
@@ -775,8 +776,22 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
             //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
-            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.5))
-            //TALVEZ FIQUE BOM NO SE COM SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.48))
+            
+            if modelName == "iPhone 5" || modelName == "iPhone 5c" || modelName == "iPhone 5s" || modelName == "iPhone SE" {
+                
+                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.46))
+                
+            } else if modelName == "iPhone 6" || modelName == "iPhone 6s" || modelName == "iPhone 7" {
+               
+                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.50))
+                
+            } else {
+               
+                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.55))
+                
+            }
+            
+
             inimigoNode.physicsBody?.allowsRotation = false
             //inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
 //            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
@@ -791,7 +806,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
             
             //Inimigo Size
-            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
+//            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
