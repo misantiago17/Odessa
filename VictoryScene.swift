@@ -21,7 +21,7 @@ class VictoryScene: SKScene {
         
         
         let winLabel = SKLabelNode(fontNamed: "Montserrat-Regular")
-        winLabel.text = "Fim do testflight"     //colocar mensagem de vitoria aqui
+        winLabel.text = "Clique para a próxima fase"     //colocar mensagem de vitoria aqui
         winLabel.fontSize = 30
         winLabel.zPosition = 3
         winLabel.horizontalAlignmentMode = .center
@@ -65,7 +65,7 @@ class VictoryScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         
-        let nextScene = HomeScene(size: self.size)
+        let nextScene = GameScene(size: self.size)
         nextScene.scaleMode = self.scaleMode
         nextScene.backgroundColor = UIColor.black
         self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
