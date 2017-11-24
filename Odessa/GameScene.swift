@@ -103,6 +103,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var isTouchingEnemy = false
     var inimigoSendoTocado = SKSpriteNode()
     
+    //bonfires
+    var pedra1 = SKSpriteNode(texture: SKTexture(imageNamed: "bonfire"))
+    var pedra2 = SKSpriteNode(texture: SKTexture(imageNamed: "bonfire"))
+
+    
     //Booelan Hoplita Attack
     var hoplitaAttack = false
     
@@ -142,8 +147,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         bnb.size = bnb.size*0.2
         addChild(bnb)
         
-        context = appDelegate.persistentContainer.viewContext
+        //Bonfires
+        setInicialBonfire ()
+        setFinalBonfire()
         
+        
+        //Core Data
+        context = appDelegate.persistentContainer.viewContext
         recoverData(context: context)
 
         // Mapa
@@ -741,6 +751,24 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             cam.position = CGPoint(x: playerNode.position.x, y: 120)
         //}
 
+        if (playerNode.position.x > modulesInitialPositions.last! + 500){
+            
+            print("\(pedra2.position.x)")
+            pedra2Animation()
+            
+        }
+        
+        if (playerNode.position.x > modulesInitialPositions.last! + 600){
+            
+            VictoryHandler()
+            
+        }
+        if (playerNode.position.x < pedra1.position.x){
+            
+            pedra1Animation()
+            
+        }
+        
         
         
         // Game Over
@@ -1378,6 +1406,57 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         enemy.run(sequence, withKey: "attack")
     }
     
+    
+    //MARK: Bonfire
+    
+    func setInicialBonfire (){
+        
+        pedra1.position = CGPoint(x: 400, y: 160)// 8200 230
+        pedra1.zPosition = 1
+        pedra1.setScale(0.75)
+        
+        addChild(pedra1)
+    }
+    
+    func setFinalBonfire(){
+        
+        pedra2.position = CGPoint(x: 8200, y: 160)// 8200 230
+        pedra2.zPosition = 1
+        pedra2.setScale(0.75)
+        
+        addChild(pedra2)
+    }
+    
+    
+    func pedra1Animation (){
+        
+        var pedritaFogos = [SKTexture]()
+        for i in 1...13 {
+            pedritaFogos.append(SKTexture(imageNamed:("bonfire-frame-\(i)")))
+        }
+        let fogosAction = SKAction.animate(with: pedritaFogos, timePerFrame: 0.26, resize: true, restore: false)
+        let repeatAction = SKAction.repeatForever(fogosAction)
+        
+        pedra1.run(repeatAction, withKey: "repeatAction")
+        
+        
+        
+    }
+    
+    func pedra2Animation(){
+        
+        var pedritaFogos = [SKTexture]()
+        for i in 1...13 {
+            pedritaFogos.append(SKTexture(imageNamed:("bonfire-frame-\(i)")))
+        }
+        let fogosAction = SKAction.animate(with: pedritaFogos, timePerFrame: 0.26, resize: true, restore: false)
+        let repeatAction = SKAction.repeatForever(fogosAction)
+        
+        pedra2.run(repeatAction, withKey: "repeatAction")
+        
+        
+        
+    }    
     //MARK: Core Data
 
     func atualizaBanco(){
