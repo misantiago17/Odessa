@@ -123,8 +123,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     //Devices
     let modelName = UIDevice.current.modelName
     
+    let bnb = SKSpriteNode(imageNamed: "expences-button-png-hi")
     
     override func sceneDidLoad() {
+        
+        bnb.size = bnb.size*0.2
+        addChild(bnb)
         
         // Mapa
         mapa = createMap()
@@ -590,6 +594,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             //let playerPosition = playerNode.convert(playerNode.position, to: enemy.parent!).x
             //let enemyPosition = enemy.position.x
             
+            bnb.position.x = enemyPosition
+            bnb.position.y = enemy.position.y
+            
             print(enemy.convert(enemy.position, from: self).x, "ASASF")
             enemy.convert(enemy.position, to: self)
 
@@ -771,7 +778,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             let texture = SKTextureAtlas(named: "Inimigos").textureNamed(inimigo.imgName)
             
-            let inimigoNode = SKSpriteNode(texture: texture, size: texture.size()*0.75)
+            let inimigoNode = SKSpriteNode(texture: texture) // 75% antes
+            inimigoNode.size = CGSize(width: texture.size().width*0.75, height: texture.size().height*0.75)
             inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height))
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
@@ -779,14 +787,17 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             if modelName == "iPhone 5" || modelName == "iPhone 5c" || modelName == "iPhone 5s" || modelName == "iPhone SE" {
                 
+                //inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.46)
                 inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.46))
                 
             } else if modelName == "iPhone 6" || modelName == "iPhone 6s" || modelName == "iPhone 7" {
                
+                inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.50)
                 inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.50))
                 
             } else {
                
+                inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.55)
                 inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.55))
                 
             }
