@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5530411FA3860800CFE572 /* VictoryScene.swift */; };
+		0B581DF51FC7A2DF00200057 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B581DF41FC7A2DF00200057 /* CoreData.swift */; };
 		0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
 		0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */; };
+		0BD663E61FC730F700088CD7 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */; };
 		56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
 		56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
 		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
@@ -50,8 +52,10 @@
 
 /* Begin PBXFileReference section */
 		0B5530411FA3860800CFE572 /* VictoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryScene.swift; sourceTree = "<group>"; };
+		0B581DF41FC7A2DF00200057 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
+		0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
 		0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
 		56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
@@ -173,11 +177,13 @@
 				8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */,
 				8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */,
 				8A5C63ED1F6C061400271379 /* GameScene.swift */,
+				0B581DF41FC7A2DF00200057 /* CoreData.swift */,
 				0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */,
 				8A5C642E1F71775700271379 /* PauseGameScene.swift */,
 				0B5530411FA3860800CFE572 /* VictoryScene.swift */,
 				0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */,
 				BEC134F71FBA215000AA094C /* StoreScene.swift */,
+				0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -358,11 +364,13 @@
 				0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */,
 				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
 				0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */,
+				0BD663E61FC730F700088CD7 /* CoreData.xcdatamodeld in Sources */,
 				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
 				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
 				8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */,
 				8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */,
 				8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */,
+				0B581DF51FC7A2DF00200057 /* CoreData.swift in Sources */,
 				8A5C64311F71784A00271379 /* HomeScene.swift in Sources */,
 				8A5C64191F6C12B600271379 /* Arma.swift in Sources */,
 				8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */,
@@ -548,6 +556,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8A5C63DC1F6C061400271379 /* Project object */;
 }

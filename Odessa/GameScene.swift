@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 import SwiftyJSON
+import CoreData
 
 class GameScene: SKScene,  SKPhysicsContactDelegate {
     
@@ -23,6 +24,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     //var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
     
     var hud = SKNode()
+    
+    
+    
+    
     
     var mapa: Mapa?
     var HUDNode = HUD()
@@ -115,18 +120,33 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
     var inimigol = 4
     
-    var  pontos: Int = 0 {
+    var nMoeda: Int = 0
+     
+    var  pontos: Int = 0
+    {
         didSet{
+
             HUDNode.pontosLabel.text = "\(pontos)"
         }
     }
+
+    var temUser: Bool!
     
-    //let moeda = SKSpriteNode(imageNamed: "moeda")
+    var score: Int = 0
     
+    public let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var context: NSManagedObjectContext!
+
     var PosInicialInimigo: [CGFloat] = []
+    
+  
     
     override func sceneDidLoad() {
         
+        context = appDelegate.persistentContainer.viewContext
+        
+        recoverData(context: context)
+
         // Mapa
         mapa = createMap()
         let floor = organizeMap()
@@ -156,7 +176,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Lança
         lancaNode.size = CGSize(width: size.height/2, height: size.height/2)
         lancaNode.name = "lancaNode"
-        lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.lanca
+      //  lancaNode.physicsBody?.categoryBitMask = PhysicsCategory.lanca
         lancaNode.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
         
         // Background
@@ -191,14 +211,17 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         modules.remove(at: 0)
 
     }
-    
-    
+
     override func didMove(to view: SKView) {
         
         //setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
         
         physicsWorld.contactDelegate = self
+        
+        if (temUser == true){
+            pontos = nMoeda
+        }
 
   
         // cam.addChild(parallax.frente)
@@ -307,6 +330,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     
                 })
                 
+             
                 
                 let end = SKAction.run({
                     
@@ -513,7 +537,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
     
+    //MARK: UPDATE
+    
     override func update(_ currentTime: TimeInterval) {
+        
+      
    
         // Põe inimigos na tela conforme a Odessa anda -- DESBLOQUEAR ISSO
         if (!modulesInitialPositions.isEmpty){
@@ -526,6 +554,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             }
         }
         
+     //   print("\(attacking)")
         
     //    attacking = true
 //
@@ -559,12 +588,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         if (playerNode.position.x > modulesInitialPositions.last! + 200){
 
-            let nextScene = VictoryScene(size: self.scene!.size)
-            nextScene.scaleMode = self.scaleMode
-            nextScene.backgroundColor = UIColor.black
-            joystick?.removeFromSuperview()
-            self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 0.5))
-
+            VictoryHandler()
+            
         }
         
         if (attacking == true){
@@ -591,12 +616,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             //let playerPosition = playerNode.convert(playerNode.position, to: enemy.parent!).x
             //let enemyPosition = enemy.position.x
             
-            print(enemy.convert(enemy.position, from: self).x, "ASASF")
+//            print(enemy.convert(enemy.position, from: self).x, "ASASF")
             enemy.convert(enemy.position, to: self)
 
-            print(enemyPosition, "INIMIGO")
-            print(placedEnemies.index(of: enemy))
-            print(playerPosition, "PLAYER")
+//            print(enemyPosition, "INIMIGO")
+//            print(placedEnemies.index(of: enemy))
+//            print(playerPosition, "PLAYER")
             
             distancia = enemyPosition - playerPosition
 
@@ -621,7 +646,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     hoplitaAttackAnimationInvertida(enemy: enemy)
                 }
                 
-                print("Entre odessa")
+//                print("Entre odessa")
         
             } else if (enemyPosition > playerPosition + (playerNode.size.width*0.4/2)) {
 
@@ -641,11 +666,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 }
                 if (enemy.value(forAttributeNamed: "animation")?.floatValue == 0){
                     hoplitaWalkAnimation(enemy: enemy)
-                    print("EntrouEsquerda")
+//                    print("EntrouEsquerda")
                 }
 
                 enemy.position.x -= 0.7*3
-                print("esquerda")
+//                print("esquerda")
 
             } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
 
@@ -665,12 +690,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 }
                 if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 0){
                     hoplitaWalkAnimationInvertido(enemy: enemy)
-                    print("EntrouDireita")
+//                    print("EntrouDireita")
 
                 }
 
                 enemy.position.x += 0.7*3
-                print("direita")
+//                print("direita")
             }
             
         }
@@ -736,6 +761,19 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         nextScene.backgroundColor = UIColor.black
         joystick?.removeFromSuperview()
         self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 1.5))
+    }
+    
+    
+    func VictoryHandler(){
+       atualizaBanco()
+  
+        let nextScene = VictoryScene(size: self.scene!.size)
+        nextScene.scaleMode = self.scaleMode
+        nextScene.backgroundColor = UIColor.black
+        joystick?.removeFromSuperview()
+        self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 0.5))
+        
+        
     }
     
     // Place Enemies in module
@@ -896,10 +934,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             floorModule.physicsBody = SKPhysicsBody(texture: floorModule.texture!, size: (floorModule.texture?.size())!)
             floorModule.physicsBody?.affectedByGravity = false
             floorModule.physicsBody?.isDynamic = false
-        //    floorModule.physicsBody?.categoryBitMask = PhysicsCategory.chao
-            
+            floorModule.physicsBody?.categoryBitMask = PhysicsCategory.chao
+            floorModule.name = "chao"
             floorSegments.append(floorModule)
             floor.addChild(floorModule)
+          
             
             modulesInitialPositions.append(floor.calculateAccumulatedFrame().size.width - floorModule.size.width)
             // Modulo Inicial e Final
@@ -1085,64 +1124,17 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //         if (( firstBody.categoryBitMask == PhysicsCategory.odessa) && (secondBody.categoryBitMask == PhysicsCategory.enemy)){
             
         }
+        
+ 
        
        
         
     }
     
-   // contact
-    
-//        func verificaColisao () {
-//
-//            if (( firstBody.categoryBitMask == PhysicsCategory.odessa) && (secondBody.categoryBitMask == PhysicsCategory.enemy)){
-//
-//                switch attacking {
-//                case false:  //odessa n ta atacano
-//
-//                    print("odessa ta morreno")
-//                    enemyAttackedOdessa(odessa:  firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-//
-//
-//                    break
-//
-//                case true:  //odessa ta atacano
-//
-//                    print("inimigo ta morreno")
-//                    odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-//
-//                    break
-//
-//                }
-//
-//
-//
-//        }
-    
-//        if firstBody.node?.name == "player" && secondBody.node?.name == "inimigo" {
-//            switch attacking {
-//            case false:  //odessa n ta atacano
-//
-//                print("odessa ta morreno")
-//                enemyAttackedOdessa(odessa:  firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-//
-//
-//                break
-//
-//            case true:  //odessa ta atacano
-//
-//                print("inimigo ta morreno")
-//                odessaAttackedEnemy(odessa: firstBody.node as! SKSpriteNode, enemy: secondBody.node as! SKSpriteNode)
-//
-//                break
-//
-//            }
-//        }
-  //  }
-    
     func odessaAttackedEnemy(odessa:SKSpriteNode, enemy:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
-        print(enemy)
+//        print(enemy)
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
 //        print("atacou inimigo")
@@ -1163,17 +1155,21 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
             pontos += 100
             
+           
+            
+            
+            
         }
         
     }
     
     func enemyAttackedOdessa(odessa:SKSpriteNode, enemy:SKSpriteNode) {
         
-        playerHP = max(0, playerHP - 5)//25
+        playerHP = max(0, playerHP - 50)//25
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
         if (playerHP == 0){
-            
+            atualizaBanco()
             playerNode.removeFromParent()
             GameOverHandler()
             
@@ -1181,6 +1177,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
     }
 
+    
+    //Mark: Update das Health Bars
+    
     func updateEnemyLife(enemyBar: SKSpriteNode,withHealthPoints hp: Float){
         
         let barSize = CGSize(width: HealthBarWE, height: HealthBarHeight);
@@ -1239,19 +1238,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
     }
     
-  
+    //Mark: Physics Category
 
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
         static let odessa    : UInt32 = 0b1       // 1
-        static let enemy     :   UInt32 = 0b10      // 2
-        static let lanca     : UInt32 = 3
+        static let enemy     : UInt32 = 0b10      // 2
+        static let chao      : UInt32 = 3          //3
       
     }
     
-    // Hoplita Animation
     
+    //Mark: Hoplita Animation
+
     func hoplitaWalkAnimationInvertido(enemy: SKSpriteNode){
         enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "animationInvertida")
         var walkArray = [SKTexture]()
@@ -1343,7 +1343,105 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         enemy.run(sequence, withKey: "attack")
     }
     
+    //MARK: Core Data
+
+    func atualizaBanco(){
+
+        score += pontos
+        print("\(pontos)")
+        print("\(score)")
+        print("\(temUser)")
+
+        if (temUser == true){
+            if (score > nMoeda){
+                print("é maior")
+                print("atualiza bd")
+                updateData (context: context, score: score)
+
+            }
+            else {
+                print("n moeda é maior")
+            }
+
+
+        }
+        else {  // só entra quando n tem user no bd
+            print("saved")
+            storeData(context: context, moeda: score)
+
+        }
+
+    }
     
+  
+    func storeData(context: NSManagedObjectContext, moeda: Int){
+
+        if (temUser == nil){
+            let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: context)
+            newUser.setValue(moeda, forKey: "coins")
+            //  newUser.setValue("123", forKey: "password")
+        }
+
+        do {
+            try context.save()
+            print("SAVED")
+        }
+        catch{
+            print("erro")
+        }
+        
+    }
+    
+    func recoverData (context: NSManagedObjectContext){
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
+        do {
+            let results = try context.fetch(request)
+            if results.count > 0 {
+               
+                for result in results as! [NSManagedObject] {
+                    if let moeda = result.value(forKey: "coins") as? Int {
+                        print(moeda)
+                        nMoeda = moeda
+                        temUser = true
+                    }
+                }
+            }
+        }
+        catch {
+            print("erro")
+        }
+    }
+    
+    func updateData (context: NSManagedObjectContext, score: Int){
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
+        do {
+            let results = try context.fetch(request)
+            if results.count > 0 {
+                
+                for result in results as! [NSManagedObject] {
+                    if let moeda = result.value(forKey: "coins") as? Int {
+                        if (moeda < score){
+                            result.setValue(score, forKey: "coins")
+                            storeData(context: context, moeda: score)
+                            print("atualizou")
+                        }
+                        else if (score > 1000){
+                            print("está mior que o score máximo")
+                        }
+                    }
+                }
+            }
+        }
+        catch {
+            
+        }
+        
+
+    }
 
     
     
