@@ -171,10 +171,10 @@ class HomeScene: SKScene {
         //
         //         let group = SKAction.group([andandoAction,direita])
         //
-        pig.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.075)
-        pig2.position = CGPoint(x: screenWidth*0.6, y: screenHeight*0.075)
+        pig.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.0756)
+        pig2.position = CGPoint(x: screenWidth*0.6, y: screenHeight*0.076)
         //
-        bandeirao.position = CGPoint(x: screenWidth*0.15, y: screenHeight*0.127)
+        bandeirao.position = CGPoint(x: screenWidth*0.15, y: screenHeight*0.257)
         bandeirao2.position = CGPoint(x: screenWidth*0.90, y: screenHeight*0.257)
         //
         nuvem1.position = CGPoint(x: screenWidth*0.01 - 100, y: screenHeight*0.8)

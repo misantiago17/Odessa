@@ -1411,18 +1411,18 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setInicialBonfire (){
         
-        pedra1.position = CGPoint(x: 400, y: 160)// 8200 230
-        pedra1.zPosition = 1
-        pedra1.setScale(0.75)
+        pedra1.position = CGPoint(x: 400, y: screenHeight*0.385)// 8200 230
+        pedra1.zPosition = -1
+        pedra1.setScale(0.55)
         
         addChild(pedra1)
     }
     
     func setFinalBonfire(){
         
-        pedra2.position = CGPoint(x: 8200, y: 160)// 8200 230
-        pedra2.zPosition = 1
-        pedra2.setScale(0.75)
+        pedra2.position = CGPoint(x: 8200, y: screenHeight*0.385)// 8200 230
+        pedra2.zPosition = -1
+        pedra2.setScale(0.55)
         
         addChild(pedra2)
     }
