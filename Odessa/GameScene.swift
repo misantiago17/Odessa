@@ -136,11 +136,15 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
     var PosInicialInimigo: [CGFloat] = []
     
-  
+    //Devices
+    let modelName = UIDevice.current.modelName
+    
+    let bnb = SKSpriteNode(imageNamed: "expences-button-png-hi")
     
     override func sceneDidLoad() {
         
-        context = appDelegate.persistentContainer.viewContext
+        bnb.size = bnb.size*0.2
+        addChild(bnb)
         
         recoverData(context: context)
 
@@ -585,6 +589,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         if (playerNode.position.x > modulesInitialPositions.last! + 200){
 
+            goToGameScene()
+//            let nextScene = VictoryScene(size: self.scene!.size)
+//
+//            nextScene.scaleMode = self.scaleMode
+//            nextScene.backgroundColor = UIColor.black
+//            joystick?.removeFromSuperview()
+//            self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 0.5))
+
             VictoryHandler()
             
         }
@@ -613,7 +625,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             //let playerPosition = playerNode.convert(playerNode.position, to: enemy.parent!).x
             //let enemyPosition = enemy.position.x
             
-//            print(enemy.convert(enemy.position, from: self).x, "ASASF")
+            bnb.position.x = enemyPosition
+            bnb.position.y = enemy.position.y
+            
+            print(enemy.convert(enemy.position, from: self).x, "ASASF")
             enemy.convert(enemy.position, to: self)
 
 //            print(enemyPosition, "INIMIGO")
