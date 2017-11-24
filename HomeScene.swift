@@ -19,6 +19,7 @@ class HomeScene: SKScene {
     
     let newGameButton = SKSpriteNode(imageNamed: "newGame")
     let storeButton = SKSpriteNode(imageNamed: "storeButton")
+    let creditsButton = SKSpriteNode(imageNamed: "creditsPetit")
     var pigComendo = [SKTexture]()
     var bandeiraGrande = [SKTexture]()
     var primeiraNuvem = [SKTexture]()
@@ -260,6 +261,11 @@ class HomeScene: SKScene {
 //                    storeButton.zPosition = 2.5
 //                    storeButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
 //                    addChild(storeButton)
+                    
+                    creditsButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.108*screenHeight)
+                    creditsButton.zPosition = 2.5
+                    //creditsButton.size = CGSize(width: 35/667*screenWidth , height: 14/375*screenHeight)
+                    addChild(creditsButton)
                     
                     
                     isNewGame = true

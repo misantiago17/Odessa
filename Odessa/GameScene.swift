@@ -86,6 +86,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var longBlock:Bool = false
     
     var ultimo = CGFloat()
+    var primeiro = CGFloat()
     var posicaoBandeira = CGFloat()
     
     let MaxHealth = 250
@@ -139,7 +140,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
      
         // Player
         playerNode.size = CGSize(width: size.height/2, height: size.height/2)
-        playerNode.position = CGPoint(x: 100, y: 400)
+        playerNode.position = CGPoint(x: 300, y: 400)
         playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.85))
         //playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
@@ -166,10 +167,24 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         hud = HUDNode.getHUDNode()
  
         ultimo = modulesInitialPositions.last!
-        setFlag()
+        primeiro = modulesInitialPositions[1]
+        //setFlag()
+        
+        // MARK: Camera
+        camera = cam
+        addChild(cam)
+        cam.addChild(hud)
+        cam.addChild(background)
+        
+        // TEM QUE AJEITAR PARA OUTROS IPHONES
+        // Ideal: modulesInitialPositions[0] estar sempre na extremidade esquerda da camera
+//        print(cam.contains(CGPoint(x: modulesInitialPositions[0], y: 120)), "TA LA MEMO?")
+//        cam.position.x = modulesInitialPositions[1]
+//        cam.position.y = 120
+
         
         // Pegar o primeiro modulo e colocar os inimigos nas posições dele
-        placeEnemies()
+        //placeEnemies()
         modulesInitialPositions.remove(at: 0)
         
     }
@@ -179,46 +194,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         //setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
-        //updateHealthBar(node: enemyHealthBar, withHealthPoints: enemyHP)
-        
-        
-        //
-//        for module in inimigosNode {
-//            for enemy in module {
-//                print(enemy.parent,"soy gay")
-//                self.addChild(enemyHealthBar)
-//
-//              //  enemyHealthBar.addChild(inimigosNode[0][0])
-//               // inimigosNode[0][0].addChild(enemyHealthBar)
-//            }
-//        }
         
         physicsWorld.contactDelegate = self
-       
-//        moeda.position = CGPoint(x: 500 , y: 280)
-//        moeda.setScale(0.8)
-   
-        // MARK: Camera
-        camera = cam
-        addChild(cam)
-        cam.addChild(hud)
-        cam.addChild(background)
-     //   self.addChild(enemyHealthBar)
-        
-        
-     //   self.enemyNode.addChild(enemyHealthBar)
-        
-    //    cam.addChild(enemyHealthBar)
+
+  
         // cam.addChild(parallax.frente)
         // cam.addChild(parallax.meio)
-        
-        // cam.addChild(playerHealthBar)
-       // cam.addChild(enemyHealthBar)
-        
-        
-        
-        // cam.addChild(moeda)
-        // cam.addChild(pontosLabel)
         
         let zoomOutAction = SKAction.scale(to: 2.0, duration: 0)
         cam.run(zoomOutAction)
@@ -305,12 +286,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 attacking = true
                 atacou = true
                 
-               // verificaColisao()
-                
                
-                let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.1, resize: false, restore: false)
+                let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.08, resize: false, restore: false)
                 
-                let animateLanca = SKAction.animate(with: self.movements.lancaAttack, timePerFrame: 0.1, resize: false, restore: false)
+                let animateLanca = SKAction.animate(with: self.movements.lancaAttack, timePerFrame: 0.08, resize: false, restore: false)
                 
                 
                 let addLanca = SKAction.run({
@@ -359,16 +338,16 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 block = true
                 fingerIsTouching = true
                 
-                let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.20, resize: false, restore: false)
+                let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.2, resize: false, restore: false)
                 
-                let animateLanca = SKAction.animate(with: self.movements.lancaBlock, timePerFrame: 0.20, resize: false, restore: false)
+                let animateLanca = SKAction.animate(with: self.movements.lancaBlock, timePerFrame: 0.2, resize: false, restore: false)
                 
                 let addLanca = SKAction.run({
                     
                     self.playerNode.addChild(self.lancaNode)
                     self.lancaNode.position = CGPoint(x: 20, y: 0)
                     self.lancaNode.zPosition = -1
-                    self.lancaNode.size = CGSize(width: 240 / 2, height: 250 / 2)//
+                    self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
                     self.lancaNode.run(animateLanca)
                     
                 })
@@ -536,9 +515,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         // Põe inimigos na tela conforme a Odessa anda -- DESBLOQUEAR ISSO
         if (!modulesInitialPositions.isEmpty){
             if ((cam.position.x + self.size.width) >= modulesInitialPositions[0]){
+                if (modulesInitialPositions.count != 1) {   // não é o ultimo modulo
+                    placeEnemies()
+                    modulesInitialPositions.remove(at: 0)
+                }
 
-                placeEnemies()
-                modulesInitialPositions.remove(at: 0)
             }
         }
         
@@ -573,7 +554,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //        }
         
         
-        if (playerNode.position.x > 6862 ){
+        if (playerNode.position.x > modulesInitialPositions.last! + 200){
 
             let nextScene = VictoryScene(size: self.scene!.size)
             nextScene.scaleMode = self.scaleMode
@@ -719,7 +700,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         
         // Camera
-        cam.position = CGPoint(x: playerNode.position.x, y: 120)
+        //if (playerNode.position.x > primeiro){
+            cam.position = CGPoint(x: playerNode.position.x, y: 120)
+        //}
+
         
         
         // Game Over
@@ -790,7 +774,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
             //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
-            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width*0.25, height: texture.size().height*0.45))
+            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.5))
+            //TALVEZ FIQUE BOM NO SE COM SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.48))
             inimigoNode.physicsBody?.allowsRotation = false
             //inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
 //            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
@@ -854,10 +839,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         let modulosIDs: [Int] = randomizeModules()
         var modulos: [ModuloMapa] = []
         
+        // Modulo Inicial
+        let moduleInicial = ModuloMapa(imagemCenario: "floorPortao", IDModulo: -1, waves: [])
+        modulos.append(moduleInicial)
+
+        
         for ID in modulosIDs {
             let modulo = Reader().GetModule(ModuleID: ID)
             modulos.append(modulo)
         }
+        
+        // Modulo Final
+        let moduleFinal = ModuloMapa(imagemCenario: "floorEspada", IDModulo: -2, waves: [])
+        modulos.append(moduleFinal)
+
         
         let map = Mapa(Modulos: modulos)
         
@@ -904,7 +899,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             floor.addChild(floorModule)
             
             modulesInitialPositions.append(floor.calculateAccumulatedFrame().size.width - floorModule.size.width)
-            getModulesEnemy(modulo: module)
+            // Modulo Inicial e Final
+            if (module.IDModulo != -1 && module.IDModulo != -2) {
+                getModulesEnemy(modulo: module)
+            }
+
             modules.append(floorModule)
             
             if (i > 0){
@@ -1301,7 +1300,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
 //        }
         
-        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.2, resize: false, restore: false)
         
         let end = SKAction.run ({
             if (self.isTouchingEnemy == true){
@@ -1328,7 +1327,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //            lancaAttack.append(SKTexture(imageNamed: "maca-soldier_attack-frame\(i)"))
         //        }
         
-        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.75, resize: false, restore: false)
+        let animateOdessa = SKAction.animate(with: attackArray, timePerFrame: 0.2, resize: false, restore: false)
         
         let end = SKAction.run ({
             if (self.isTouchingEnemy == true){

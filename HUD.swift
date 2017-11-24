@@ -43,7 +43,7 @@ class HUD {
         // Attack Button
         attackButtonNode = SKSpriteNode(imageNamed: "aButton")
         attackButtonNode.zPosition = 2
-        attackButtonNode.size = CGSize(width: 70, height: 70)
+        attackButtonNode.size = CGSize(width: 45, height: 45)
         attackButtonNode.position = CGPoint(x: screenSize.width/2 * 0.50, y: -(screenSize.height/2 * 0.62))
         
         HUDNode.addChild(attackButtonNode)
@@ -62,25 +62,25 @@ class HUD {
         // Jump Button
         jumpButtonNode = SKSpriteNode(imageNamed: "jButton")
         jumpButtonNode.zPosition = 2
-        jumpButtonNode.size = CGSize(width: 60, height: 60)
-        jumpButtonNode.position = CGPoint(x: marginAButton + 18, y: -(screenSize.height/2 * 0.82))
+        jumpButtonNode.size = CGSize(width: 45, height: 45)
+        jumpButtonNode.position = CGPoint(x: marginAButton + 26, y: -(screenSize.height/2 * 0.82))
         
         HUDNode.addChild(jumpButtonNode)
         
         // Special Button
         specialButtonNode = SKSpriteNode(imageNamed: "sButton")
         specialButtonNode.zPosition = 2
-        specialButtonNode.size = CGSize(width: 60, height: 60)
-        specialButtonNode.position = CGPoint(x: marginAButton + 18, y: -(screenSize.height/2 * 0.42))
+        specialButtonNode.size = CGSize(width: 45, height: 45)
+        specialButtonNode.position = CGPoint(x: marginAButton + 26, y: -(screenSize.height/2 * 0.42))
         
-   //     HUDNode.addChild(specialButtonNode)
+        HUDNode.addChild(specialButtonNode)
 
 //        // Barras
         
         suporteNode = SKSpriteNode(imageNamed: "SuporteHPSP")
         suporteNode.size.width = screenWidth*0.42
         suporteNode.size.height = screenWidth*0.09
-        suporteNode.position = CGPoint(x: -screenWidth*0.3, y: screenHeight*0.45)
+        suporteNode.position = CGPoint(x: -screenWidth*0.3, y: screenHeight*0.43)
         suporteNode.zPosition = 2
         HUDNode.addChild(suporteNode)
         
@@ -97,17 +97,17 @@ class HUD {
         moedaNode.size.width = screenWidth*0.11
         moedaNode.size.height = screenWidth*0.11
         moedaNode.setScale(0.3)
-        moedaNode.position = CGPoint(x:screenWidth*0.38, y: screenHeight*0.46) //0.45  //0.44
+        moedaNode.position = CGPoint(x:screenWidth*0.38, y: screenHeight*0.43) //0.45  //0.44
         moedaNode.zPosition = 2
         HUDNode.addChild(moedaNode)
         
 
         // Contador de Moedas
         
-        pontosLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
+        pontosLabel = SKLabelNode(fontNamed: "Montserrat")
         pontosLabel.text = "0"
         pontosLabel.horizontalAlignmentMode = .right
-        pontosLabel.position = CGPoint(x: screenWidth*0.45, y: screenHeight*0.44)
+        pontosLabel.position = CGPoint(x: screenWidth*0.46, y: screenHeight*0.41 )
         pontosLabel.fontSize = 15
         pontosLabel.zPosition = 2
         pontosLabel.color = UIColor.white
@@ -116,7 +116,7 @@ class HUD {
         
         // Hp Odessa
         let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.0038
-        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.076
+        let suporteHeight = self.suporteNode.frame.origin.y + self.suporteNode.frame.size.height - screenHeight*0.06
         
        // playerHealthBar.setScale(0.1)
         playerHealthBar.zPosition = 3
