@@ -59,6 +59,8 @@ class HUD {
 //
 //        HUDNode.addChild(blockButtonNode)
         
+        HUDNode.addChild(blockButtonNode)
+        
         // Jump Button
         jumpButtonNode = SKSpriteNode(imageNamed: "jButton")
         jumpButtonNode.zPosition = 2

@@ -186,7 +186,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         // Pegar o primeiro modulo e colocar os inimigos nas posições dele
         //placeEnemies()
         modulesInitialPositions.remove(at: 0)
-        
+        modules.remove(at: 0)
+
     }
     
     
@@ -790,7 +791,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
             
             //Inimigo Size
-//            inimigoNode.size = CGSize(width: 26/24*size.height/2, height: 26/24*size.height/2)
+            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
