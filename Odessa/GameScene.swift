@@ -23,11 +23,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     //var lancaNode = SKSpriteNode(texture: SKTexture(imageNamed: "lanca-odessa-attackframe1"))
     
     var hud = SKNode()
-    
-    
-    
-    
-    
+
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
@@ -145,6 +141,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         bnb.size = bnb.size*0.2
         addChild(bnb)
+        
+        context = appDelegate.persistentContainer.viewContext
         
         recoverData(context: context)
 
