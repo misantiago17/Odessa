@@ -608,23 +608,26 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || (isTouchingEnemy && inimigoSendoTocado == enemy)){
                 
-                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
-                    enemy.removeAction(forKey: "repeatForeverInvertido")
-                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
-                    hoplitaAttackAnimationInvertida(enemy: enemy)
-                } else if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
-                    enemy.removeAction(forKey: "repeatActionAnimation")
-                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
-                    hoplitaAttackAnimation(enemy: enemy)
-                }
                 if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
                     enemy.removeAction(forKey: "Attack")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
                     hoplitaAttackAnimation(enemy: enemy)
+                    print("entrei 3")
                 } else if (enemy.value(forAttributeNamed: "AttackInvertida")?.floatValue == 0){
                     enemy.removeAction(forKey: "AttackInvertida")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
                     hoplitaAttackAnimationInvertida(enemy: enemy)
+                    print("entrei 5")
+                } else if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatForeverInvertido")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+                    hoplitaAttackAnimationInvertida(enemy: enemy)
+                    print("entrei 1")
+                } else if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatActionAnimation")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+                    hoplitaAttackAnimation(enemy: enemy)
+                    print("entrei 2")
                 }
                 
                 print("Entre odessa")
