@@ -13,7 +13,6 @@ import CoreData
 
 class GameScene: SKScene,  SKPhysicsContactDelegate {
     
-    
     //Public
     var background = SKSpriteNode()
     var player: Player = Player(nome: "Odessa", vida: 100, velocidade: 100.0, defesa: 30, numVida: 3, ataqueEspecial: 75)
@@ -32,7 +31,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
-//    var parallax = ParallaxScene()
     
     // Private
     private var modules: [SKSpriteNode] = []
@@ -111,7 +109,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //Booelan Hoplita Attack
     var hoplitaAttack = false
-//    var walkHoplita = false
     
     //Distância
     var distancia: CGFloat?
@@ -624,18 +621,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            print(playerPosition, "PLAYER")
             
             distancia = enemyPosition - playerPosition
-
-            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || isTouchingEnemy){
+            
+            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || (isTouchingEnemy && inimigoSendoTocado == enemy)){
                 
-                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
-                    enemy.removeAction(forKey: "repeatForeverInvertido")
-                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
-                    hoplitaAttackAnimationInvertida(enemy: enemy)
-                } else if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
-                    enemy.removeAction(forKey: "repeatActionAnimation")
-                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
-                    hoplitaAttackAnimation(enemy: enemy)
-                }
                 if (enemy.value(forAttributeNamed: "Attack")?.floatValue == 0){
                     enemy.removeAction(forKey: "Attack")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
@@ -644,6 +632,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     enemy.removeAction(forKey: "AttackInvertida")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
                     hoplitaAttackAnimationInvertida(enemy: enemy)
+                } else if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatForeverInvertido")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
+                    hoplitaAttackAnimationInvertida(enemy: enemy)
+                } else if (enemy.value(forAttributeNamed: "animation")?.floatValue == 1){
+                    enemy.removeAction(forKey: "repeatActionAnimation")
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
+                    hoplitaAttackAnimation(enemy: enemy)
                 }
                 
 //                print("Entre odessa")
@@ -752,6 +748,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
+    func goToGameScene(){
+        let gameScene:GameScene = GameScene(size: self.view!.bounds.size) // create your new scene
+        let transition = SKTransition.fade(withDuration: 1.0) // create type of transition (you can check in documentation for more transtions)
+        gameScene.scaleMode = SKSceneScaleMode.fill
+        
+        self.view!.presentScene(gameScene, transition: transition)
+    }
+    
     // Game Over
     func GameOverHandler(){
         
@@ -810,13 +814,31 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             let texture = SKTextureAtlas(named: "Inimigos").textureNamed(inimigo.imgName)
             
-            let inimigoNode = SKSpriteNode(texture: texture, size: texture.size()*0.75)
+            let inimigoNode = SKSpriteNode(texture: texture) // 75% antes
+            inimigoNode.size = CGSize(width: texture.size().width*0.75, height: texture.size().height*0.75)
             inimigoNode.position = CGPoint(x: Double(inimigo.posInModuleX!), y: Double(inimigo.posInModuleY!) + Double(texture.size().height))
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
-            //inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
-            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.5))
-            //TALVEZ FIQUE BOM NO SE COM SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.48))
+            inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: texture.size()*0.75)
+            
+//            if modelName == "iPhone 5" || modelName == "iPhone 5c" || modelName == "iPhone 5s" || modelName == "iPhone SE" {
+//
+//                //inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.46)
+//                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.46))
+//
+//            } else if modelName == "iPhone 6" || modelName == "iPhone 6s" || modelName == "iPhone 7" {
+//
+//                inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.50)
+//                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.50))
+//
+//            } else {
+//
+//                inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.55)
+//                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.55))
+//
+//            }
+            
+
             inimigoNode.physicsBody?.allowsRotation = false
             //inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
 //            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
@@ -831,7 +853,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
             
             //Inimigo Size
-            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
+//            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1

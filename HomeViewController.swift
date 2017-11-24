@@ -20,7 +20,8 @@ class HomeViewController: UIViewController {
             
             // Present the scene
             let view = self.view as! SKView
-                
+            
+            
 //            view.ignoresSiblingOrder = true
 //            view.showsFPS = true
            // view.showsNodeCount = true

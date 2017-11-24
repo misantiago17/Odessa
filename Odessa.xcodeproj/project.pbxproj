@@ -14,6 +14,8 @@
 		0BD663E61FC730F700088CD7 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */; };
 		56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
 		56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
+		56EB90A31FC63EB2004C27E3 /* GameSceneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */; };
+		56F1EEBD1FC852FE00F17EF3 /* DeviceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */; };
 		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
 		8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63E71F6C061400271379 /* AppDelegate.swift */; };
 		8A5C63EA1F6C061400271379 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63E91F6C061400271379 /* GameScene.sks */; };
@@ -60,6 +62,8 @@
 		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
 		56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
 		56105E671FA38934002D3832 /* CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphics.swift; sourceTree = "<group>"; };
+		56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneHelper.swift; sourceTree = "<group>"; };
+		56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypes.swift; sourceTree = "<group>"; };
 		7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.release.xcconfig"; sourceTree = "<group>"; };
 		8A5C63E41F6C061400271379 /* Odessa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Odessa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5C63E71F6C061400271379 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Odessa/AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 				56105E651FA388C8002D3832 /* JoyStickView.swift */,
 				56105E671FA38934002D3832 /* CoreGraphics.swift */,
 				8AE806551F7D305100AE71A0 /* JsonFile.json */,
+				56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */,
+				56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -350,12 +356,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56EB90A31FC63EB2004C27E3 /* GameSceneHelper.swift in Sources */,
 				BEC134FA1FBA37EE00AA094C /* StoreViewController.swift in Sources */,
 				8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */,
 				8A5C64171F6C0B5600271379 /* DAO.swift in Sources */,
 				8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */,
 				8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */,
 				8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */,
+				56F1EEBD1FC852FE00F17EF3 /* DeviceTypes.swift in Sources */,
 				56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */,
 				8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */,
 				8A5C64111F6C0B1800271379 /* Fase.swift in Sources */,
