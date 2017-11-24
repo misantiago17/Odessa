@@ -1383,7 +1383,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             print("SAVED")
         }
         catch{
-            print("erro")
+            print("NOT SAVED")
         }
         
     }
