@@ -1447,9 +1447,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setFinalBonfire(){
         
-        pedra2.position = CGPoint(x: 8200, y: 160)// 8200 230
-        pedra2.zPosition = 1
-        pedra2.setScale(0.75)
+        pedra2.position = CGPoint(x: 8200, y: screenHeight*0.385)// 8200 230
+        pedra2.zPosition = -1
+        pedra2.setScale(0.55)
         
         addChild(pedra2)
     }
