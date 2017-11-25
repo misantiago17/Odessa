@@ -1438,7 +1438,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setInicialBonfire (){
         
-        pedra1.position = CGPoint(x: cam.position.x - screenSize.width*0.7, y: 160)// 8200 230
+        pedra1.position = CGPoint(x: cam.position.x - screenSize.width*0.7, y: screenHeight*0.385)// 8200 230
         pedra1.zPosition = -1
         pedra1.setScale(0.75)
         
