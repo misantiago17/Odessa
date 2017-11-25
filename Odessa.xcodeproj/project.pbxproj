@@ -162,12 +162,12 @@
 				8A980C1C1F90099C00483B59 /* Movimentacao.swift */,
 				8A5C64141F6C0B3E00271379 /* HUD.swift */,
 				8A5C64161F6C0B5600271379 /* DAO.swift */,
-				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
 				56105E651FA388C8002D3832 /* JoyStickView.swift */,
 				56105E671FA38934002D3832 /* CoreGraphics.swift */,
-				8AE806551F7D305100AE71A0 /* JsonFile.json */,
 				56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */,
 				56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */,
+				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
+				8AE806551F7D305100AE71A0 /* JsonFile.json */,
 			);
 			name = Model;
 			sourceTree = "<group>";

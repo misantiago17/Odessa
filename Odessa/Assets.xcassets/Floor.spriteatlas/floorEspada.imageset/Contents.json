@@ -2,17 +2,15 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "mod_uniforme.png",
+      "filename" : "mod_uniforme_comprido.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "mod_uniforme@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "mod_uniforme@3x.png",
       "scale" : "3x"
     }
   ],

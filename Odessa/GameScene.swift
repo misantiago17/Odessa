@@ -88,6 +88,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     var ultimo = CGFloat()
     var primeiro = CGFloat()
+    var moduloInicial = CGFloat()
     var posicaoBandeira = CGFloat()
     
     let MaxHealth = 250
@@ -137,6 +138,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
     var PosInicialInimigo: [CGFloat] = []
     
+    var iniciou = false
+    var correndo = false
+    var podeMovimentar = false
+    
+    var camLimit: CGFloat = 0.0
+    var posicaoAnteriorCamera: CGFloat = 0.0
+    
     //Devices
     let modelName = UIDevice.current.modelName
     
@@ -146,11 +154,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
        // bnb.size = bnb.size*0.2
        // addChild(bnb)
-        
-        //Bonfires
-        setInicialBonfire ()
-        setFinalBonfire()
-        
         
         //Core Data
         context = appDelegate.persistentContainer.viewContext
@@ -171,7 +174,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
      
         // Player
         playerNode.size = CGSize(width: size.height/2, height: size.height/2)
-        playerNode.position = CGPoint(x: 300, y: 400)
+        playerNode.position = CGPoint(x: modulesInitialPositions[0] + playerNode.size.width*0.4/2, y: 400)
         playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.85))
         //playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.zPosition = 1
@@ -199,6 +202,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
  
         ultimo = modulesInitialPositions.last!
         primeiro = modulesInitialPositions[1]
+        moduloInicial = modulesInitialPositions[0]
         //setFlag()
         
         // MARK: Camera
@@ -207,22 +211,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         cam.addChild(hud)
         cam.addChild(background)
         
-        // TEM QUE AJEITAR PARA OUTROS IPHONES
-        // Ideal: modulesInitialPositions[0] estar sempre na extremidade esquerda da camera
-        print(cam.contains(CGPoint(x: modulesInitialPositions[0], y: 120)), "TA LA MEMO?")
-        print(modulesInitialPositions[0], "Posição do modulo")
-        print(self.frame.size.width/2, "frame da tela")
-        print(cam.convert(cam.position, from: self).x, "posição  da camera")
-        print(playerNode.position.x, "Posição com do player")
-        print(cam.position.x - cam.frame.size.width/2, "Min X da camera")
-//        cam.position.x = modulesInitialPositions[1]
-//        cam.position.y = 120
+        cam.position.x = modulesInitialPositions[0] + screenSize.width + modules[0].size.width*0.20
+        cam.position.y = 120
+        
+        // limite para a camera voltar
+        camLimit = cam.position.x - screenSize.width*0.3
+        posicaoAnteriorCamera = cam.position.x
 
+        //Bonfires
+        setInicialBonfire()
+        setFinalBonfire()
         
         // Pegar o primeiro modulo e colocar os inimigos nas posições dele
         //placeEnemies()
         modulesInitialPositions.remove(at: 0)
         modules.remove(at: 0)
+        
+        iniciou = true
 
     }
 
@@ -267,24 +272,27 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         joystick?.beginHandler = {
             
-            self.joystickInUse = true
-            self.startTime = Date().timeIntervalSinceReferenceDate
-            self.stopTimer = false
-            self.runOdessa()
-            
+            if (self.podeMovimentar){
+                self.joystickInUse = true
+                self.startTime = Date().timeIntervalSinceReferenceDate
+                self.stopTimer = false
+                self.runOdessa()
+            }
         }
         
         joystick?.trackingHandler = {
             
-            if (self.angle >= 60 && self.angle <= 120){
-                
-                let rightScale = SKAction.scaleX(to: 1, duration: 0)
-                self.playerNode.run(rightScale)
-                
-            } else if (self.angle >= 240 && self.angle <= 300){
-                
-                let leftScale = SKAction.scaleX(to: -1, duration: 0)
-                self.playerNode.run(leftScale)
+            if (self.podeMovimentar){
+                if (self.angle >= 60 && self.angle <= 120){
+                    
+                    let rightScale = SKAction.scaleX(to: 1, duration: 0)
+                    self.playerNode.run(rightScale)
+                    
+                } else if (self.angle >= 240 && self.angle <= 300){
+                    
+                    let leftScale = SKAction.scaleX(to: -1, duration: 0)
+                    self.playerNode.run(leftScale)
+                }
             }
         }
         
@@ -314,173 +322,176 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for t in touches {
+        if (podeMovimentar){
             
-            self.touchDown(atPoint: t.location(in: cam))
-            location = t.location(in: cam)
-            
-            if (HUDNode.attackButtonNode.frame.contains(location)) && attack == false && block == false {
+            for t in touches {
                 
-                attack = true
-            
-                attacking = true
-                atacou = true
+                self.touchDown(atPoint: t.location(in: cam))
+                location = t.location(in: cam)
                 
-               
-                let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.08, resize: false, restore: false)
-                
-                let animateLanca = SKAction.animate(with: self.movements.lancaAttack, timePerFrame: 0.08, resize: false, restore: false)
-                
-                
-                let addLanca = SKAction.run({
+                if (HUDNode.attackButtonNode.frame.contains(location)) && attack == false && block == false {
                     
-                    self.playerNode.addChild(self.lancaNode)
-                    self.lancaNode.position = CGPoint(x: 20, y: 0)
-                    self.lancaNode.zPosition = -1
-                    self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
-                   
+                    attack = true
                     
-                    self.lancaNode.run(animateLanca)
+                    attacking = true
+                    atacou = true
                     
-                })
-                
-             
-                
-                let end = SKAction.run({
                     
-                    self.playerNode.removeAction(forKey: "attackAction")
-                    self.attack = false
+                    let animateAction = SKAction.animate(with: movements.attackArray, timePerFrame: 0.08, resize: false, restore: false)
                     
-                    for child in self.playerNode.children{
-                        if child.name == "lancaNode"{
-                            
+                    let animateLanca = SKAction.animate(with: self.movements.lancaAttack, timePerFrame: 0.08, resize: false, restore: false)
+                    
+                    
+                    let addLanca = SKAction.run({
                         
-                            
-                            child.removeFromParent()
+                        self.playerNode.addChild(self.lancaNode)
+                        self.lancaNode.position = CGPoint(x: 20, y: 0)
+                        self.lancaNode.zPosition = -1
+                        self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
+                        
+                        
+                        self.lancaNode.run(animateLanca)
+                        
+                    })
+                    
+                    
+                    
+                    let end = SKAction.run({
+                        
+                        self.playerNode.removeAction(forKey: "attackAction")
+                        self.attack = false
+                        
+                        for child in self.playerNode.children{
+                            if child.name == "lancaNode"{
+                                
+                                
+                                
+                                child.removeFromParent()
+                            }
                         }
-                    }
-                    
-                    self.attacking = false
-                  
-                    
-                    
-                })
-                
-                
-                let group = SKAction.group([animateAction, addLanca])
-                let sequence = SKAction.sequence([group,end])
-                self.playerNode.run(sequence, withKey: "attackAction")
-                
-                
-            }
-            
-            if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false && longBlock == false {
-                
-                block = true
-                fingerIsTouching = true
-                
-                let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.2, resize: false, restore: false)
-                
-                let animateLanca = SKAction.animate(with: self.movements.lancaBlock, timePerFrame: 0.2, resize: false, restore: false)
-                
-                let addLanca = SKAction.run({
-                    
-                    self.playerNode.addChild(self.lancaNode)
-                    self.lancaNode.position = CGPoint(x: 20, y: 0)
-                    self.lancaNode.zPosition = -1
-                    self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
-                    self.lancaNode.run(animateLanca)
-                    
-                })
-                
-                let end = SKAction.run({
-                    
-                    self.playerNode.removeAction(forKey: "blockAction")
-                    self.block = false
-                    
-                    for child in self.playerNode.children{
-                        if child.name == "lancaNode"{
-                            child.removeFromParent()
-                        }
-                    }
-                    
-                })
-                
-                let group = SKAction.group([animateAction, addLanca])
-                let sequence = SKAction.sequence([group, end])
-                
-                
-                self.playerNode.run(sequence, withKey: "blockAction")
-                self.longBlockStartTime = Date().timeIntervalSinceReferenceDate
-                
-                
-            }
-            
-            if (HUDNode.jumpButtonNode.frame.contains(location) ) && jump == false{
-                
-                
-                if attack == true || block == true || longBlock == true{
-                    
-                    self.playerNode.removeAction(forKey: "attackAction")
-                    self.playerNode.removeAction(forKey: "blockAction")
+                        
+                        self.attacking = false
+                        
+                        
+                        
+                    })
                     
                     
-                    for child in self.playerNode.children{
-                        if child.name == "lancaNode"{
-                            child.removeFromParent()
-                        }
-                    }
+                    let group = SKAction.group([animateAction, addLanca])
+                    let sequence = SKAction.sequence([group,end])
+                    self.playerNode.run(sequence, withKey: "attackAction")
                     
-                    attack = false
-                    block = false
                     
                 }
                 
-                //self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
-                //self.jumpStartTime = Date().timeIntervalSinceReferenceDate
-                
-                jump = true
-                
-                var impulsoArray = [SKTexture]()
-                var puloCimaArray = [SKTexture]()
-                var puloBaixoArray = [SKTexture]()
-                
-                for i in 1...2 {
-                    impulsoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
+                if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false && longBlock == false {
+                    
+                    block = true
+                    fingerIsTouching = true
+                    
+                    let animateAction = SKAction.animate(with: movements.blockArray, timePerFrame: 0.2, resize: false, restore: false)
+                    
+                    let animateLanca = SKAction.animate(with: self.movements.lancaBlock, timePerFrame: 0.2, resize: false, restore: false)
+                    
+                    let addLanca = SKAction.run({
+                        
+                        self.playerNode.addChild(self.lancaNode)
+                        self.lancaNode.position = CGPoint(x: 20, y: 0)
+                        self.lancaNode.zPosition = -1
+                        self.lancaNode.size = CGSize(width: 240 * 0.75, height: 250 * 0.75)
+                        self.lancaNode.run(animateLanca)
+                        
+                    })
+                    
+                    let end = SKAction.run({
+                        
+                        self.playerNode.removeAction(forKey: "blockAction")
+                        self.block = false
+                        
+                        for child in self.playerNode.children{
+                            if child.name == "lancaNode"{
+                                child.removeFromParent()
+                            }
+                        }
+                        
+                    })
+                    
+                    let group = SKAction.group([animateAction, addLanca])
+                    let sequence = SKAction.sequence([group, end])
+                    
+                    
+                    self.playerNode.run(sequence, withKey: "blockAction")
+                    self.longBlockStartTime = Date().timeIntervalSinceReferenceDate
+                    
+                    
                 }
                 
-                puloCimaArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe3"))
-                
-                for i in 4...6 {
-                    puloBaixoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
-                }
-                
-                let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
-                let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
-                
-                let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
-                let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
-                let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
-                let group = SKAction.group([puloBaixo, fallBack])
-                
-                let endMoviment = SKAction.run({
+                if (HUDNode.jumpButtonNode.frame.contains(location) ) && jump == false{
                     
-                    self.jump = false
-                    self.playerNode.removeAction(forKey: "jumpAction")
                     
-                    if self.joystickInUse == true {
-                        self.runOdessa()
+                    if attack == true || block == true || longBlock == true{
+                        
+                        self.playerNode.removeAction(forKey: "attackAction")
+                        self.playerNode.removeAction(forKey: "blockAction")
+                        
+                        
+                        for child in self.playerNode.children{
+                            if child.name == "lancaNode"{
+                                child.removeFromParent()
+                            }
+                        }
+                        
+                        attack = false
+                        block = false
+                        
                     }
                     
-                })
-                
-                let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
-                
-                //self.playerNode.removeAction(forKey: "runOdessa")
-                self.playerNode.run(jumpAction, withKey: "jumpAction")
+                    //self.playerNode.run(movements.jumpAction, withKey: "repeatAction")
+                    //self.jumpStartTime = Date().timeIntervalSinceReferenceDate
+                    
+                    jump = true
+                    
+                    var impulsoArray = [SKTexture]()
+                    var puloCimaArray = [SKTexture]()
+                    var puloBaixoArray = [SKTexture]()
+                    
+                    for i in 1...2 {
+                        impulsoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
+                    }
+                    
+                    puloCimaArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe3"))
+                    
+                    for i in 4...6 {
+                        puloBaixoArray.append(SKTextureAtlas(named: "Jump").textureNamed("odessaJumpframe\(i)"))
+                    }
+                    
+                    let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
+                    let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+                    
+                    let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
+                    let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
+                    let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
+                    let group = SKAction.group([puloBaixo, fallBack])
+                    
+                    let endMoviment = SKAction.run({
+                        
+                        self.jump = false
+                        self.playerNode.removeAction(forKey: "jumpAction")
+                        
+                        if self.joystickInUse == true {
+                            self.runOdessa()
+                        }
+                        
+                    })
+                    
+                    let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
+                    
+                    //self.playerNode.removeAction(forKey: "runOdessa")
+                    self.playerNode.run(jumpAction, withKey: "jumpAction")
+                    
+                }
                 
             }
-            
         }
         
     }
@@ -555,7 +566,28 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         
-      
+        // Limite que a camera pode voltar
+        if (cam.position.x > posicaoAnteriorCamera){
+            posicaoAnteriorCamera = cam.position.x
+            camLimit = cam.position.x - screenSize.width*0.3
+        }
+        
+        //Fazer a odessa andar até o centro da camera
+        if (iniciou == true) {
+            
+            playerNode.position.x += 2.6
+            
+            if (correndo == false){
+                runOdessa()
+                correndo = true
+            }
+            
+            if (playerNode.position.x >= cam.position.x/*moduloInicial + screenSize.width*/){
+                playerNode.removeAction(forKey: "runOdessa")
+                iniciou = false
+                podeMovimentar = true
+            }
+        }
    
         // Põe inimigos na tela conforme a Odessa anda -- DESBLOQUEAR ISSO
         if (!modulesInitialPositions.isEmpty){
@@ -639,7 +671,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             // bnb.position.x = enemyPosition
             // bnb.position.y = enemy.position.y
             
-            print(enemy.convert(enemy.position, from: self).x, "ASASF")
             enemy.convert(enemy.position, to: self)
             
             distancia = enemyPosition - playerPosition
@@ -726,23 +757,28 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
       //  self.moveSprite(sprite: parallax.frente, nextSprite: parallax.frenteNext, speed: 10.0)
       //  self.moveSprite(sprite: parallax.meio, nextSprite: parallax.frenteNext, speed: 5.0)
         
-        
-        if (self.angle >= 60 && self.angle <= 120) && joystickInUse == true && longBlock == false {
+        // Só pode se movimentar depois que acabar a animação inicial
+        if podeMovimentar {
             
-            self.playerNode.position.x += self.displacement*3
-            
-        } else if (self.angle >= 240 && self.angle <= 300) && joystickInUse == true && longBlock == false{
-            
-            self.playerNode.position.x -= self.displacement*3
-            
+            if (self.angle >= 60 && self.angle <= 120) && joystickInUse == true && longBlock == false {
+                
+                self.playerNode.position.x += self.displacement*3
+                
+            } else if (self.angle >= 240 && self.angle <= 300) && joystickInUse == true && longBlock == false{
+                
+                // não permite que a odessa ande para antes do limite da camera
+                if (playerNode.position.x - playerNode.size.width*0.4/2 >= cam.position.x - screenSize.width) {
+                    self.playerNode.position.x -= self.displacement*3
+                }
+                
+            }
         }
         
-        
-        // Camera
-        //if (playerNode.position.x > primeiro){
+        // Camera acompanhando a Odessa
+        if (iniciou == false && playerNode.position.x >= camLimit){
             cam.position = CGPoint(x: playerNode.position.x, y: 120)
-        //}
-
+        }
+        
         if (playerNode.position.x > modulesInitialPositions.last! + 500){
             
             print("\(pedra2.position.x)")
@@ -768,7 +804,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             GameOverHandler()
         }
         
-        if (fingerIsTouching == true) && (longBlock == false){
+        if (fingerIsTouching == true) && (longBlock == false) && podeMovimentar {
             
             longBlockEndTime = Date().timeIntervalSinceReferenceDate
             longBlockDt = Double(longBlockEndTime - longBlockStartTime)
@@ -935,7 +971,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         var modulos: [ModuloMapa] = []
         
         // Modulo Inicial
-        let moduleInicial = ModuloMapa(imagemCenario: "floorPortao", IDModulo: -1, waves: [])
+        let moduleInicial = ModuloMapa(imagemCenario: "floorEspada", IDModulo: -1, waves: [])
         modulos.append(moduleInicial)
 
         
@@ -1402,8 +1438,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setInicialBonfire (){
         
-        pedra1.position = CGPoint(x: 400, y: 160)// 8200 230
-        pedra1.zPosition = 1
+        pedra1.position = CGPoint(x: cam.position.x - screenSize.width*0.7, y: 160)// 8200 230
+        pedra1.zPosition = -1
         pedra1.setScale(0.75)
         
         addChild(pedra1)
