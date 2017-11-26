@@ -1,584 +1,582 @@
 // !$*UTF8*$!
 {
-    archiveVersion = 1;
-    classes = {
-    };
-    objectVersion = 46;
-    objects = {
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
 
 /* Begin PBXBuildFile section */
-        0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5530411FA3860800CFE572 /* VictoryScene.swift */; };
-        0B581DF51FC7A2DF00200057 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B581DF41FC7A2DF00200057 /* CoreData.swift */; };
-        0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
-        0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */; };
-        0BD663E61FC730F700088CD7 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */; };
-        56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
-        56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
-        56EB90A31FC63EB2004C27E3 /* GameSceneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */; };
-        56F1EEBD1FC852FE00F17EF3 /* DeviceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */; };
-        63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
-        8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63E71F6C061400271379 /* AppDelegate.swift */; };
-        8A5C63EA1F6C061400271379 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63E91F6C061400271379 /* GameScene.sks */; };
-        8A5C63EC1F6C061400271379 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63EB1F6C061400271379 /* Actions.sks */; };
-        8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63ED1F6C061400271379 /* GameScene.swift */; };
-        8A5C63F01F6C061400271379 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63EF1F6C061400271379 /* GameViewController.swift */; };
-        8A5C63F31F6C061400271379 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63F11F6C061400271379 /* Main.storyboard */; };
-        8A5C63F81F6C061400271379 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */; };
-        8A5C64031F6C0AC200271379 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64021F6C0AC200271379 /* Player.swift */; };
-        8A5C64051F6C0ACF00271379 /* Ataque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64041F6C0ACF00271379 /* Ataque.swift */; };
-        8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64061F6C0ADA00271379 /* Inimigo.swift */; };
-        8A5C64091F6C0AED00271379 /* Waves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64081F6C0AED00271379 /* Waves.swift */; };
-        8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640A1F6C0AF800271379 /* Itens.swift */; };
-        8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */; };
-        8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640E1F6C0B0D00271379 /* Mapa.swift */; };
-        8A5C64111F6C0B1800271379 /* Fase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64101F6C0B1800271379 /* Fase.swift */; };
-        8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64121F6C0B2200271379 /* Jogo.swift */; };
-        8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64141F6C0B3E00271379 /* HUD.swift */; };
-        8A5C64171F6C0B5600271379 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64161F6C0B5600271379 /* DAO.swift */; };
-        8A5C64191F6C12B600271379 /* Arma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64181F6C12B600271379 /* Arma.swift */; };
-        8A5C64231F71766800271379 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64221F71766800271379 /* HomeViewController.swift */; };
-        8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */; };
-        8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */; };
-        8A5C64291F71771600271379 /* PauseGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64281F71771600271379 /* PauseGameViewController.swift */; };
-        8A5C642B1F71772E00271379 /* HomeOptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */; };
-        8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */; };
-        8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642E1F71775700271379 /* PauseGameScene.swift */; };
-        8A5C64311F71784A00271379 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64301F71784A00271379 /* HomeScene.swift */; };
-        8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A980C1C1F90099C00483B59 /* Movimentacao.swift */; };
-        8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */; };
-        8AB71B851F8406B600726E14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71B841F8406B600726E14 /* Assets.xcassets */; };
-        8AE806561F7D305100AE71A0 /* JsonFile.json in Resources */ = {isa = PBXBuildFile; fileRef = 8AE806551F7D305100AE71A0 /* JsonFile.json */; };
-        BEC134F81FBA215000AA094C /* StoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC134F71FBA215000AA094C /* StoreScene.swift */; };
-        BEC134FA1FBA37EE00AA094C /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC134F91FBA37EE00AA094C /* StoreViewController.swift */; };
+		0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5530411FA3860800CFE572 /* VictoryScene.swift */; };
+		0B581DF51FC7A2DF00200057 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B581DF41FC7A2DF00200057 /* CoreData.swift */; };
+		0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */; };
+		0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */; };
+		0BD663E61FC730F700088CD7 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */; };
+		56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E651FA388C8002D3832 /* JoyStickView.swift */; };
+		56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56105E671FA38934002D3832 /* CoreGraphics.swift */; };
+		56EB90A31FC63EB2004C27E3 /* GameSceneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */; };
+		56F1EEBD1FC852FE00F17EF3 /* DeviceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */; };
+		63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */; };
+		8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63E71F6C061400271379 /* AppDelegate.swift */; };
+		8A5C63EA1F6C061400271379 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63E91F6C061400271379 /* GameScene.sks */; };
+		8A5C63EC1F6C061400271379 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63EB1F6C061400271379 /* Actions.sks */; };
+		8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63ED1F6C061400271379 /* GameScene.swift */; };
+		8A5C63F01F6C061400271379 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C63EF1F6C061400271379 /* GameViewController.swift */; };
+		8A5C63F31F6C061400271379 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63F11F6C061400271379 /* Main.storyboard */; };
+		8A5C63F81F6C061400271379 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */; };
+		8A5C64031F6C0AC200271379 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64021F6C0AC200271379 /* Player.swift */; };
+		8A5C64051F6C0ACF00271379 /* Ataque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64041F6C0ACF00271379 /* Ataque.swift */; };
+		8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64061F6C0ADA00271379 /* Inimigo.swift */; };
+		8A5C64091F6C0AED00271379 /* Waves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64081F6C0AED00271379 /* Waves.swift */; };
+		8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640A1F6C0AF800271379 /* Itens.swift */; };
+		8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */; };
+		8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C640E1F6C0B0D00271379 /* Mapa.swift */; };
+		8A5C64111F6C0B1800271379 /* Fase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64101F6C0B1800271379 /* Fase.swift */; };
+		8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64121F6C0B2200271379 /* Jogo.swift */; };
+		8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64141F6C0B3E00271379 /* HUD.swift */; };
+		8A5C64171F6C0B5600271379 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64161F6C0B5600271379 /* DAO.swift */; };
+		8A5C64191F6C12B600271379 /* Arma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64181F6C12B600271379 /* Arma.swift */; };
+		8A5C64231F71766800271379 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64221F71766800271379 /* HomeViewController.swift */; };
+		8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */; };
+		8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */; };
+		8A5C64291F71771600271379 /* PauseGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64281F71771600271379 /* PauseGameViewController.swift */; };
+		8A5C642B1F71772E00271379 /* HomeOptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */; };
+		8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */; };
+		8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C642E1F71775700271379 /* PauseGameScene.swift */; };
+		8A5C64311F71784A00271379 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5C64301F71784A00271379 /* HomeScene.swift */; };
+		8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A980C1C1F90099C00483B59 /* Movimentacao.swift */; };
+		8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */; };
+		8AB71B851F8406B600726E14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AB71B841F8406B600726E14 /* Assets.xcassets */; };
+		8AE806561F7D305100AE71A0 /* JsonFile.json in Resources */ = {isa = PBXBuildFile; fileRef = 8AE806551F7D305100AE71A0 /* JsonFile.json */; };
+		BEC134F81FBA215000AA094C /* StoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC134F71FBA215000AA094C /* StoreScene.swift */; };
+		BEC134FA1FBA37EE00AA094C /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC134F91FBA37EE00AA094C /* StoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-        0B5530411FA3860800CFE572 /* VictoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryScene.swift; sourceTree = "<group>"; };
-        0B581DF41FC7A2DF00200057 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
-        0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
-        0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
-        0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
-        0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-        138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
-        56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
-        56105E671FA38934002D3832 /* CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphics.swift; sourceTree = "<group>"; };
-        56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneHelper.swift; sourceTree = "<group>"; };
-        56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypes.swift; sourceTree = "<group>"; };
-        7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.release.xcconfig"; sourceTree = "<group>"; };
-        8A5C63E41F6C061400271379 /* Odessa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Odessa.app; sourceTree = BUILT_PRODUCTS_DIR; };
-        8A5C63E71F6C061400271379 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Odessa/AppDelegate.swift; sourceTree = "<group>"; };
-        8A5C63E91F6C061400271379 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = Odessa/GameScene.sks; sourceTree = "<group>"; };
-        8A5C63EB1F6C061400271379 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Actions.sks; path = Odessa/Actions.sks; sourceTree = "<group>"; };
-        8A5C63ED1F6C061400271379 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Odessa/GameScene.swift; sourceTree = "<group>"; };
-        8A5C63EF1F6C061400271379 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = Odessa/GameViewController.swift; sourceTree = "<group>"; };
-        8A5C63F21F6C061400271379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-        8A5C63F71F6C061400271379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-        8A5C63F91F6C061400271379 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Odessa/Info.plist; sourceTree = "<group>"; };
-        8A5C64021F6C0AC200271379 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-        8A5C64041F6C0ACF00271379 /* Ataque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ataque.swift; sourceTree = "<group>"; };
-        8A5C64061F6C0ADA00271379 /* Inimigo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inimigo.swift; sourceTree = "<group>"; };
-        8A5C64081F6C0AED00271379 /* Waves.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waves.swift; sourceTree = "<group>"; };
-        8A5C640A1F6C0AF800271379 /* Itens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itens.swift; sourceTree = "<group>"; };
-        8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuloMapa.swift; sourceTree = "<group>"; };
-        8A5C640E1F6C0B0D00271379 /* Mapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mapa.swift; sourceTree = "<group>"; };
-        8A5C64101F6C0B1800271379 /* Fase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fase.swift; sourceTree = "<group>"; };
-        8A5C64121F6C0B2200271379 /* Jogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jogo.swift; sourceTree = "<group>"; };
-        8A5C64141F6C0B3E00271379 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
-        8A5C64161F6C0B5600271379 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
-        8A5C64181F6C12B600271379 /* Arma.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arma.swift; sourceTree = "<group>"; };
-        8A5C64221F71766800271379 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-        8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeOptionsViewController.swift; sourceTree = "<group>"; };
-        8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusViewController.swift; sourceTree = "<group>"; };
-        8A5C64281F71771600271379 /* PauseGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameViewController.swift; sourceTree = "<group>"; };
-        8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeOptionsScene.swift; sourceTree = "<group>"; };
-        8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusScene.swift; sourceTree = "<group>"; };
-        8A5C642E1F71775700271379 /* PauseGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameScene.swift; sourceTree = "<group>"; };
-        8A5C64301F71784A00271379 /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
-        8A980C1C1F90099C00483B59 /* Movimentacao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movimentacao.swift; sourceTree = "<group>"; };
-        8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reader_JSON.swift; sourceTree = "<group>"; };
-        8AB71B841F8406B600726E14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Odessa/Assets.xcassets; sourceTree = "<group>"; };
-        8AE806551F7D305100AE71A0 /* JsonFile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JsonFile.json; sourceTree = "<group>"; };
-        BEC134F71FBA215000AA094C /* StoreScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScene.swift; sourceTree = "<group>"; };
-        BEC134F91FBA37EE00AA094C /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
+		0B5530411FA3860800CFE572 /* VictoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryScene.swift; sourceTree = "<group>"; };
+		0B581DF41FC7A2DF00200057 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
+		0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Odessa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.debug.xcconfig"; sourceTree = "<group>"; };
+		56105E651FA388C8002D3832 /* JoyStickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
+		56105E671FA38934002D3832 /* CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphics.swift; sourceTree = "<group>"; };
+		56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneHelper.swift; sourceTree = "<group>"; };
+		56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypes.swift; sourceTree = "<group>"; };
+		7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Odessa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Odessa/Pods-Odessa.release.xcconfig"; sourceTree = "<group>"; };
+		8A5C63E41F6C061400271379 /* Odessa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Odessa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A5C63E71F6C061400271379 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Odessa/AppDelegate.swift; sourceTree = "<group>"; };
+		8A5C63E91F6C061400271379 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = Odessa/GameScene.sks; sourceTree = "<group>"; };
+		8A5C63EB1F6C061400271379 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Actions.sks; path = Odessa/Actions.sks; sourceTree = "<group>"; };
+		8A5C63ED1F6C061400271379 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Odessa/GameScene.swift; sourceTree = "<group>"; };
+		8A5C63EF1F6C061400271379 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = Odessa/GameViewController.swift; sourceTree = "<group>"; };
+		8A5C63F21F6C061400271379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8A5C63F71F6C061400271379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A5C63F91F6C061400271379 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Odessa/Info.plist; sourceTree = "<group>"; };
+		8A5C64021F6C0AC200271379 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8A5C64041F6C0ACF00271379 /* Ataque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ataque.swift; sourceTree = "<group>"; };
+		8A5C64061F6C0ADA00271379 /* Inimigo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inimigo.swift; sourceTree = "<group>"; };
+		8A5C64081F6C0AED00271379 /* Waves.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waves.swift; sourceTree = "<group>"; };
+		8A5C640A1F6C0AF800271379 /* Itens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itens.swift; sourceTree = "<group>"; };
+		8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuloMapa.swift; sourceTree = "<group>"; };
+		8A5C640E1F6C0B0D00271379 /* Mapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mapa.swift; sourceTree = "<group>"; };
+		8A5C64101F6C0B1800271379 /* Fase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fase.swift; sourceTree = "<group>"; };
+		8A5C64121F6C0B2200271379 /* Jogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jogo.swift; sourceTree = "<group>"; };
+		8A5C64141F6C0B3E00271379 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		8A5C64161F6C0B5600271379 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
+		8A5C64181F6C12B600271379 /* Arma.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arma.swift; sourceTree = "<group>"; };
+		8A5C64221F71766800271379 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeOptionsViewController.swift; sourceTree = "<group>"; };
+		8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusViewController.swift; sourceTree = "<group>"; };
+		8A5C64281F71771600271379 /* PauseGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameViewController.swift; sourceTree = "<group>"; };
+		8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeOptionsScene.swift; sourceTree = "<group>"; };
+		8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlayerStatusScene.swift; sourceTree = "<group>"; };
+		8A5C642E1F71775700271379 /* PauseGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseGameScene.swift; sourceTree = "<group>"; };
+		8A5C64301F71784A00271379 /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
+		8A980C1C1F90099C00483B59 /* Movimentacao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movimentacao.swift; sourceTree = "<group>"; };
+		8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reader_JSON.swift; sourceTree = "<group>"; };
+		8AB71B841F8406B600726E14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Odessa/Assets.xcassets; sourceTree = "<group>"; };
+		8AE806551F7D305100AE71A0 /* JsonFile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JsonFile.json; sourceTree = "<group>"; };
+		BEC134F71FBA215000AA094C /* StoreScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScene.swift; sourceTree = "<group>"; };
+		BEC134F91FBA37EE00AA094C /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        8A5C63E11F6C061400271379 /* Frameworks */ = {
-            isa = PBXFrameworksBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-                63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */,
-            );
-            runOnlyForDeploymentPostprocessing = 0;
-        };
+		8A5C63E11F6C061400271379 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63277653BAEC0F1759AF6B38 /* Pods_Odessa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-        4149374C4372F449CAA502E6 /* Frameworks */ = {
-            isa = PBXGroup;
-            children = (
-                0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */,
-            );
-            name = Frameworks;
-            sourceTree = "<group>";
-        };
-        8A5C63DB1F6C061400271379 = {
-            isa = PBXGroup;
-            children = (
-                8A5C64011F6C06E500271379 /* Controller */,
-                8A5C64001F6C06DE00271379 /* View */,
-                8A5C63FF1F6C06D500271379 /* Model */,
-                8A5C63E51F6C061400271379 /* Products */,
-                D56E158A60FBF0C0616472C5 /* Pods */,
-                4149374C4372F449CAA502E6 /* Frameworks */,
-                8AA610681FBB1099008BE7D3 /* Recovered References */,
-            );
-            sourceTree = "<group>";
-        };
-        8A5C63E51F6C061400271379 /* Products */ = {
-            isa = PBXGroup;
-            children = (
-                8A5C63E41F6C061400271379 /* Odessa.app */,
-            );
-            name = Products;
-            sourceTree = "<group>";
-        };
-        8A5C63FF1F6C06D500271379 /* Model */ = {
-            isa = PBXGroup;
-            children = (
-                8AB71B841F8406B600726E14 /* Assets.xcassets */,
-                8A5C63E71F6C061400271379 /* AppDelegate.swift */,
-                8A5C63F91F6C061400271379 /* Info.plist */,
-                8A5C64021F6C0AC200271379 /* Player.swift */,
-                8A5C64181F6C12B600271379 /* Arma.swift */,
-                8A5C64041F6C0ACF00271379 /* Ataque.swift */,
-                8A5C64061F6C0ADA00271379 /* Inimigo.swift */,
-                8A5C64081F6C0AED00271379 /* Waves.swift */,
-                8A5C640A1F6C0AF800271379 /* Itens.swift */,
-                8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */,
-                8A5C640E1F6C0B0D00271379 /* Mapa.swift */,
-                8A5C64101F6C0B1800271379 /* Fase.swift */,
-                8A5C64121F6C0B2200271379 /* Jogo.swift */,
-                8A980C1C1F90099C00483B59 /* Movimentacao.swift */,
-                8A5C64141F6C0B3E00271379 /* HUD.swift */,
-                8A5C64161F6C0B5600271379 /* DAO.swift */,
-                8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
-                56105E651FA388C8002D3832 /* JoyStickView.swift */,
-                56105E671FA38934002D3832 /* CoreGraphics.swift */,
-                8AE806551F7D305100AE71A0 /* JsonFile.json */,
-                56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */,
-                56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */,
-                8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
-                8AE806551F7D305100AE71A0 /* JsonFile.json */,
-            );
-            name = Model;
-            sourceTree = "<group>";
-        };
-        8A5C64001F6C06DE00271379 /* View */ = {
-            isa = PBXGroup;
-            children = (
-                8A5C63F11F6C061400271379 /* Main.storyboard */,
-                8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */,
-                8A5C63E91F6C061400271379 /* GameScene.sks */,
-                8A5C63EB1F6C061400271379 /* Actions.sks */,
-                8A5C64301F71784A00271379 /* HomeScene.swift */,
-                8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */,
-                8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */,
-                8A5C63ED1F6C061400271379 /* GameScene.swift */,
-                0B581DF41FC7A2DF00200057 /* CoreData.swift */,
-                0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */,
-                8A5C642E1F71775700271379 /* PauseGameScene.swift */,
-                0B5530411FA3860800CFE572 /* VictoryScene.swift */,
-                0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */,
-                BEC134F71FBA215000AA094C /* StoreScene.swift */,
-                0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */,
-            );
-            name = View;
-            sourceTree = "<group>";
-        };
-        8A5C64011F6C06E500271379 /* Controller */ = {
-            isa = PBXGroup;
-            children = (
-                8A5C64221F71766800271379 /* HomeViewController.swift */,
-                8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */,
-                8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */,
-                8A5C63EF1F6C061400271379 /* GameViewController.swift */,
-                8A5C64281F71771600271379 /* PauseGameViewController.swift */,
-                BEC134F91FBA37EE00AA094C /* StoreViewController.swift */,
-            );
-            name = Controller;
-            sourceTree = "<group>";
-        };
-        8AA610681FBB1099008BE7D3 /* Recovered References */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            name = "Recovered References";
-            sourceTree = "<group>";
-        };
-        D56E158A60FBF0C0616472C5 /* Pods */ = {
-            isa = PBXGroup;
-            children = (
-                138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */,
-                7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */,
-            );
-            name = Pods;
-            sourceTree = "<group>";
-        };
+		4149374C4372F449CAA502E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0FA639897DDFC08859C3C802 /* Pods_Odessa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8A5C63DB1F6C061400271379 = {
+			isa = PBXGroup;
+			children = (
+				8A5C64011F6C06E500271379 /* Controller */,
+				8A5C64001F6C06DE00271379 /* View */,
+				8A5C63FF1F6C06D500271379 /* Model */,
+				8A5C63E51F6C061400271379 /* Products */,
+				D56E158A60FBF0C0616472C5 /* Pods */,
+				4149374C4372F449CAA502E6 /* Frameworks */,
+				8AA610681FBB1099008BE7D3 /* Recovered References */,
+			);
+			sourceTree = "<group>";
+		};
+		8A5C63E51F6C061400271379 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A5C63E41F6C061400271379 /* Odessa.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A5C63FF1F6C06D500271379 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8AB71B841F8406B600726E14 /* Assets.xcassets */,
+				8A5C63E71F6C061400271379 /* AppDelegate.swift */,
+				8A5C63F91F6C061400271379 /* Info.plist */,
+				8A5C64021F6C0AC200271379 /* Player.swift */,
+				8A5C64181F6C12B600271379 /* Arma.swift */,
+				8A5C64041F6C0ACF00271379 /* Ataque.swift */,
+				8A5C64061F6C0ADA00271379 /* Inimigo.swift */,
+				8A5C64081F6C0AED00271379 /* Waves.swift */,
+				8A5C640A1F6C0AF800271379 /* Itens.swift */,
+				8A5C640C1F6C0B0400271379 /* ModuloMapa.swift */,
+				8A5C640E1F6C0B0D00271379 /* Mapa.swift */,
+				8A5C64101F6C0B1800271379 /* Fase.swift */,
+				8A5C64121F6C0B2200271379 /* Jogo.swift */,
+				8A980C1C1F90099C00483B59 /* Movimentacao.swift */,
+				8A5C64141F6C0B3E00271379 /* HUD.swift */,
+				8A5C64161F6C0B5600271379 /* DAO.swift */,
+				56105E651FA388C8002D3832 /* JoyStickView.swift */,
+				56105E671FA38934002D3832 /* CoreGraphics.swift */,
+				56EB90A21FC63EB2004C27E3 /* GameSceneHelper.swift */,
+				56F1EEBC1FC852FE00F17EF3 /* DeviceTypes.swift */,
+				8A9D864B1F7AC21B00AA94FB /* Reader_JSON.swift */,
+				8AE806551F7D305100AE71A0 /* JsonFile.json */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		8A5C64001F6C06DE00271379 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8A5C63F11F6C061400271379 /* Main.storyboard */,
+				8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */,
+				8A5C63E91F6C061400271379 /* GameScene.sks */,
+				8A5C63EB1F6C061400271379 /* Actions.sks */,
+				8A5C64301F71784A00271379 /* HomeScene.swift */,
+				8A5C642A1F71772E00271379 /* HomeOptionsScene.swift */,
+				8A5C642C1F71774000271379 /* HomePlayerStatusScene.swift */,
+				8A5C63ED1F6C061400271379 /* GameScene.swift */,
+				0B581DF41FC7A2DF00200057 /* CoreData.swift */,
+				0BA40D5A1FA246E100F79B09 /* GameOverScene.swift */,
+				8A5C642E1F71775700271379 /* PauseGameScene.swift */,
+				0B5530411FA3860800CFE572 /* VictoryScene.swift */,
+				0BB61CDA1FBDF2D500699F0F /* ParallaxView.swift */,
+				BEC134F71FBA215000AA094C /* StoreScene.swift */,
+				0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		8A5C64011F6C06E500271379 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8A5C64221F71766800271379 /* HomeViewController.swift */,
+				8A5C64241F7176E000271379 /* HomeOptionsViewController.swift */,
+				8A5C64261F7176F000271379 /* HomePlayerStatusViewController.swift */,
+				8A5C63EF1F6C061400271379 /* GameViewController.swift */,
+				8A5C64281F71771600271379 /* PauseGameViewController.swift */,
+				BEC134F91FBA37EE00AA094C /* StoreViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		8AA610681FBB1099008BE7D3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		D56E158A60FBF0C0616472C5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */,
+				7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-        8A5C63E31F6C061400271379 /* Odessa */ = {
-            isa = PBXNativeTarget;
-            buildConfigurationList = 8A5C63FC1F6C061400271379 /* Build configuration list for PBXNativeTarget "Odessa" */;
-            buildPhases = (
-                B6AAAF9287E3BFD7C00F9434 /* [CP] Check Pods Manifest.lock */,
-                8A5C63E01F6C061400271379 /* Sources */,
-                8A5C63E11F6C061400271379 /* Frameworks */,
-                8A5C63E21F6C061400271379 /* Resources */,
-                82817C38AAC24468ABB2EF48 /* [CP] Embed Pods Frameworks */,
-                02740F6393D188A46C5BDA27 /* [CP] Copy Pods Resources */,
-            );
-            buildRules = (
-            );
-            dependencies = (
-            );
-            name = Odessa;
-            productName = Odessa;
-            productReference = 8A5C63E41F6C061400271379 /* Odessa.app */;
-            productType = "com.apple.product-type.application";
-        };
+		8A5C63E31F6C061400271379 /* Odessa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A5C63FC1F6C061400271379 /* Build configuration list for PBXNativeTarget "Odessa" */;
+			buildPhases = (
+				B6AAAF9287E3BFD7C00F9434 /* [CP] Check Pods Manifest.lock */,
+				8A5C63E01F6C061400271379 /* Sources */,
+				8A5C63E11F6C061400271379 /* Frameworks */,
+				8A5C63E21F6C061400271379 /* Resources */,
+				82817C38AAC24468ABB2EF48 /* [CP] Embed Pods Frameworks */,
+				02740F6393D188A46C5BDA27 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Odessa;
+			productName = Odessa;
+			productReference = 8A5C63E41F6C061400271379 /* Odessa.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-        8A5C63DC1F6C061400271379 /* Project object */ = {
-            isa = PBXProject;
-            attributes = {
-                LastSwiftUpdateCheck = 0830;
-                LastUpgradeCheck = 0830;
-                ORGANIZATIONNAME = "Michelle Beadle";
-                TargetAttributes = {
-                    8A5C63E31F6C061400271379 = {
-                        CreatedOnToolsVersion = 8.3.3;
-                        DevelopmentTeam = H98HS8WJD5;
-                        ProvisioningStyle = Automatic;
-                    };
-                };
-            };
-            buildConfigurationList = 8A5C63DF1F6C061400271379 /* Build configuration list for PBXProject "Odessa" */;
-            compatibilityVersion = "Xcode 3.2";
-            developmentRegion = English;
-            hasScannedForEncodings = 0;
-            knownRegions = (
-                en,
-                Base,
-            );
-            mainGroup = 8A5C63DB1F6C061400271379;
-            productRefGroup = 8A5C63E51F6C061400271379 /* Products */;
-            projectDirPath = "";
-            projectRoot = "";
-            targets = (
-                8A5C63E31F6C061400271379 /* Odessa */,
-            );
-        };
+		8A5C63DC1F6C061400271379 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Michelle Beadle";
+				TargetAttributes = {
+					8A5C63E31F6C061400271379 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = EPL3UEE88E;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 8A5C63DF1F6C061400271379 /* Build configuration list for PBXProject "Odessa" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8A5C63DB1F6C061400271379;
+			productRefGroup = 8A5C63E51F6C061400271379 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A5C63E31F6C061400271379 /* Odessa */,
+			);
+		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-        8A5C63E21F6C061400271379 /* Resources */ = {
-            isa = PBXResourcesBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-                8A5C63F31F6C061400271379 /* Main.storyboard in Resources */,
-                8A5C63EA1F6C061400271379 /* GameScene.sks in Resources */,
-                8A5C63F81F6C061400271379 /* LaunchScreen.storyboard in Resources */,
-                8A5C63EC1F6C061400271379 /* Actions.sks in Resources */,
-                8AB71B851F8406B600726E14 /* Assets.xcassets in Resources */,
-                8AE806561F7D305100AE71A0 /* JsonFile.json in Resources */,
-            );
-            runOnlyForDeploymentPostprocessing = 0;
-        };
+		8A5C63E21F6C061400271379 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A5C63F31F6C061400271379 /* Main.storyboard in Resources */,
+				8A5C63EA1F6C061400271379 /* GameScene.sks in Resources */,
+				8A5C63F81F6C061400271379 /* LaunchScreen.storyboard in Resources */,
+				8A5C63EC1F6C061400271379 /* Actions.sks in Resources */,
+				8AB71B851F8406B600726E14 /* Assets.xcassets in Resources */,
+				8AE806561F7D305100AE71A0 /* JsonFile.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-        02740F6393D188A46C5BDA27 /* [CP] Copy Pods Resources */ = {
-            isa = PBXShellScriptBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-            );
-            inputPaths = (
-            );
-            name = "[CP] Copy Pods Resources";
-            outputPaths = (
-            );
-            runOnlyForDeploymentPostprocessing = 0;
-            shellPath = /bin/sh;
-            shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Odessa/Pods-Odessa-resources.sh\"\n";
-            showEnvVarsInLog = 0;
-        };
-        82817C38AAC24468ABB2EF48 /* [CP] Embed Pods Frameworks */ = {
-            isa = PBXShellScriptBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-            );
-            inputPaths = (
-                "${SRCROOT}/Pods/Target Support Files/Pods-Odessa/Pods-Odessa-frameworks.sh",
-                "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-            );
-            name = "[CP] Embed Pods Frameworks";
-            outputPaths = (
-                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-            );
-            runOnlyForDeploymentPostprocessing = 0;
-            shellPath = /bin/sh;
-            shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Odessa/Pods-Odessa-frameworks.sh\"\n";
-            showEnvVarsInLog = 0;
-        };
-        B6AAAF9287E3BFD7C00F9434 /* [CP] Check Pods Manifest.lock */ = {
-            isa = PBXShellScriptBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-            );
-            inputPaths = (
-                "${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-                "${PODS_ROOT}/Manifest.lock",
-            );
-            name = "[CP] Check Pods Manifest.lock";
-            outputPaths = (
-                "$(DERIVED_FILE_DIR)/Pods-Odessa-checkManifestLockResult.txt",
-            );
-            runOnlyForDeploymentPostprocessing = 0;
-            shellPath = /bin/sh;
-            shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-            showEnvVarsInLog = 0;
-        };
+		02740F6393D188A46C5BDA27 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Odessa/Pods-Odessa-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82817C38AAC24468ABB2EF48 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Odessa/Pods-Odessa-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Odessa/Pods-Odessa-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B6AAAF9287E3BFD7C00F9434 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Odessa-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-        8A5C63E01F6C061400271379 /* Sources */ = {
-            isa = PBXSourcesBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-                56EB90A31FC63EB2004C27E3 /* GameSceneHelper.swift in Sources */,
-                BEC134FA1FBA37EE00AA094C /* StoreViewController.swift in Sources */,
-                8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */,
-                8A5C64171F6C0B5600271379 /* DAO.swift in Sources */,
-                8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */,
-                8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */,
-                8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */,
-                56F1EEBD1FC852FE00F17EF3 /* DeviceTypes.swift in Sources */,
-                56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */,
-                8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */,
-                8A5C64111F6C0B1800271379 /* Fase.swift in Sources */,
-                8A5C64031F6C0AC200271379 /* Player.swift in Sources */,
-                56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */,
-                0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */,
-                8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
-                0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */,
-                0BD663E61FC730F700088CD7 /* CoreData.xcdatamodeld in Sources */,
-                8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
-                8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
-                8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */,
-                8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */,
-                8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */,
-                0B581DF51FC7A2DF00200057 /* CoreData.swift in Sources */,
-                8A5C64311F71784A00271379 /* HomeScene.swift in Sources */,
-                8A5C64191F6C12B600271379 /* Arma.swift in Sources */,
-                8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */,
-                8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */,
-                8A5C642B1F71772E00271379 /* HomeOptionsScene.swift in Sources */,
-                BEC134F81FBA215000AA094C /* StoreScene.swift in Sources */,
-                8A5C64231F71766800271379 /* HomeViewController.swift in Sources */,
-                0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */,
-                8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */,
-                8A5C64291F71771600271379 /* PauseGameViewController.swift in Sources */,
-                8A5C63F01F6C061400271379 /* GameViewController.swift in Sources */,
-                8A5C64051F6C0ACF00271379 /* Ataque.swift in Sources */,
-                8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */,
-            );
-            runOnlyForDeploymentPostprocessing = 0;
-        };
+		8A5C63E01F6C061400271379 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56EB90A31FC63EB2004C27E3 /* GameSceneHelper.swift in Sources */,
+				BEC134FA1FBA37EE00AA094C /* StoreViewController.swift in Sources */,
+				8A5C64271F7176F000271379 /* HomePlayerStatusViewController.swift in Sources */,
+				8A5C64171F6C0B5600271379 /* DAO.swift in Sources */,
+				8A5C64071F6C0ADA00271379 /* Inimigo.swift in Sources */,
+				8A5C640B1F6C0AF800271379 /* Itens.swift in Sources */,
+				8A5C642F1F71775700271379 /* PauseGameScene.swift in Sources */,
+				56F1EEBD1FC852FE00F17EF3 /* DeviceTypes.swift in Sources */,
+				56105E681FA38934002D3832 /* CoreGraphics.swift in Sources */,
+				8A5C640D1F6C0B0400271379 /* ModuloMapa.swift in Sources */,
+				8A5C64111F6C0B1800271379 /* Fase.swift in Sources */,
+				8A5C64031F6C0AC200271379 /* Player.swift in Sources */,
+				56105E661FA388C8002D3832 /* JoyStickView.swift in Sources */,
+				0BA40D5B1FA246E100F79B09 /* GameOverScene.swift in Sources */,
+				8A5C640F1F6C0B0D00271379 /* Mapa.swift in Sources */,
+				0BB61CDB1FBDF2D500699F0F /* ParallaxView.swift in Sources */,
+				0BD663E61FC730F700088CD7 /* CoreData.xcdatamodeld in Sources */,
+				8A5C64251F7176E000271379 /* HomeOptionsViewController.swift in Sources */,
+				8A5C64091F6C0AED00271379 /* Waves.swift in Sources */,
+				8A5C642D1F71774000271379 /* HomePlayerStatusScene.swift in Sources */,
+				8A980C1D1F90099C00483B59 /* Movimentacao.swift in Sources */,
+				8A5C64151F6C0B3E00271379 /* HUD.swift in Sources */,
+				0B581DF51FC7A2DF00200057 /* CoreData.swift in Sources */,
+				8A5C64311F71784A00271379 /* HomeScene.swift in Sources */,
+				8A5C64191F6C12B600271379 /* Arma.swift in Sources */,
+				8A5C63EE1F6C061400271379 /* GameScene.swift in Sources */,
+				8A9D864C1F7AC21B00AA94FB /* Reader_JSON.swift in Sources */,
+				8A5C642B1F71772E00271379 /* HomeOptionsScene.swift in Sources */,
+				BEC134F81FBA215000AA094C /* StoreScene.swift in Sources */,
+				8A5C64231F71766800271379 /* HomeViewController.swift in Sources */,
+				0B5530421FA3860800CFE572 /* VictoryScene.swift in Sources */,
+				8A5C64131F6C0B2200271379 /* Jogo.swift in Sources */,
+				8A5C64291F71771600271379 /* PauseGameViewController.swift in Sources */,
+				8A5C63F01F6C061400271379 /* GameViewController.swift in Sources */,
+				8A5C64051F6C0ACF00271379 /* Ataque.swift in Sources */,
+				8A5C63E81F6C061400271379 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-        8A5C63F11F6C061400271379 /* Main.storyboard */ = {
-            isa = PBXVariantGroup;
-            children = (
-                8A5C63F21F6C061400271379 /* Base */,
-            );
-            name = Main.storyboard;
-            path = Odessa;
-            sourceTree = "<group>";
-        };
-        8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */ = {
-            isa = PBXVariantGroup;
-            children = (
-                8A5C63F71F6C061400271379 /* Base */,
-            );
-            name = LaunchScreen.storyboard;
-            path = Odessa;
-            sourceTree = "<group>";
-        };
+		8A5C63F11F6C061400271379 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A5C63F21F6C061400271379 /* Base */,
+			);
+			name = Main.storyboard;
+			path = Odessa;
+			sourceTree = "<group>";
+		};
+		8A5C63F61F6C061400271379 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A5C63F71F6C061400271379 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			path = Odessa;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-        8A5C63FA1F6C061400271379 /* Debug */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                ALWAYS_SEARCH_USER_PATHS = NO;
-                CLANG_ANALYZER_NONNULL = YES;
-                CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-                CLANG_CXX_LIBRARY = "libc++";
-                CLANG_ENABLE_MODULES = YES;
-                CLANG_ENABLE_OBJC_ARC = YES;
-                CLANG_WARN_BOOL_CONVERSION = YES;
-                CLANG_WARN_CONSTANT_CONVERSION = YES;
-                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-                CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-                CLANG_WARN_EMPTY_BODY = YES;
-                CLANG_WARN_ENUM_CONVERSION = YES;
-                CLANG_WARN_INFINITE_RECURSION = YES;
-                CLANG_WARN_INT_CONVERSION = YES;
-                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-                CLANG_WARN_SUSPICIOUS_MOVE = YES;
-                CLANG_WARN_UNREACHABLE_CODE = YES;
-                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                COPY_PHASE_STRIP = NO;
-                DEBUG_INFORMATION_FORMAT = dwarf;
-                ENABLE_STRICT_OBJC_MSGSEND = YES;
-                ENABLE_TESTABILITY = YES;
-                GCC_C_LANGUAGE_STANDARD = gnu99;
-                GCC_DYNAMIC_NO_PIC = NO;
-                GCC_NO_COMMON_BLOCKS = YES;
-                GCC_OPTIMIZATION_LEVEL = 0;
-                GCC_PREPROCESSOR_DEFINITIONS = (
-                    "DEBUG=1",
-                    "$(inherited)",
-                );
-                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-                GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-                GCC_WARN_UNDECLARED_SELECTOR = YES;
-                GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-                GCC_WARN_UNUSED_FUNCTION = YES;
-                GCC_WARN_UNUSED_VARIABLE = YES;
-                IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-                MTL_ENABLE_DEBUG_INFO = YES;
-                ONLY_ACTIVE_ARCH = YES;
-                SDKROOT = iphoneos;
-                SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-                SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-            };
-            name = Debug;
-        };
-        8A5C63FB1F6C061400271379 /* Release */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                ALWAYS_SEARCH_USER_PATHS = NO;
-                CLANG_ANALYZER_NONNULL = YES;
-                CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-                CLANG_CXX_LIBRARY = "libc++";
-                CLANG_ENABLE_MODULES = YES;
-                CLANG_ENABLE_OBJC_ARC = YES;
-                CLANG_WARN_BOOL_CONVERSION = YES;
-                CLANG_WARN_CONSTANT_CONVERSION = YES;
-                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-                CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-                CLANG_WARN_EMPTY_BODY = YES;
-                CLANG_WARN_ENUM_CONVERSION = YES;
-                CLANG_WARN_INFINITE_RECURSION = YES;
-                CLANG_WARN_INT_CONVERSION = YES;
-                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-                CLANG_WARN_SUSPICIOUS_MOVE = YES;
-                CLANG_WARN_UNREACHABLE_CODE = YES;
-                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                COPY_PHASE_STRIP = NO;
-                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-                ENABLE_NS_ASSERTIONS = NO;
-                ENABLE_STRICT_OBJC_MSGSEND = YES;
-                GCC_C_LANGUAGE_STANDARD = gnu99;
-                GCC_NO_COMMON_BLOCKS = YES;
-                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-                GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-                GCC_WARN_UNDECLARED_SELECTOR = YES;
-                GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-                GCC_WARN_UNUSED_FUNCTION = YES;
-                GCC_WARN_UNUSED_VARIABLE = YES;
-                IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-                MTL_ENABLE_DEBUG_INFO = NO;
-                SDKROOT = iphoneos;
-                SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-                VALIDATE_PRODUCT = YES;
-            };
-            name = Release;
-        };
-        8A5C63FD1F6C061400271379 /* Debug */ = {
-            isa = XCBuildConfiguration;
-            baseConfigurationReference = 138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */;
-            buildSettings = {
-                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-                DEVELOPMENT_TEAM = H98HS8WJD5;
-                INFOPLIST_FILE = Odessa/Info.plist;
-                IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-                PRODUCT_BUNDLE_IDENTIFIER = michellesantiago.Odessa;
-                PRODUCT_NAME = "$(TARGET_NAME)";
-                SWIFT_VERSION = 3.0;
-            };
-            name = Debug;
-        };
-        8A5C63FE1F6C061400271379 /* Release */ = {
-            isa = XCBuildConfiguration;
-            baseConfigurationReference = 7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */;
-            buildSettings = {
-                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-                DEVELOPMENT_TEAM = H98HS8WJD5;
-                INFOPLIST_FILE = Odessa/Info.plist;
-                IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-                PRODUCT_BUNDLE_IDENTIFIER = michellesantiago.Odessa;
-                PRODUCT_NAME = "$(TARGET_NAME)";
-                SWIFT_VERSION = 3.0;
-            };
-            name = Release;
-        };
+		8A5C63FA1F6C061400271379 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8A5C63FB1F6C061400271379 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8A5C63FD1F6C061400271379 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 138244C465E1E2C03077D40F /* Pods-Odessa.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = EPL3UEE88E;
+				INFOPLIST_FILE = Odessa/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = michellesantiago.Odessa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		8A5C63FE1F6C061400271379 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7589921192E90683F302AAF8 /* Pods-Odessa.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = EPL3UEE88E;
+				INFOPLIST_FILE = Odessa/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = michellesantiago.Odessa;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-        8A5C63DF1F6C061400271379 /* Build configuration list for PBXProject "Odessa" */ = {
-            isa = XCConfigurationList;
-            buildConfigurations = (
-                8A5C63FA1F6C061400271379 /* Debug */,
-                8A5C63FB1F6C061400271379 /* Release */,
-            );
-            defaultConfigurationIsVisible = 0;
-            defaultConfigurationName = Release;
-        };
-        8A5C63FC1F6C061400271379 /* Build configuration list for PBXNativeTarget "Odessa" */ = {
-            isa = XCConfigurationList;
-            buildConfigurations = (
-                8A5C63FD1F6C061400271379 /* Debug */,
-                8A5C63FE1F6C061400271379 /* Release */,
-            );
-            defaultConfigurationIsVisible = 0;
-            defaultConfigurationName = Release;
-        };
+		8A5C63DF1F6C061400271379 /* Build configuration list for PBXProject "Odessa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A5C63FA1F6C061400271379 /* Debug */,
+				8A5C63FB1F6C061400271379 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A5C63FC1F6C061400271379 /* Build configuration list for PBXNativeTarget "Odessa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A5C63FD1F6C061400271379 /* Debug */,
+				8A5C63FE1F6C061400271379 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-        0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */ = {
-            isa = XCVersionGroup;
-            children = (
-                0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */,
-            );
-            currentVersion = 0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */;
-            path = CoreData.xcdatamodeld;
-            sourceTree = "<group>";
-            versionGroupType = wrapper.xcdatamodel;
-        };
+		0BD663E41FC730F700088CD7 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 0BD663E51FC730F700088CD7 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 /* End XCVersionGroup section */
-    };
-    rootObject = 8A5C63DC1F6C061400271379 /* Project object */;
+	};
+	rootObject = 8A5C63DC1F6C061400271379 /* Project object */;
 }

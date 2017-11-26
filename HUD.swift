@@ -20,7 +20,8 @@ class HUD {
     var setaDirButtonNode = SKSpriteNode() // seta direita
     var setaEsqButtonNode = SKSpriteNode() // seta esquerda
     var suporteNode = SKSpriteNode() // suporte
-    public var pontosLabel: SKLabelNode!
+    public var pontosLabel: SKLabelNode! //label pontos
+ //   public var levelLabel: SKLabelNode!
    
     var moedaNode = SKSpriteNode()
     let playerHealthBar = SKSpriteNode() // hp da Odessa
@@ -115,6 +116,18 @@ class HUD {
         pontosLabel.color = UIColor.white
         
         HUDNode.addChild(pontosLabel)
+        
+//        levelLabel = SKLabelNode(fontNamed: "Montserrat")
+//        levelLabel.horizontalAlignmentMode = .center
+//        levelLabel.text = "1"
+//        // levelLabel.position = CGPoint(x: cam.position.x - screenSize.width*0.7, y: screenHeight*0.385)
+//
+//        levelLabel.position = CGPoint(x: screenWidth*0.46, y: screenHeight*0.31 )
+//        levelLabel.fontSize = 30
+//        levelLabel.zPosition = -1
+//        levelLabel.color = UIColor.white
+//
+//        HUDNode.addChild(levelLabel)
         
         // Hp Odessa
         let marginSuporte = self.suporteNode.frame.origin.x + self.suporteNode.frame.size.width/2 + screenWidth*0.0038

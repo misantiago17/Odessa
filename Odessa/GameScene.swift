@@ -108,6 +108,17 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var pedra1 = SKSpriteNode(texture: SKTexture(imageNamed: "bonfire"))
     var pedra2 = SKSpriteNode(texture: SKTexture(imageNamed: "bonfire"))
 
+    //numero Fase
+    
+    var levelLabel: SKLabelNode!  //label level
+    
+    var  numFase: Int = 1
+//    {
+//        didSet{
+//
+//            levelLabel.text = "\(numFase)"
+//        }
+//    }
     
     //Booelan Hoplita Attack
     var hoplitaAttack = false
@@ -120,6 +131,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var inimigol = 4
     
     var nMoeda: Int = 0
+    var nFase: Int = 0
      
     var  pontos: Int = 0
     {
@@ -150,14 +162,31 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //let bnb = SKSpriteNode(imageNamed: "expences-button-png-hi")
     
-    override func sceneDidLoad() {
+    override func sceneDidLoad(){
+        
+        
+       // numFase += 1
         
        // bnb.size = bnb.size*0.2
        // addChild(bnb)
         
+       
+        print("did load : \(numFase)")
+        
+//        recoverData(context: context)
+       
         //Core Data
         context = appDelegate.persistentContainer.viewContext
         recoverData(context: context)
+//        if (temUser == nil){
+//
+//            print("numero moedas: \(nMoeda)")
+//          //  HUDNode.pontosLabel.text = "\(nMoeda)"
+//        }
+       
+        
+        
+        
 
         // Mapa
         mapa = createMap()
@@ -221,6 +250,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Bonfires
         setInicialBonfire()
         setFinalBonfire()
+       
         
         // Pegar o primeiro modulo e colocar os inimigos nas posições dele
         //placeEnemies()
@@ -233,15 +263,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
     override func didMove(to view: SKView) {
         
+        
+        if (temUser == true){
+            pontos = nMoeda
+            numFase = nFase
+            
+        }
+        print("didi move \(numFase)")
+        
+        
         //setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
         
         physicsWorld.contactDelegate = self
         
-        if (temUser == true){
-            pontos = nMoeda
-        }
+      
 
+         setLevelLabel()
   
         // cam.addChild(parallax.frente)
         // cam.addChild(parallax.meio)
@@ -642,7 +680,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            joystick?.removeFromSuperview()
 //            self.view?.presentScene(nextScene, transition: SKTransition.fade(with: UIColor.black, duration: 0.5))
 
-            VictoryHandler()
+         //   VictoryHandler()
             
         }
         
@@ -779,16 +817,18 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             cam.position = CGPoint(x: playerNode.position.x, y: 120)
         }
         
-        if (playerNode.position.x > modulesInitialPositions.last! + 500){
+        if (playerNode.position.x < pedra2.position.x /*modulesInitialPositions.last! + 500*/){
             
-            print("\(pedra2.position.x)")
+          //  print("\(pedra2.position.x)")
             pedra2Animation()
             
         }
         
-        if (playerNode.position.x > modulesInitialPositions.last! + 600){
+        if (playerNode.position.x > modulesInitialPositions.last! + 700){
             
-            VictoryHandler()
+           // VictoryHandler()
+            
+            goToGameScene()
             
         }
         if (playerNode.position.x < pedra1.position.x){
@@ -818,11 +858,18 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
     func goToGameScene(){
+        
+  
+        
+        atualizaBanco()
+        
         let gameScene:GameScene = GameScene(size: self.view!.bounds.size) // create your new scene
         let transition = SKTransition.fade(withDuration: 1.0) // create type of transition (you can check in documentation for more transtions)
         gameScene.scaleMode = SKSceneScaleMode.fill
-        
         self.view!.presentScene(gameScene, transition: transition)
+       
+        
+        
     }
     
     // Game Over
@@ -1447,7 +1494,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setFinalBonfire(){
         
-        pedra2.position = CGPoint(x: 8200, y: screenHeight*0.385)// 8200 230
+        pedra2.position = CGPoint(x: 9000, y: screenHeight*0.385)// 8200 230
         pedra2.zPosition = -1
         pedra2.setScale(0.55)
         
@@ -1461,7 +1508,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         for i in 1...13 {
             pedritaFogos.append(SKTexture(imageNamed:("bonfire-frame-\(i)")))
         }
-        let fogosAction = SKAction.animate(with: pedritaFogos, timePerFrame: 0.26, resize: true, restore: false)
+        let fogosAction = SKAction.animate(with: pedritaFogos, timePerFrame: 0.15, resize: true, restore: false)
         let repeatAction = SKAction.repeatForever(fogosAction)
         
         pedra1.run(repeatAction, withKey: "repeatAction")
@@ -1476,31 +1523,66 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         for i in 1...13 {
             pedritaFogos.append(SKTexture(imageNamed:("bonfire-frame-\(i)")))
         }
-        let fogosAction = SKAction.animate(with: pedritaFogos, timePerFrame: 0.26, resize: true, restore: false)
+        let fogosAction = SKAction.animate(with: pedritaFogos, timePerFrame: 0.15, resize: true, restore: false)
         let repeatAction = SKAction.repeatForever(fogosAction)
         
         pedra2.run(repeatAction, withKey: "repeatAction")
         
         
         
-    }    
+    }
+    
+    //MARK: Level Label
+    
+    func setLevelLabel(){
+        
+        print("set level label: \(numFase)")
+ 
+        levelLabel = SKLabelNode(fontNamed: "Montserrat")
+        levelLabel.horizontalAlignmentMode = .center
+        levelLabel.text = "\(numFase)"
+        levelLabel.position = CGPoint(x: cam.position.x - screenSize.width*0.7, y: screenHeight*0.800)
+        levelLabel.fontSize = 60
+        levelLabel.zPosition = -1
+        levelLabel.color = UIColor.white
+        
+        addChild(levelLabel)
+    }
+    
+    
+    
+    
+    
+    
+    
     //MARK: Core Data
 
     func atualizaBanco(){
 
         score += pontos
+        numFase += 1
+        
         print("\(pontos)")
         print("\(score)")
         print("\(temUser)")
+        print(" num fase data \(numFase)")
+        print("nFase \(nFase)")
 
         if (temUser == true){
             if (score > nMoeda){
                 print("é maior")
                 print("atualiza bd")
-                updateData (context: context, score: score)
+                updateData (context: context, score: score,level: numFase)
                 score = 0
 
             }
+            
+            else if (nFase < numFase){
+                
+                updateData (context: context, score: score,level: numFase)
+       
+            }
+    
             else {
                 print("n moeda é maior")
                 score = 0
@@ -1510,7 +1592,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         else {  // só entra quando n tem user no bd
             print("saved")
-            storeData(context: context, moeda: score)
+            storeData(context: context, moeda: score, level: numFase)
             score = 0
 
         }
@@ -1518,12 +1600,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
   
-    func storeData(context: NSManagedObjectContext, moeda: Int){
+    func storeData(context: NSManagedObjectContext, moeda: Int, level: Int){
 
         if (temUser == nil){
             let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: context)
             newUser.setValue(moeda, forKey: "coins")
-            //  newUser.setValue("123", forKey: "password")
+            newUser.setValue(level, forKey: "level")
         }
 
         do {
@@ -1549,16 +1631,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                         print(moeda)
                         nMoeda = moeda
                         temUser = true
+                        
                     }
+                    if let level = result.value(forKey: "level") as? Int{
+                        print("level \(level)")
+                        nFase = level
+                    }
+                    
                 }
             }
         }
         catch {
             print("erro")
         }
+  
     }
     
-    func updateData (context: NSManagedObjectContext, score: Int){
+    func updateData (context: NSManagedObjectContext, score: Int, level: Int){
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         request.returnsObjectsAsFaults = false
@@ -1570,12 +1659,26 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     if let moeda = result.value(forKey: "coins") as? Int {
                         if (moeda < score){
                             result.setValue(score, forKey: "coins")
-                            storeData(context: context, moeda: score)
+                            storeData(context: context, moeda: score, level: level)
                             print("atualizou")
                         }
                         else if (score > 1000){
                             print("está mior que o score máximo")
                         }
+                    }
+                    
+                     if let nivel = result.value(forKey: "level") as? Int{
+                    
+                        if (nivel < level){
+                            
+                            result.setValue(level, forKey: "level")
+                            print("update data \(level)")
+                            storeData(context: context, moeda: score, level: level)
+                            print("atualizou")
+                            
+                        }
+                        
+                        
                     }
                 }
             }
@@ -1583,7 +1686,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         catch {
             
         }
-        
 
     }
 
