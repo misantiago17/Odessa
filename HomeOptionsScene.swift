@@ -10,7 +10,10 @@ import UIKit
 import GameplayKit
 import SpriteKit
 
+
 class HomeOptionsScene: SKScene {
+    
+    
     
     //Fundo animado
     
@@ -36,6 +39,8 @@ class HomeOptionsScene: SKScene {
 //    let myActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
     override func sceneDidLoad() {
+        
+       
         
         //print("Home Options")
         
@@ -219,12 +224,14 @@ class HomeOptionsScene: SKScene {
             let location = touch.location(in: self)
             
             if self.atPoint(location) == self.newGameButton {
-         
-        self.removeAllChildren()
-        self.removeAllActions()
-        let sceneOptions = GameScene(size: (self.scene?.size)!)
-        self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.0))
-            } else if self.atPoint(location) == self.storeButton {
+                print("tocou")
+                self.removeAllChildren()
+                self.removeAllActions()
+                let sceneOptions = GameScene(size: (self.scene?.size)!)
+               // self.view?.presentScene(sceneOptions, transition: SKTransition.crossFade(withDuration: 1.0))
+            }
+            
+            else if self.atPoint(location) == self.storeButton {
                 self.removeAllChildren()
                 self.removeAllActions()
                 let sceneOptions = StoreScene(size: (self.scene?.size)!)
@@ -232,6 +239,7 @@ class HomeOptionsScene: SKScene {
             }
         }
     }
- 
+    
+   
 
 }
