@@ -12,7 +12,7 @@ import GameplayKit
 class GameOverScene: SKScene {
     
     
-    let continueButton = SKSpriteNode(imageNamed: "smallContinueButton") // Sim
+    let continueButton = SKSpriteNode(imageNamed: "lula") // Sim
     let homeButton = SKSpriteNode(imageNamed: "smallHomeButton") // Nao
     var pigComendo = [SKTexture]()
     var pig = SKSpriteNode()
