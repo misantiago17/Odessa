@@ -132,7 +132,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var inimigol = 4
     
     var nMoeda: Int = 0
-    var nFase: Int = 0
+    var nFase: Int = 1
      
     var  pontos: Int = 0
     {
@@ -153,6 +153,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     var iniciou = false
     var correndo = false
+    var correndoFinal = false
     var podeMovimentar = false
     
     var camLimit: CGFloat = 0.0
@@ -263,6 +264,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
 
     override func didMove(to view: SKView) {
+        
+        //Core Data
+        context = appDelegate.persistentContainer.viewContext
+        recoverData(context: context)
         
         
         if (temUser == true){
@@ -621,9 +626,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             playerNode.position.x += 2.6
             
-            if (correndo == false){
+            if (correndoFinal == false){
                 runOdessa()
-                correndo = true
+                correndoFinal = true
             }
             
             if (playerNode.position.x >= cam.position.x/*moduloInicial + screenSize.width*/){
@@ -834,8 +839,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
         if (playerNode.position.x < pedra2.position.x /*modulesInitialPositions.last! + 500*/){
-            
-          //  print("\(pedra2.position.x)")
+      
             pedra2Animation()
             
         }
@@ -844,8 +848,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
            // VictoryHandler()
             
-            goToGameScene()
+            playerNode.position.x += 2.6
+            podeMovimentar = false
             
+            if (correndo == true){
+              
+                runOdessa()
+                correndo = false
+            }
+            cam.position.x = modulesInitialPositions.last! + 700
+      
+            if (playerNode.position.x > modulesInitialPositions.last! + (modules.last?.size.width)!){
+                goToGameScene()
+            }
+  
         }
         if (playerNode.position.x < pedra1.position.x){
             
@@ -875,13 +891,20 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func goToGameScene(){
         
-  
+        print("aaa")
         
-        atualizaBanco()
+     
         
         let gameScene:GameScene = GameScene(size: self.view!.bounds.size) // create your new scene
-        let transition = SKTransition.fade(withDuration: 1.0) // create type of transition (you can check in documentation for more transtions)
+        
+//        let transition = SKTransition.doorsCloseHorizontal(withDuration: 3.0)
+//        let transition = SKTransition.fade(withDuration: 0.0)
+//
+
+
+        let transition = SKTransition.fade(withDuration: 0.0) // create type of transition (you can check in documentation for more transtions)
         gameScene.scaleMode = SKSceneScaleMode.fill
+        atualizaBanco()
         self.view!.presentScene(gameScene, transition: transition)
        
         
