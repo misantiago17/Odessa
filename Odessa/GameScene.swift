@@ -155,6 +155,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var correndo = false
     var podeMovimentar = false
     
+    var atacouDireita = false
+    
     var camLimit: CGFloat = 0.0
     var posicaoAnteriorCamera: CGFloat = 0.0
     
@@ -698,7 +700,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                         let enemyPosition = enemies.convert(enemies.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemies)!]/2
                         let playerPosition = playerNode.position.x
                         
-                        if (enemyPosition >= playerPosition + (playerNode.size.width*0.4/2) || enemyPosition < playerPosition - (playerNode.size.width*0.4/2)) {
+                        if (enemyPosition >= playerPosition + (playerNode.size.width*0.4/2) ) {
+                            atacouDireita = false
+                            odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
+                            atacou = false
+                        } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
+                            atacouDireita = true
                             odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
                             atacou = false
                         }
@@ -1287,14 +1294,25 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     func odessaAttackedEnemy(odessa:SKSpriteNode, enemy:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
-//        print(enemy)
+        
+        // Descobre o lado que a odessa atacou
+        if (atacouDireita){
+            enemy.physicsBody?.applyImpulse(CGVector(dx: -100.0, dy: 100.0))
+        } else {
+            enemy.physicsBody?.applyImpulse(CGVector(dx: 100.0, dy: 100.0))
+        }
+        
+
+        let apagaAction = SKAction.fadeOut(withDuration: 0.09)
+        let acendeAction = SKAction.fadeIn(withDuration: 0.09)
+        
+        let piscaAction = SKAction.sequence([apagaAction,acendeAction])
+        enemy.run(piscaAction)
+        
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
-//        print("atacou inimigo")
 
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
-
-//            print("inimigo morreu")
             
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
@@ -1307,11 +1325,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             PosInicialInimigo.remove(at: i!)
 
             pontos += 100
-            
-           
-            
-            
-            
         }
         
     }
