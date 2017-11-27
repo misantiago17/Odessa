@@ -111,8 +111,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     //numero Fase
     
     var levelLabel: SKLabelNode!  //label level
+    var morreu = false
     
-    var  numFase: Int = 1
+    var  numFase: Int = 0
 //    {
 //        didSet{
 //
@@ -165,7 +166,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     override func sceneDidLoad(){
         
         
-       // numFase += 1
+        numFase += 1
         
        // bnb.size = bnb.size*0.2
        // addChild(bnb)
@@ -1321,6 +1322,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
         if (playerHP == 0){
+            morreu = true
             atualizaBanco()
             playerNode.removeFromParent()
             GameOverHandler()
@@ -1572,11 +1574,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //MARK: Core Data
 
-    func atualizaBanco(){
+    func atualizaBanco(){     //rezetar tudo ao clicar no new game
 
         score += pontos
-        numFase += 1
-        
+       // numFase += 1
+        if (morreu == false){
+            numFase += 1
+        }
+
         print("\(pontos)")
         print("\(score)")
         print("\(temUser)")
@@ -1703,6 +1708,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
 
     }
+    
+    
+  
 
     
     

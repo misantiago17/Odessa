@@ -56,7 +56,7 @@ class HomePlayerStatusScene: SKScene {
             switch touchedNode {
                 
             case statusPlayerButton:
-                //print("Play game")
+//                print("Play game")
                 
                 let nextScene = GameScene(size: frame.size)
                 //view?.presentScene(nextScene)

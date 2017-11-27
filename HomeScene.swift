@@ -8,8 +8,12 @@
 
 import UIKit
 import GameplayKit
+import CoreData
 
 class HomeScene: SKScene {
+    
+    public let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var context: NSManagedObjectContext!
     
     //Fundo animado
     //Logo da imagem
@@ -20,6 +24,7 @@ class HomeScene: SKScene {
     let newGameButton = SKSpriteNode(imageNamed: "newGame")
     let storeButton = SKSpriteNode(imageNamed: "storeButton")
     let creditsButton = SKSpriteNode(imageNamed: "creditsPetit")
+    let continueButton = SKSpriteNode(imageNamed: "continue")
     var pigComendo = [SKTexture]()
     var bandeiraGrande = [SKTexture]()
     var primeiraNuvem = [SKTexture]()
@@ -39,7 +44,7 @@ class HomeScene: SKScene {
     
     override func sceneDidLoad() {
         
-        
+        context = appDelegate.persistentContainer.viewContext
         
         title = SKSpriteNode(imageNamed: "odessa")
         title.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -236,8 +241,17 @@ class HomeScene: SKScene {
             case newGameButton:
                 removeAllActions()
                 removeAllChildren()
+                resetData(context: context)
                 let nextScene = GameScene(size: frame.size)
                 self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+                
+            
+            case continueButton:
+                removeAllActions()
+                removeAllChildren()
+                let nextScene = GameScene(size: frame.size)
+                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+  
             default:
                 
                 if self.atPoint(location) == self.storeButton {
@@ -245,7 +259,9 @@ class HomeScene: SKScene {
                     let nextScene = StoreScene(size: frame.size)
                     self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
                     
-                } else if isNewGame == false{
+                }
+                
+                else if isNewGame == false{
                     
                     title.removeFromParent()
                     tapLabel.removeFromParent()
@@ -255,7 +271,7 @@ class HomeScene: SKScene {
                     newGameButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
                     addChild(newGameButton)
                     
-//                    let marginFromNewGame = self.newGameButton.frame.origin.y - newGameButton.size.height*0.8
+                   let marginFromNewGame = self.newGameButton.frame.origin.y - newGameButton.size.height*0.8
                     
 //                    storeButton.position = CGPoint(x: 0.5*screenWidth ,y: marginFromNewGame)
 //                    storeButton.zPosition = 2.5
@@ -268,6 +284,12 @@ class HomeScene: SKScene {
                     addChild(creditsButton)
                     
                     
+                    continueButton.position = CGPoint(x: 0.5*screenWidth ,y: marginFromNewGame)
+                    continueButton.zPosition = 2.5
+                    continueButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
+                    addChild(continueButton)
+                    
+                    
                     isNewGame = true
                     
                 }
@@ -276,5 +298,25 @@ class HomeScene: SKScene {
         }
         
     }
+    func resetData(context: NSManagedObjectContext){
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
+        do {
+            let results = try context.fetch(request)
+            if results.count > 0 {
+                for result in results as! [NSManagedObject] {
+                    result.managedObjectContext?.delete(result)
+                }
+            }
+        }
+        catch {
+            print("erro")
+        }
+        print("apagou")
+        
+        
+    }
+    
     
 }
