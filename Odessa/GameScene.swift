@@ -133,6 +133,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     var nMoeda: Int = 0
     var nFase: Int = 1
+    
+    var labelFinal = SKLabelNode()
      
     var  pontos: Int = 0
     {
@@ -155,6 +157,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var correndo = false
     var correndoFinal = false
     var podeMovimentar = false
+    
+    var atacouDireita = false
     
     var camLimit: CGFloat = 0.0
     var posicaoAnteriorCamera: CGFloat = 0.0
@@ -282,8 +286,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
       
-
-         setLevelLabel()
+        // pedra inicial
+         setLevelLabel(position: CGPoint(x: cam.position.x - screenSize.width*0.7, y: screenHeight*0.800))
+        
+        // pedra final
+        setLevelLabel(position: CGPoint(x: modulesInitialPositions.last! + ((modules.last?.size.width)! * 0.7), y: screenHeight*0.800))
+        
   
         // cam.addChild(parallax.frente)
         // cam.addChild(parallax.meio)
@@ -701,7 +709,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                         let enemyPosition = enemies.convert(enemies.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemies)!]/2
                         let playerPosition = playerNode.position.x
                         
-                        if (enemyPosition >= playerPosition + (playerNode.size.width*0.4/2) || enemyPosition < playerPosition - (playerNode.size.width*0.4/2)) {
+                        if (enemyPosition >= playerPosition + (playerNode.size.width*0.4/2) ) {
+                            atacouDireita = false
+                            odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
+                            atacou = false
+                        } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
+                            atacouDireita = true
                             odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
                             atacou = false
                         }
@@ -727,6 +740,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             enemy.convert(enemy.position, to: self)
             
             distancia = enemyPosition - playerPosition
+            
+            // Odessa dá um bounce pra outro lado
+            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) && (isTouchingEnemy && inimigoSendoTocado == enemy)) {
+                
+                // Odessa está em cima do inimigo 
+                
+            }
             
             if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || (isTouchingEnemy && inimigoSendoTocado == enemy)){
                 
@@ -840,6 +860,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
       
             pedra2Animation()
             
+        }
+        
+        if (playerNode.position.x >= pedra2.position.x) {
+            labelFinal.text = "\(numFase + 1)"
         }
         
         if (playerNode.position.x > modulesInitialPositions.last! + 700){
@@ -1308,14 +1332,24 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     func odessaAttackedEnemy(odessa:SKSpriteNode, enemy:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
-//        print(enemy)
+        
+        // Descobre o lado que a odessa atacou
+        if (atacouDireita){
+            enemy.physicsBody?.applyImpulse(CGVector(dx: -100.0, dy: 100.0))
+        } else {
+            enemy.physicsBody?.applyImpulse(CGVector(dx: 100.0, dy: 100.0))
+        }
+
+        let apagaAction = SKAction.fadeOut(withDuration: 0.09)
+        let acendeAction = SKAction.fadeIn(withDuration: 0.09)
+        
+        let piscaAction = SKAction.sequence([apagaAction,acendeAction])
+        enemy.run(piscaAction)
+        
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
-//        print("atacou inimigo")
 
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
-
-//            print("inimigo morreu")
             
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
@@ -1328,11 +1362,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             PosInicialInimigo.remove(at: i!)
 
             pontos += 100
-            
-           
-            
-            
-            
         }
         
     }
@@ -1492,6 +1521,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         enemy.run(sequence, withKey: "attack")
     }
     
+    
+    
     func hoplitaAttackAnimation(enemy: SKSpriteNode){
         enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "Attack")
         
@@ -1533,9 +1564,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setFinalBonfire(){
         
-        pedra2.position = CGPoint(x: 9000, y: screenHeight*0.385)// 8200 230
+        pedra2.position = CGPoint(x: modulesInitialPositions.last! + ((modules.last?.size.width)! * 0.7), y: screenHeight*0.385)// 8200 230
         pedra2.zPosition = -1
-        pedra2.setScale(0.55)
+        pedra2.setScale(0.75)
         
         addChild(pedra2)
     }
@@ -1573,19 +1604,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //MARK: Level Label
     
-    func setLevelLabel(){
+    func setLevelLabel(position: CGPoint){
         
         print("set level label: \(numFase)")
  
         levelLabel = SKLabelNode(fontNamed: "Montserrat")
         levelLabel.horizontalAlignmentMode = .center
         levelLabel.text = "\(numFase)"
-        levelLabel.position = CGPoint(x: cam.position.x - screenSize.width*0.7, y: screenHeight*0.800)
+        levelLabel.position = position
         levelLabel.fontSize = 60
         levelLabel.zPosition = -1
         levelLabel.color = UIColor.white
         
         addChild(levelLabel)
+        
+        if (position == CGPoint(x: modulesInitialPositions.last! + ((modules.last?.size.width)! * 0.7), y: screenHeight*0.800)){
+            labelFinal = levelLabel
+        }
     }
     
     
