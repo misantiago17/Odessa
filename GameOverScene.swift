@@ -12,10 +12,11 @@ import GameplayKit
 class GameOverScene: SKScene {
     
     
-    let continueButton = SKSpriteNode(imageNamed: "continue") // Sim
+    let continueButton = SKSpriteNode(imageNamed: "smallContinueButton") // Sim
     let homeButton = SKSpriteNode(imageNamed: "smallHomeButton") // Nao
     var pigComendo = [SKTexture]()
     var pig = SKSpriteNode()
+    let gameOverLabel = SKSpriteNode(imageNamed: "gameOverLabel")
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
@@ -26,10 +27,16 @@ class GameOverScene: SKScene {
         
         view?.backgroundColor = UIColor.black
         
+        gameOverLabel.zPosition = 3
+        gameOverLabel.position = CGPoint(x: screenWidth*0.5, y: screenHeight*0.72) //100
+        gameOverLabel.size = CGSize(width: screenWidth*454/667, height: screenWidth*53/667)
+        addChild(gameOverLabel)
+        
         let title = SKSpriteNode(imageNamed: "odessa")
         title.position = CGPoint(x: frame.midX, y: screenHeight*0.15)
         title.zPosition = 2
-        title.setScale(0.4)
+        title.setScale(0.2)
+        //title.size = CGSize(width: screenWidth*83/667, height: screenWidth*23/375)
         
         addChild(title)
         
@@ -40,11 +47,11 @@ class GameOverScene: SKScene {
         
         pig = SKSpriteNode(texture: pigComendo[0])
         pig.zPosition = 2
-        pig.setScale(0.55)
+        pig.setScale(0.35)
         
         let comendoAction = SKAction.animate(with: pigComendo, timePerFrame: 0.9, resize: true, restore: false)
         
-        pig.position = CGPoint(x: screenWidth*0.5, y: screenHeight*0.65)
+        pig.position = CGPoint(x: screenWidth*0.5, y: screenHeight*0.48)
         
         let repeatAction = SKAction.repeatForever(comendoAction)
         
@@ -52,11 +59,13 @@ class GameOverScene: SKScene {
         addChild(pig)
         //
         
-        self.continueButton.position = CGPoint(x: screenWidth*0.3, y: screenHeight*0.4) //100
-        self.homeButton.position = CGPoint(x: screenWidth*0.7, y: screenHeight*0.4) //100
+        self.continueButton.position = CGPoint(x: screenWidth*0.32, y: screenHeight*0.32) //100
+        self.homeButton.position = CGPoint(x: screenWidth*0.68, y: screenHeight*0.32) //100
         continueButton.zPosition = 2
-        continueButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
-        homeButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
+        continueButton.size = CGSize(width: screenWidth*222/667, height: screenWidth*35/667)
+        //continueButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
+        homeButton.size = CGSize(width: screenWidth*222/667, height: screenWidth*35/667)
+        //homeButton.size = CGSize(width: screenWidth*0.38, height: screenWidth*0.06)
         homeButton.zPosition = 2
         
         addChild(continueButton)

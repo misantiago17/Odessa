@@ -1368,13 +1368,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func enemyAttackedOdessa(odessa:SKSpriteNode, enemy:SKSpriteNode) {
         
-        let apagaOdessa = SKAction.fadeOut(withDuration: 0.06)
-        let acendeOdessa = SKAction.fadeIn(withDuration: 0.06)
-        
-        let piscaOdessa = SKAction.sequence([apagaOdessa, acendeOdessa])
-        playerNode.run(piscaOdessa)
-        
-        playerHP = max(0, playerHP - 5)//25
+        //playerHP = max(0, playerHP - 85)//25
+        playerHP = max(0, playerHP - 10)//25
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
         if (playerHP == 0){
