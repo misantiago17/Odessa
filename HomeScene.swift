@@ -266,7 +266,7 @@ class HomeScene: SKScene {
                     title.removeFromParent()
                     tapLabel.removeFromParent()
 //                    newGameButton.position = CGPoint(x: 0.5*screenWidth ,y: 0.6*screenHeight)
-                    newGameButton.position = CGPoint(x: 0.52*screenWidth ,y: 0.45*screenHeight)
+                    newGameButton.position = CGPoint(x: 0.52*screenWidth ,y: 0.60*screenHeight)//0.45
                     newGameButton.zPosition = 2.5
                     newGameButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
                     addChild(newGameButton)
@@ -284,7 +284,7 @@ class HomeScene: SKScene {
                     addChild(creditsButton)
                     
                     
-                    continueButton.position = CGPoint(x: 0.5*screenWidth ,y: marginFromNewGame)
+                    continueButton.position = CGPoint(x: 0.52*screenWidth ,y: marginFromNewGame)
                     continueButton.zPosition = 2.5
                     continueButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
                     addChild(continueButton)
