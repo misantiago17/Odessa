@@ -268,12 +268,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Core Data
         context = appDelegate.persistentContainer.viewContext
         recoverData(context: context)
-        
-        
+    
         if (temUser == true){
             pontos = nMoeda
             numFase = nFase
-            
         }
         print("didi move \(numFase)")
         
