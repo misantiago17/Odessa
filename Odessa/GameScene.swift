@@ -1339,7 +1339,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func enemyAttackedOdessa(odessa:SKSpriteNode, enemy:SKSpriteNode) {
         
-        playerHP = max(0, playerHP - 5)//25
+        //playerHP = max(0, playerHP - 85)//25
+        playerHP = max(0, playerHP - 10)//25
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
         if (playerHP == 0){
