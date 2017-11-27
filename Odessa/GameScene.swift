@@ -297,6 +297,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         let joystickFrame = CGRect(origin: CGPoint(x: 40.0, y: (rect.height - size.height - 25.0)), size: size)
         joystick = JoyStickView(frame: joystickFrame)
         
+        
         joystick?.monitor = { angle, displacement in
             self.angle = angle
             self.displacement = displacement
@@ -336,14 +337,16 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         joystick?.stopHandler = {
             
-            self.joystickInUse = false
-            self.stopTimer = false
-            self.playerNode.removeAction(forKey: "repeatForever")
-            let playerTexture = SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1")
-            self.playerNode.texture = playerTexture
-            self.currentOdessaIdleSprite = 1
-            //self.playerNode.physicsBody = SKPhysicsBody(texture: self.playerNode.texture! , size: CGSize(width: self.playerNode.size.width, height: self.playerNode.size.height))
-            self.playerNode.removeAction(forKey: "runOdessa")
+            if (self.podeMovimentar){
+                self.joystickInUse = false
+                self.stopTimer = false
+                self.playerNode.removeAction(forKey: "repeatForever")
+                let playerTexture = SKTextureAtlas(named: "Idle").textureNamed("Odessa-idle-frame1")
+                self.playerNode.texture = playerTexture
+                self.currentOdessaIdleSprite = 1
+                //self.playerNode.physicsBody = SKPhysicsBody(texture: self.playerNode.texture! , size: CGSize(width: self.playerNode.size.width, height: self.playerNode.size.height))
+                self.playerNode.removeAction(forKey: "runOdessa")
+            }
         }
     }
     
@@ -541,28 +544,30 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             
-            self.touchUp(atPoint: t.location(in: cam))
-            
-            velocityX = 0
-            
-            fingerIsTouching = false
-            
-    
-            
-            if (HUDNode.blockButtonNode.frame.contains(location)) && longBlock == true{
+            if (podeMovimentar){
                 
-                for child in self.playerNode.children{
-                    if child.name == "lancaNode"{
-                        child.removeFromParent()
+                self.touchUp(atPoint: t.location(in: cam))
+                
+                velocityX = 0
+                
+                fingerIsTouching = false
+                
+                
+                
+                if (HUDNode.blockButtonNode.frame.contains(location)) && longBlock == true{
+                    
+                    for child in self.playerNode.children{
+                        if child.name == "lancaNode"{
+                            child.removeFromParent()
+                        }
                     }
+                    
+                    self.block = false
+                    self.longBlock = false
+                    self.playerNode.removeAction(forKey: "longBlock")
+                    self.playerNode.removeAction(forKey: "blockAction")
+                    
                 }
-                
-                self.block = false
-                self.longBlock = false
-                self.playerNode.removeAction(forKey: "longBlock")
-                self.playerNode.removeAction(forKey: "blockAction")
-                
-                
             }
             
         }
@@ -688,8 +693,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             if (atacou == true && isTouchingEnemy == true){
                 for enemies in placedEnemies{
                     if (enemies == inimigoSendoTocado) {
-                        odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
-                        atacou = false
+                        
+                        let enemyPosition = enemies.convert(enemies.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemies)!]/2
+                        let playerPosition = playerNode.position.x
+                        
+                        if (enemyPosition >= playerPosition + (playerNode.size.width*0.4/2) || enemyPosition < playerPosition - (playerNode.size.width*0.4/2)) {
+                            odessaAttackedEnemy(odessa: playerNode, enemy: inimigoSendoTocado)
+                            atacou = false
+                        }
                     }
                 }
             }
@@ -749,11 +760,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     enemy.removeAction(forKey: "repeatForeverInvertido")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animationInvertida")
                 }
-                if (enemy.value(forAttributeNamed: "animation")?.floatValue == 0){
+                if (enemy.value(forAttributeNamed: "animation")?.floatValue == 0) && iniciou == false {
                     hoplitaWalkAnimation(enemy: enemy)
                 }
 
-                enemy.position.x -= 0.7*3
+                if (iniciou == false){
+                    enemy.position.x -= 0.7*3
+                }
 
             } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
 
@@ -771,11 +784,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     enemy.removeAction(forKey: "repeatActionAnimation")
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
                 }
-                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 0){
+                if (enemy.value(forAttributeNamed: "animationInvertida")?.floatValue == 0) && iniciou == false {
                     hoplitaWalkAnimationInvertido(enemy: enemy)
                 }
 
-                enemy.position.x += 0.7*3
+                if (iniciou == false){
+                    enemy.position.x += 0.7*3
+                }
             }
             
         }
