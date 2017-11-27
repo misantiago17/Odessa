@@ -76,7 +76,7 @@ class HUD {
         specialButtonNode.size = CGSize(width: 45, height: 45)
         specialButtonNode.position = CGPoint(x: marginAButton + 26, y: -(screenSize.height/2 * 0.42))
         
-        HUDNode.addChild(specialButtonNode)
+    //    HUDNode.addChild(specialButtonNode)
 
 //        // Barras
         
