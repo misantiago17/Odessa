@@ -1108,9 +1108,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: inimigoNode.size.width*0.4, height: inimigoNode.size.height*0.72))
 
             inimigoNode.physicsBody?.allowsRotation = false
-            //inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
-//            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
-//            inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+            inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
+            inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+            inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
+            inimigoNode.physicsBody?.collisionBitMask = PhysicsCategory.odessa | PhysicsCategory.chao
             inimigoNode.name = "inimigo"
             
             let HealthBar = createEnemyHealthBar()
