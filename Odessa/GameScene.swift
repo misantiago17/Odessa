@@ -166,10 +166,15 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var atacouDireita = false
     
     var camLimit: CGFloat = 0.0
+    var camFinalLimit: CGFloat = 0.0
     var posicaoAnteriorCamera: CGFloat = 0.0
     
     //Devices
     let modelName = UIDevice.current.modelName
+    
+    var numInimigosFase = 0
+    var numInimigosDerrotados = 0
+    var derrotouTodosInimigos = false
     
     //let bnb = SKSpriteNode(imageNamed: "expences-button-png-hi")
     
@@ -255,8 +260,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         cam.position.y = 120
         
         // limite para a camera voltar
-        camLimit = cam.position.x - screenSize.width*0.3
+        //camLimit = cam.position.x - screenSize.width*0.3
         posicaoAnteriorCamera = cam.position.x
+        
+        // Limite que a camera pode voltar até o inicio da fase
+        camLimit = moduloInicial + screenSize.width
+        camFinalLimit = (modules.last?.position.x)!
 
         //Bonfires
         setInicialBonfire()
@@ -303,6 +312,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         let zoomOutAction = SKAction.scale(to: 2.0, duration: 0)
         cam.run(zoomOutAction)
+        
+        
+        //randomXPos()
         
         // cam.addChild(ParallaxScene().parallaxNode)
         // cam.addChild(ParallaxScene().parallaxNode)
@@ -669,11 +681,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         
-        // Limite que a camera pode voltar
-        if (cam.position.x > posicaoAnteriorCamera){
-            posicaoAnteriorCamera = cam.position.x
-            camLimit = cam.position.x - screenSize.width*0.3
-        }
+        // Limite que a camera pode voltar - conforme ela avança o jogo
+//        if (cam.position.x > posicaoAnteriorCamera){
+//            posicaoAnteriorCamera = cam.position.x
+//            camLimit = cam.position.x - screenSize.width*0.3
+//        }
         
         
         
@@ -921,7 +933,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
         // Camera acompanhando a Odessa
-        if (iniciou == false && playerNode.position.x >= camLimit){
+        if (iniciou == false && playerNode.position.x >= camLimit && playerNode.position.x <= camFinalLimit){
             cam.position = CGPoint(x: playerNode.position.x, y: 120)
         }
         
@@ -931,11 +943,21 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
         }
         
-        if (playerNode.position.x >= pedra2.position.x) {
-            labelFinal.text = "\(numFase + 1)"
+        
+        if (numInimigosFase == numInimigosDerrotados){
+            derrotouTodosInimigos = true
+        } else {
+            labelFinal.text = "\(numInimigosDerrotados)/\(numInimigosFase)"
         }
         
-        if (playerNode.position.x > modulesInitialPositions.last! + 700){
+        // Enquanto todos os inimigos não forem todos mortos a fase não acaba e a
+        // label em cima da pedra tem o contador de inimigos, quando ele mata todos
+        // o contador dos inimigos troca para o nível da fase (ou nada at all)
+//        if (playerNode.position.x >= pedra2.position.x) {
+//            labelFinal.text = "\(numFase + 1)"
+//        }
+        
+        if (playerNode.position.x > modulesInitialPositions.last! + 700 && derrotouTodosInimigos){
             
            // VictoryHandler()
             
@@ -1048,6 +1070,25 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         modules.remove(at: 0)
     }
     
+    func randomXPos() {
+        
+        for numModulo in inimigosNode {
+            for enemies in numModulo {
+                
+                let moduloSprite = enemies.parent as! SKSpriteNode
+                
+                let modInicialPos = moduloSprite.position.x - moduloSprite.size.width/2
+                let modFinalPos = moduloSprite.position.x + moduloSprite.size.width/2
+                let position = CGFloat(arc4random_uniform(UInt32(modFinalPos))) + modInicialPos
+                
+                enemies.position.x = position
+                
+            }
+            
+        }
+        
+    }
+    
     
     // Get Enemies from all modules
     func getModulesEnemy(modulo: ModuloMapa) {
@@ -1065,24 +1106,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.zPosition = 1
             inimigoNode.anchorPoint = CGPoint(x: 0.5, y: 0.43)
             inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: inimigoNode.size.width*0.4, height: inimigoNode.size.height*0.72))
-            
-//            if modelName == "iPhone 5" || modelName == "iPhone 5c" || modelName == "iPhone 5s" || modelName == "iPhone SE" {
-//
-//                //inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.46)
-//                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.46))
-//
-//            } else if modelName == "iPhone 6" || modelName == "iPhone 6s" || modelName == "iPhone 7" {
-//
-//                inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.50)
-//                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.50))
-//
-//            } else {
-//
-//                inimigoNode.size = CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.55)
-//                inimigoNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: playerNode.size.width*0.4, height: playerNode.size.height*0.55))
-//
-//            }
-            
 
             inimigoNode.physicsBody?.allowsRotation = false
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
@@ -1096,13 +1119,15 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             inimigoNode.addChild(HealthBar)
             
-            inimigoNode.setValue(SKAttributeValue.init(float: 100), forAttribute: "life")
+            inimigoNode.setValue(SKAttributeValue.init(float: Float(100 + (5 * numFase))), forAttribute: "life")
             
             //Inimigo Size
 //            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
             
             enemiesInCurrentModule.append(inimigoNode)
             i += 1
+            
+            numInimigosFase += 1
             
             if (i == moduleWaves[item].inimigos.count){
                 inimigosNode.append(enemiesInCurrentModule)
@@ -1421,6 +1446,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
             
+            numInimigosDerrotados += 1
+            
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
 
@@ -1446,7 +1473,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         let piscaOdessa = SKAction.sequence([apagaOdessa,acendeOdessa])
         playerNode.run(piscaOdessa)
         
-        playerHP = max(0, playerHP - 10)//25
+        playerHP = max(0, playerHP - 5 - (5 * numFase))//25
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: playerHP)
 
         if (playerHP == 0){
@@ -1683,8 +1710,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setLevelLabel(position: CGPoint){
         
-        print("set level label: \(numFase)")
- 
         levelLabel = SKLabelNode(fontNamed: "Montserrat")
         levelLabel.horizontalAlignmentMode = .center
         levelLabel.text = "\(numFase)"
@@ -1696,6 +1721,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(levelLabel)
         
         if (position == CGPoint(x: modulesInitialPositions.last! + ((modules.last?.size.width)! * 0.7), y: screenHeight*0.800)){
+            levelLabel.text = "\(numInimigosDerrotados)/\(numInimigosFase)"
             labelFinal = levelLabel
         }
     }
