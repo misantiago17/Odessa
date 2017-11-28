@@ -678,8 +678,25 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         for enemy in placedEnemies {
             
-            if (Float(enemy.position.x) == enemy.value(forAttributeNamed: "PosicaoAnterior")?.floatValue) && iniciou == false && isTouchingEnemy == false {
+            let posAnterior = enemy.value(forAttributeNamed: "PosicaoAnterior")!.floatValue
+            let inimigoAntes = Float(enemy.position.x + enemy.size.width/2)
+            let inimigosDepois = Float(enemy.position.x - enemy.size.width/2)
+            
+            print(posAnterior, "posAnterior")
+            print(inimigoAntes, "inimigoAntes")
+            print(inimigosDepois, "inimigosDepois")
+            
+            if (posAnterior >= inimigoAntes && posAnterior <= inimigosDepois && iniciou == false) /*&& isTouchingEnemy == false*/ {
                 
+                print("pulou")
+                
+                if (enemy.value(forAttributeNamed: "PosicaoAnterior")?.floatValue == 0){
+                    jumpHoplita(enemy: enemy)
+                }
+            
+                
+
+                /*
                 print("entrou aqui")
                 
                 let tempoAntigo = enemy.value(forAttributeNamed: "tempoEspera")?.floatValue
@@ -687,16 +704,18 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 
                 if (Double((enemy.value(forAttributeNamed: "tempoEspera")?.floatValue)!) >= 60.0){
                     
-                    print("pulou")
-                    
                     jumpHoplita(enemy: enemy)
                     enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "tempoEspera")
-                }
+                }*/
                 
-            } else {
+            }
+            print("kd")
+            enemy.setValue(SKAttributeValue.init(float: Float(enemy.position.x)), forAttribute: "PosicaoAnterior")
+            
+            /*else {
                 enemy.setValue(SKAttributeValue.init(float: Float(enemy.position.x)), forAttribute: "PosicaoAnterior")
                 enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "tempoEspera")
-            }
+            }*/
         }
         
         
@@ -1023,6 +1042,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "PosicaoAnterior")
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "tempoEspera")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "jumping")
             placedEnemies.append(enemy)
             PosInicialInimigo.append(enemy.convert(enemy.position, to: self).x)
             //hoplitaWalkAnimation(enemy: enemy)
@@ -1077,7 +1097,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
             inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
-            inimigoNode.physicsBody?.collisionBitMask = PhysicsCategory.odessa //faz inimigo não colidir com ele mesmo
+            //inimigoNode.physicsBody?.collisionBitMask = PhysicsCategory.odessa //faz inimigo não colidir com ele mesmo
             inimigoNode.name = "inimigo"
             
             let HealthBar = createEnemyHealthBar()
@@ -1676,6 +1696,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     // Jump hoplita
     func jumpHoplita(enemy: SKSpriteNode){
         
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "jumping")
+        
         var impulsoArray = [SKTexture]()
         var puloCimaArray = [SKTexture]()
         var puloBaixoArray = [SKTexture]()
@@ -1700,6 +1722,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         let endMoviment = SKAction.run({
             
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "jumping")
             self.jump = false
             enemy.removeAction(forKey: "jumpAction")
             
