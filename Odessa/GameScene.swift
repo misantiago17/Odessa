@@ -27,6 +27,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
+
+    var posicoesHoplita : [CGPoint] = []
+    
+    
+    
     
     // Private
     private var modules: [SKSpriteNode] = []
@@ -561,6 +566,49 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
+    func jumpHoplita(enemy: SKSpriteNode){
+        
+        
+        var impulsoArray = [SKTexture]()
+        var puloCimaArray = [SKTexture]()
+        var puloBaixoArray = [SKTexture]()
+        
+        for i in 1...2 {
+            impulsoArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame\(i)"))
+        }
+        
+        puloCimaArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame3"))
+        
+        for i in 4...6 {
+            puloBaixoArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame\(i)"))
+        }
+        
+        let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
+        let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+        
+        let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
+        let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
+        let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
+        let group = SKAction.group([puloBaixo, fallBack])
+        
+        let endMoviment = SKAction.run({
+            
+            self.jump = false
+            enemy.removeAction(forKey: "jumpAction")
+            
+            if self.joystickInUse == true {
+                self.runOdessa()
+            }
+            
+        })
+        
+        let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
+        
+        //self.playerNode.removeAction(forKey: "runOdessa")
+        enemy.run(jumpAction, withKey: "jumpAction")
+        
+    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }
@@ -639,6 +687,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            camLimit = cam.position.x - screenSize.width*0.3
 //        }
         
+        
+        
+        
+        
         //Fazer a odessa andar até o centro da camera
         if (iniciou == true) {
             
@@ -666,6 +718,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
             }
         }
+        
+        //Fazer os Hoplitas pularem todas as vezes que ele ficar mais de x segundos na msm posição
+        
+        for enemy in placedEnemies {
+            
+            if (Float(enemy.position.x) == enemy.value(forAttributeNamed: "PosicaoAnterior")?.floatValue) && iniciou == false {
+                
+                print ("AAAAAAAA")
+                
+                jumpHoplita(enemy: enemy)
+                
+            }
+            
+            enemy.setValue(SKAttributeValue.init(float: Float(enemy.position.x)), forAttribute: "PosicaoAnterior")
+            
+        }
+        
         
      //   print("\(attacking)")
         
