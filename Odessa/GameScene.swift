@@ -31,6 +31,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var posicoesHoplita : [CGPoint] = []
     
     
+    var homeButton =  UIButton()
+    var resumeButton =  UIButton()
+    
     
     
     // Private
@@ -390,6 +393,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     func touchUp(atPoint pos : CGPoint) {
     }
     
+  
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if (podeMovimentar){
@@ -454,13 +458,31 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     
                 }
                 
-                
+                //MARK: PAUSE
                 if (HUDNode.pauseButtonNode.frame.contains(location)){
                     
+                    resumeButton.backgroundColor = UIColor(patternImage: UIImage(named: "continue")!)
+                    resumeButton.frame.origin = CGPoint(x: cam.position.x/3, y: cam.position.y)
+                    resumeButton.frame.size = CGSize(width: 100, height: 58)
+                    resumeButton.sizeThatFits(CGSize(width: 50, height: 30))
+               //    resumeButton.backgroundColor = UIColor.blue
+                    resumeButton.addTarget(self, action: #selector(tirarPauseAction), for: UIControlEvents.touchUpInside)
+                    self.view?.addSubview(resumeButton)
                     
-                   
+                    homeButton.backgroundColor = UIColor(patternImage: UIImage(named: "homeButton")!)
+                    homeButton.frame.origin = CGPoint(x: cam.position.x/5, y: cam.position.y/40)
+                    homeButton.frame.size = CGSize(width: 370, height: 58)
+              //      homeButton.backgroundColor = UIColor.black
+                    homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
+                    
+                    self.view?.addSubview(homeButton)
+                    
+                    playerNode.isPaused = true
+           
                     
                 }
+                
+               
 
                 if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false && longBlock == false {
                     
@@ -573,6 +595,22 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         }
         
     }
+    
+    func tirarPauseAction(sender: UIButton!) { //pausar inimigos e odessa// fundo // botar background nos botoes// nao deixar mexer na hud
+        print("Button tapped")
+        playerNode.isPaused = false
+        homeButton.removeFromSuperview()
+        resumeButton.removeFromSuperview()
+        
+    }
+    
+    func irPraHomeAction(sender: UIButton!){
+        print("vai pra home")
+        playerNode.isPaused = false
+        homeButton.removeFromSuperview()
+        resumeButton.removeFromSuperview()
+    }
+    
     
     func jumpHoplita(enemy: SKSpriteNode){
         
