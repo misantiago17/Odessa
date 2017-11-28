@@ -248,7 +248,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         ultimo = modulesInitialPositions.last!
         primeiro = modulesInitialPositions[1]
         moduloInicial = modulesInitialPositions[0]
-        //setFlag()
+    
         
         // MARK: Camera
         camera = cam
@@ -1077,7 +1077,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
             inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
-            inimigoNode.physicsBody?.collisionBitMask = PhysicsCategory.odessa | PhysicsCategory.chao
+            inimigoNode.physicsBody?.collisionBitMask = PhysicsCategory.odessa //faz inimigo não colidir com ele mesmo
             inimigoNode.name = "inimigo"
             
             let HealthBar = createEnemyHealthBar()
@@ -1322,27 +1322,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         self.playerNode.run(repeatForever, withKey: "runOdessa")
     }
-    
-    func setFlag(){
-        
-        var bandeirao = SKSpriteNode()
-        var bandeiraGrande = [SKTexture]()
-        for i in 1...6 {
-            bandeiraGrande.append(SKTexture(imageNamed:("Bandeira1frame\(i)")))
-        }
-        bandeirao = SKSpriteNode(texture: bandeiraGrande[0])
-        let balancarAction = SKAction.animate(with: bandeiraGrande, timePerFrame: 0.26, resize: true, restore: false)
-        let repeatBandeira = SKAction.repeatForever(balancarAction)
-        
-        bandeirao.run(repeatBandeira, withKey: "repeatBandeira")
-        bandeirao.position = CGPoint(x: 6862, y: 150)
-        bandeirao.zPosition = -2
-        bandeirao.setScale(0.35)
-        addChild(bandeirao)
-        
-        posicaoBandeira = bandeirao.position.x
-    }
-    
+ 
     //MARK: Colisao
     
     func didEnd(_ contact: SKPhysicsContact) {
@@ -1848,9 +1828,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                             storeData(context: context, moeda: score, level: level)
                             print("atualizou")
                         }
-                        else if (score > 1000){
-                            print("está mior que o score máximo")
-                        }
+                       
                     }
                     
                      if let nivel = result.value(forKey: "level") as? Int{
