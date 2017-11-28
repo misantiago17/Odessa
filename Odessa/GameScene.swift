@@ -291,8 +291,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             pontos = nMoeda
             numFase = nFase
         }
-        print("didi move \(numFase)")
-        
         
         //setScore()
         updateHealthBar(node: HUDNode.playerHealthBar, withHealthPoints: MaxHealth)
@@ -566,49 +564,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
-    func jumpHoplita(enemy: SKSpriteNode){
-        
-        
-        var impulsoArray = [SKTexture]()
-        var puloCimaArray = [SKTexture]()
-        var puloBaixoArray = [SKTexture]()
-        
-        for i in 1...2 {
-            impulsoArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame\(i)"))
-        }
-        
-        puloCimaArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame3"))
-        
-        for i in 4...6 {
-            puloBaixoArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame\(i)"))
-        }
-        
-        let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
-        let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
-        
-        let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
-        let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
-        let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
-        let group = SKAction.group([puloBaixo, fallBack])
-        
-        let endMoviment = SKAction.run({
-            
-            self.jump = false
-            enemy.removeAction(forKey: "jumpAction")
-            
-            if self.joystickInUse == true {
-                self.runOdessa()
-            }
-            
-        })
-        
-        let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
-        
-        //self.playerNode.removeAction(forKey: "runOdessa")
-        enemy.run(jumpAction, withKey: "jumpAction")
-        
-    }
-    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }
@@ -723,16 +678,25 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         for enemy in placedEnemies {
             
-            if (Float(enemy.position.x) == enemy.value(forAttributeNamed: "PosicaoAnterior")?.floatValue) && iniciou == false {
+            if (Float(enemy.position.x) == enemy.value(forAttributeNamed: "PosicaoAnterior")?.floatValue) && iniciou == false && isTouchingEnemy == false {
                 
-                print ("AAAAAAAA")
+                print("entrou aqui")
                 
-                jumpHoplita(enemy: enemy)
+                let tempoAntigo = enemy.value(forAttributeNamed: "tempoEspera")?.floatValue
+                enemy.setValue(SKAttributeValue.init(float: tempoAntigo! + 1), forAttribute: "tempoEspera")
                 
+                if (Double((enemy.value(forAttributeNamed: "tempoEspera")?.floatValue)!) >= 60.0){
+                    
+                    print("pulou")
+                    
+                    jumpHoplita(enemy: enemy)
+                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "tempoEspera")
+                }
+                
+            } else {
+                enemy.setValue(SKAttributeValue.init(float: Float(enemy.position.x)), forAttribute: "PosicaoAnterior")
+                enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "tempoEspera")
             }
-            
-            enemy.setValue(SKAttributeValue.init(float: Float(enemy.position.x)), forAttribute: "PosicaoAnterior")
-            
         }
         
         
@@ -1057,6 +1021,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "animation")
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "AttackInvertida")
             enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "Attack")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "PosicaoAnterior")
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "tempoEspera")
             placedEnemies.append(enemy)
             PosInicialInimigo.append(enemy.convert(enemy.position, to: self).x)
             //hoplitaWalkAnimation(enemy: enemy)
@@ -1727,8 +1693,48 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
     
-    
-    
+    // Jump hoplita
+    func jumpHoplita(enemy: SKSpriteNode){
+        
+        var impulsoArray = [SKTexture]()
+        var puloCimaArray = [SKTexture]()
+        var puloBaixoArray = [SKTexture]()
+        
+        for i in 1...2 {
+            impulsoArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame\(i)"))
+        }
+        
+        puloCimaArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame3"))
+        
+        for i in 4...6 {
+            puloBaixoArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame\(i)"))
+        }
+        
+        let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
+        let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+        
+        let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
+        let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
+        let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
+        let group = SKAction.group([puloBaixo, fallBack])
+        
+        let endMoviment = SKAction.run({
+            
+            self.jump = false
+            enemy.removeAction(forKey: "jumpAction")
+            
+            if self.joystickInUse == true {
+                self.runOdessa()
+            }
+            
+        })
+        
+        let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
+        
+        //self.playerNode.removeAction(forKey: "runOdessa")
+        enemy.run(jumpAction, withKey: "jumpAction")
+        
+    }
     
     
     
