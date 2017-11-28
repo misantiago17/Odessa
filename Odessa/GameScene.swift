@@ -679,18 +679,19 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         for enemy in placedEnemies {
             
             let posAnterior = enemy.value(forAttributeNamed: "PosicaoAnterior")!.floatValue
-            let inimigoAntes = Float(enemy.position.x + enemy.size.width/2)
-            let inimigosDepois = Float(enemy.position.x - enemy.size.width/2)
+            let inimigoAntes = Float(enemy.position.x + (enemy.size.height/2)/2)
+            let inimigosDepois = Float(enemy.position.x - (enemy.size.height/2)/2)
             
             print(posAnterior, "posAnterior")
             print(inimigoAntes, "inimigoAntes")
             print(inimigosDepois, "inimigosDepois")
             
-            if (posAnterior >= inimigoAntes && posAnterior <= inimigosDepois && iniciou == false) /*&& isTouchingEnemy == false*/ {
+            if (Float(enemy.position.x) <= posAnterior + 1.0 && Float(enemy.position.x) >= posAnterior - 1.0 && iniciou == false) && isTouchingEnemy == false && inimigoSendoTocado != enemy {
                 
                 print("pulou")
                 
-                if (enemy.value(forAttributeNamed: "PosicaoAnterior")?.floatValue == 0){
+                if (enemy.value(forAttributeNamed: "jumping")?.floatValue == 0){
+                    print("pulou de verdade")
                     jumpHoplita(enemy: enemy)
                 }
             
@@ -1348,6 +1349,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     func didEnd(_ contact: SKPhysicsContact) {
         if (contact.bodyA.node?.name == "player" && contact.bodyB.node?.name == "inimigo") {
             isTouchingEnemy = false
+            inimigoSendoTocado = SKSpriteNode()
             
             //print("naum to tocano naum")
             
