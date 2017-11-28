@@ -265,8 +265,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Bonfires
         setInicialBonfire()
         setFinalBonfire()
-        
-        randomXPos()
        
         
         // Pegar o primeiro modulo e colocar os inimigos nas posições dele
@@ -309,6 +307,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         let zoomOutAction = SKAction.scale(to: 2.0, duration: 0)
         cam.run(zoomOutAction)
+        
+        
+        //randomXPos()
         
         // cam.addChild(ParallaxScene().parallaxNode)
         // cam.addChild(ParallaxScene().parallaxNode)
@@ -876,14 +877,16 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         if (numInimigosFase == numInimigosDerrotados){
             derrotouTodosInimigos = true
+        } else {
+            labelFinal.text = "\(numInimigosDerrotados)/\(numInimigosFase)"
         }
         
         // Enquanto todos os inimigos não forem todos mortos a fase não acaba e a
         // label em cima da pedra tem o contador de inimigos, quando ele mata todos
         // o contador dos inimigos troca para o nível da fase (ou nada at all)
-        if (playerNode.position.x >= pedra2.position.x) {
-            labelFinal.text = "\(numFase + 1)"
-        }
+//        if (playerNode.position.x >= pedra2.position.x) {
+//            labelFinal.text = "\(numFase + 1)"
+//        }
         
         if (playerNode.position.x > modulesInitialPositions.last! + 700 && derrotouTodosInimigos){
             
@@ -1637,8 +1640,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func setLevelLabel(position: CGPoint){
         
-        print("set level label: \(numFase)")
- 
         levelLabel = SKLabelNode(fontNamed: "Montserrat")
         levelLabel.horizontalAlignmentMode = .center
         levelLabel.text = "\(numFase)"
@@ -1650,6 +1651,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         addChild(levelLabel)
         
         if (position == CGPoint(x: modulesInitialPositions.last! + ((modules.last?.size.width)! * 0.7), y: screenHeight*0.800)){
+            levelLabel.text = "\(numInimigosDerrotados)/\(numInimigosFase)"
             labelFinal = levelLabel
         }
     }
