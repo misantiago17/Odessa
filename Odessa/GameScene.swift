@@ -454,6 +454,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     
                 }
                 
+                
+                if (HUDNode.pauseButtonNode.frame.contains(location)){
+                    
+                    
+                   
+                    
+                }
+
                 if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false && longBlock == false {
                     
                     block = true
@@ -725,7 +733,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             if (Float(enemy.position.x) == enemy.value(forAttributeNamed: "PosicaoAnterior")?.floatValue) && iniciou == false {
                 
-                print ("AAAAAAAA")
+            //    print ("AAAAAAAA")
                 
                 jumpHoplita(enemy: enemy)
                 
@@ -1111,7 +1119,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             inimigoNode.physicsBody?.usesPreciseCollisionDetection = true
             inimigoNode.physicsBody?.categoryBitMask = PhysicsCategory.enemy
             inimigoNode.physicsBody?.contactTestBitMask = PhysicsCategory.odessa
-            inimigoNode.physicsBody?.collisionBitMask = PhysicsCategory.odessa | PhysicsCategory.chao
+            inimigoNode.physicsBody?.collisionBitMask = PhysicsCategory.odessa 
             inimigoNode.name = "inimigo"
             
             let HealthBar = createEnemyHealthBar()
