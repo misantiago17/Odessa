@@ -33,6 +33,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     var homeButton =  UIButton()
     var resumeButton =  UIButton()
+    var fundoPause = SKSpriteNode()
+    var pauseLabel = SKLabelNode()
     
     
     
@@ -461,25 +463,49 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 //MARK: PAUSE
                 if (HUDNode.pauseButtonNode.frame.contains(location)){
                     
-                    resumeButton.backgroundColor = UIColor(patternImage: UIImage(named: "continue")!)
+                    fundoPause = SKSpriteNode(texture: SKTexture(imageNamed: "quadradoBranco"))
+                    fundoPause.size = CGSize(width: 600, height: 500)
+                    fundoPause.position = CGPoint(x: cam.position.x, y: cam.position.y)
+                    fundoPause.zPosition = 3
+                 //   addChild(fundoPause)
+                    
+                //    pauseLabel = SKLabelNode(fontNamed: "Arial")
+                    pauseLabel.horizontalAlignmentMode = .center
+                    pauseLabel.text = "Paused"
+                    pauseLabel.position = CGPoint(x: cam.position.x, y: cam.position.y * 2)
+                    pauseLabel.fontSize = 60
+                    pauseLabel.zPosition = 4
+                    pauseLabel.color = UIColor.black
+                    
+                    addChild(pauseLabel)
+                    //fundoPause.addChild(pauseLabel)
+                
+                    let image = UIImage(named: "continue")
+                    resumeButton.setImage(image, for: .normal)
                     resumeButton.frame.origin = CGPoint(x: cam.position.x/3, y: cam.position.y)
-                    resumeButton.frame.size = CGSize(width: 100, height: 58)
-                    resumeButton.sizeThatFits(CGSize(width: 50, height: 30))
-               //    resumeButton.backgroundColor = UIColor.blue
+                    resumeButton.imageView?.contentMode = .scaleAspectFit
+                    resumeButton.frame.size = CGSize(width: 150, height: 58)
                     resumeButton.addTarget(self, action: #selector(tirarPauseAction), for: UIControlEvents.touchUpInside)
                     self.view?.addSubview(resumeButton)
+                
                     
-                    homeButton.backgroundColor = UIColor(patternImage: UIImage(named: "homeButton")!)
-                    homeButton.frame.origin = CGPoint(x: cam.position.x/5, y: cam.position.y/40)
-                    homeButton.frame.size = CGSize(width: 370, height: 58)
-              //      homeButton.backgroundColor = UIColor.black
+                    let imageHome = UIImage(named: "homeButton")
+                    homeButton.setImage(imageHome, for: .normal)
+                    homeButton.frame.origin = CGPoint(x: cam.position.x/3, y: cam.position.y/1.3)
+                    homeButton.frame.size = CGSize(width: 150, height: 58)
+                    homeButton.imageView?.contentMode = .scaleAspectFit
                     homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
                     
                     self.view?.addSubview(homeButton)
                     
                     playerNode.isPaused = true
-           
+                    podeMovimentar = false
+                    self.view?.isPaused = true
                     
+                     for enemy in placedEnemies {
+                        enemy.isPaused = true
+                    }
+  
                 }
                 
                
@@ -596,19 +622,46 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
+    //MARK: Funcoes botoes pause
+    
     func tirarPauseAction(sender: UIButton!) { //pausar inimigos e odessa// fundo // botar background nos botoes// nao deixar mexer na hud
         print("Button tapped")
+        self.view?.isPaused = false
         playerNode.isPaused = false
+        for enemy in placedEnemies {
+            
+            enemy.isPaused = false
+     
+        }
+        podeMovimentar = true
         homeButton.removeFromSuperview()
         resumeButton.removeFromSuperview()
+        fundoPause.removeFromParent()
+        pauseLabel.removeFromParent()
         
     }
     
     func irPraHomeAction(sender: UIButton!){
+        self.view?.isPaused = false
         print("vai pra home")
         playerNode.isPaused = false
+        for enemy in placedEnemies {
+            
+            enemy.isPaused = false
+            
+        }
         homeButton.removeFromSuperview()
         resumeButton.removeFromSuperview()
+        fundoPause.removeFromParent()
+        pauseLabel.removeFromParent()
+        
+        joystick?.removeFromSuperview()
+        
+        let homeScene:HomeScene = HomeScene(size: self.view!.bounds.size)
+        let transition = SKTransition.fade(withDuration: 0.0)
+        homeScene.scaleMode = SKSceneScaleMode.fill
+        self.view!.presentScene(homeScene, transition: transition)
+        
     }
     
     
