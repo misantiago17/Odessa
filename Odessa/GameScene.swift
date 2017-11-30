@@ -793,7 +793,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Fazer a odessa andar até o centro da camera
         if (iniciou == true) {
             
-            playerNode.position.x += 2.6
+            joystick?.removeFromSuperview()
+            
+            HUDNode.attackButtonNode.isHidden = true
+            HUDNode.jumpButtonNode.isHidden = true
+            
+            playerNode.position.x += 4.5//2.6
             
             if (correndoFinal == false){
                 runOdessa()
@@ -804,6 +809,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 playerNode.removeAction(forKey: "runOdessa")
                 iniciou = false
                 podeMovimentar = true
+            
+                HUDNode.attackButtonNode.isHidden = false
+                HUDNode.jumpButtonNode.isHidden = false
+             
+                view?.addSubview(joystick!)
+                
+                
             }
         }
    
