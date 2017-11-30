@@ -48,12 +48,12 @@ class Movimentacao {
     func setMovements() {
         
         //MARK: Odessa Attack
-        for i in 1...7 {
+        for i in 1...4 {
             attackArray.append(SKTexture(imageNamed: "odessa-attackframe\(i)"))
         }
         
         //MARK: Lança Attack
-        for i in 1...7 {
+        for i in 1...4 {
             lancaAttack.append(SKTexture(imageNamed: "lanca-odessa-attackframe\(i)"))
         }
         

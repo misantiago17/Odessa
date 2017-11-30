@@ -592,7 +592,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
                     let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
                     
-                    let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
+                    let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.05)
                     let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
                     let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
                     let group = SKAction.group([puloBaixo, fallBack])
@@ -617,6 +617,48 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 
             }
         }
+        
+    }
+    
+    //MARK: Funcoes botoes pause
+    
+    func tirarPauseAction(sender: UIButton!) { //pausar inimigos e odessa// fundo // botar background nos botoes// nao deixar mexer na hud
+        print("Button tapped")
+        self.view?.isPaused = false
+        playerNode.isPaused = false
+        for enemy in placedEnemies {
+            
+            enemy.isPaused = false
+     
+        }
+        podeMovimentar = true
+        homeButton.removeFromSuperview()
+        resumeButton.removeFromSuperview()
+        fundoPause.removeFromParent()
+        pauseLabel.removeFromParent()
+        
+    }
+    
+    func irPraHomeAction(sender: UIButton!){
+        self.view?.isPaused = false
+        print("vai pra home")
+        playerNode.isPaused = false
+        for enemy in placedEnemies {
+            
+            enemy.isPaused = false
+            
+        }
+        homeButton.removeFromSuperview()
+        resumeButton.removeFromSuperview()
+        fundoPause.removeFromParent()
+        pauseLabel.removeFromParent()
+        
+        joystick?.removeFromSuperview()
+        
+        let homeScene:HomeScene = HomeScene(size: self.view!.bounds.size)
+        let transition = SKTransition.fade(withDuration: 0.0)
+        homeScene.scaleMode = SKSceneScaleMode.fill
+        self.view!.presentScene(homeScene, transition: transition)
         
     }
     
@@ -922,7 +964,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 }
 
                 if (iniciou == false){
-                    enemy.position.x -= 0.7*3
+                    enemy.position.x -= 0.7*4
                 }
 
             } else if (enemyPosition < playerPosition - (playerNode.size.width*0.4/2)){
@@ -946,7 +988,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 }
 
                 if (iniciou == false){
-                    enemy.position.x += 0.7*3
+                    enemy.position.x += 0.7*4
                 }
             }
             
@@ -972,7 +1014,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             if (self.angle >= 60 && self.angle <= 120) && joystickInUse == true && longBlock == false {
                 
-                self.playerNode.position.x += self.displacement*3
+                self.playerNode.position.x += self.displacement*4
                 
             } else if (self.angle >= 240 && self.angle <= 300) && joystickInUse == true && longBlock == false{
                 
@@ -1174,7 +1216,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             inimigoNode.addChild(HealthBar)
             
-            inimigoNode.setValue(SKAttributeValue.init(float: Float(100 + (5 * numFase))), forAttribute: "life")
+            inimigoNode.setValue(SKAttributeValue.init(float: Float(20 + (5 * numFase))), forAttribute: "life")
             
             //Inimigo Size
 //            inimigoNode.size = CGSize(width: size.height/2, height: size.height/2)
@@ -1464,6 +1506,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
         
+        let positionEnemy = enemy.position
+        
         // Descobre o lado que a odessa atacou
         if (atacouDireita){
             enemy.physicsBody?.applyImpulse(CGVector(dx: -100.0, dy: 100.0))
@@ -1486,15 +1530,31 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
-
+            
+            // Ela congela no ultimo frame pisca com o alpha diminuindo
             enemy.removeAllActions()
-            enemy.removeAllChildren()
-            enemy.removeFromParent()
-            let i = placedEnemies.index(of: enemy)
-            placedEnemies.remove(at: i!)
-            PosInicialInimigo.remove(at: i!)
-
-            pontos += 100
+            enemy.texture = SKTexture(imageNamed: "soldier_attack-frame1")
+            let trava = SKAction.moveTo(x: positionEnemy.x, duration: 1.0)
+            
+            let i = self.placedEnemies.index(of: enemy)
+            self.placedEnemies.remove(at: i!)
+            self.PosInicialInimigo.remove(at: i!)
+            //SKAction.position
+            //let trava = SKAction.wait(forDuration: 0.1)
+            let apaga = SKAction.fadeOut(withDuration: 0.1)
+            let acende = SKAction.fadeIn(withDuration: 0.1)
+            let alpha = SKAction.fadeAlpha(by: 0.1, duration: 0.1)
+            
+            let hoplitaMorrendo = SKAction.sequence([trava,apaga,alpha,acende,apaga,alpha,acende,apaga,alpha,acende])
+            enemy.run(hoplitaMorrendo, completion: {
+                
+                enemy.removeAllActions()
+                enemy.removeAllChildren()
+                enemy.removeFromParent()
+                
+                self.pontos += 100
+                
+            })
         }
         
     }
