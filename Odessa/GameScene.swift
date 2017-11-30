@@ -755,6 +755,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             playerNode.position.x += 4.5//2.6
             
             if (correndoFinal == false){
+                
+                joystick?.removeFromSuperview()
+                
+                HUDNode.attackButtonNode.isHidden = true
+                HUDNode.jumpButtonNode.isHidden = true
+                
                 runOdessa()
                 correndoFinal = true
             }
@@ -1508,22 +1514,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         let positionEnemy = enemy.position
         
-        // Descobre o lado que a odessa atacou
-        if (atacouDireita){
-            enemy.physicsBody?.applyImpulse(CGVector(dx: -100.0, dy: 100.0))
-        } else {
-            enemy.physicsBody?.applyImpulse(CGVector(dx: 100.0, dy: 100.0))
-        }
-
-        let apagaAction = SKAction.fadeOut(withDuration: 0.09)
-        let acendeAction = SKAction.fadeIn(withDuration: 0.09)
-        
-        let piscaAction = SKAction.sequence([apagaAction,acendeAction])
-        enemy.run(piscaAction)
+        print(enemy.value(forAttributeNamed: "life")?.floatValue)
         
         updateEnemyLife(enemyBar: enemy.childNode(withName: "HealthBar") as! SKSpriteNode, withHealthPoints: (enemy.value(forAttributeNamed: "life")?.floatValue)!)
         
-
         if (Double((enemy.value(forAttributeNamed: "life")?.floatValue)!) <= 0.0){
             
             numInimigosDerrotados += 1
@@ -1531,9 +1525,14 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             let healthBar = enemy.childNode(withName: "HealthBar")
             healthBar?.removeFromParent()
             
-            // Ela congela no ultimo frame pisca com o alpha diminuindo
             enemy.removeAllActions()
-            enemy.texture = SKTexture(imageNamed: "soldier_attack-frame1")
+            
+            if (atacouDireita){
+                enemy.texture = SKTexture(imageNamed: "soldier_attack-invertido-frame1")
+            } else {
+                enemy.texture = SKTexture(imageNamed: "soldier_attack-frame1")
+            }
+            
             let trava = SKAction.moveTo(x: positionEnemy.x, duration: 1.0)
             
             let i = self.placedEnemies.index(of: enemy)
@@ -1545,7 +1544,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             let acende = SKAction.fadeIn(withDuration: 0.1)
             let alpha = SKAction.fadeAlpha(by: 0.1, duration: 0.1)
             
-            let hoplitaMorrendo = SKAction.sequence([trava,apaga,alpha,acende,apaga,alpha,acende,apaga,alpha,acende])
+            let hoplitaMorrendo = SKAction.sequence([trava,apaga,alpha,acende,apaga])
             enemy.run(hoplitaMorrendo, completion: {
                 
                 enemy.removeAllActions()
@@ -1555,6 +1554,21 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 self.pontos += 100
                 
             })
+        } else {
+            
+            // Descobre o lado que a odessa atacou
+            if (atacouDireita){
+                enemy.physicsBody?.applyImpulse(CGVector(dx: -100.0, dy: 100.0))
+            } else {
+                enemy.physicsBody?.applyImpulse(CGVector(dx: 100.0, dy: 100.0))
+            }
+            
+            let apagaAction = SKAction.fadeOut(withDuration: 0.09)
+            let acendeAction = SKAction.fadeIn(withDuration: 0.09)
+            
+            let piscaAction = SKAction.sequence([apagaAction,acendeAction])
+            enemy.run(piscaAction)
+            
         }
         
     }
