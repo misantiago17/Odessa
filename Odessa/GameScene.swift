@@ -482,17 +482,17 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 
                     let image = UIImage(named: "continue")
                     resumeButton.setImage(image, for: .normal)
-                    resumeButton.frame.origin = CGPoint(x: cam.position.x/3, y: cam.position.y)
+                    resumeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y)
                     resumeButton.imageView?.contentMode = .scaleAspectFit
-                    resumeButton.frame.size = CGSize(width: 150, height: 58)
+                    resumeButton.frame.size = CGSize(width: 200, height: 90)
                     resumeButton.addTarget(self, action: #selector(tirarPauseAction), for: UIControlEvents.touchUpInside)
                     self.view?.addSubview(resumeButton)
                 
                     
                     let imageHome = UIImage(named: "homeButton")
                     homeButton.setImage(imageHome, for: .normal)
-                    homeButton.frame.origin = CGPoint(x: cam.position.x/3, y: cam.position.y/1.3)
-                    homeButton.frame.size = CGSize(width: 150, height: 58)
+                    homeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y/1.5)
+                    homeButton.frame.size = CGSize(width: 200, height: 90)
                     homeButton.imageView?.contentMode = .scaleAspectFit
                     homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
                     
