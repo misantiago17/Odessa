@@ -31,6 +31,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var posicoesHoplita : [CGPoint] = []
     
     
+    var homeButton =  UIButton()
+    var resumeButton =  UIButton()
+    var fundoPause = SKSpriteNode()
+    var pauseLabel = SKLabelNode()
+    
     
     
     // Private
@@ -388,6 +393,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     func touchUp(atPoint pos : CGPoint) {
     }
     
+  
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if (podeMovimentar){
@@ -452,6 +458,56 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     
                 }
                 
+                //MARK: PAUSE
+                if (HUDNode.pauseButtonNode.frame.contains(location)){
+                    
+                    fundoPause = SKSpriteNode(texture: SKTexture(imageNamed: "quadradoBranco"))
+                    fundoPause.size = CGSize(width: 600, height: 500)
+                    fundoPause.position = CGPoint(x: cam.position.x, y: cam.position.y)
+                    fundoPause.zPosition = 3
+                 //   addChild(fundoPause)
+                    
+                //    pauseLabel = SKLabelNode(fontNamed: "Arial")
+                    pauseLabel.horizontalAlignmentMode = .center
+                    pauseLabel.text = "Paused"
+                    pauseLabel.position = CGPoint(x: cam.position.x, y: cam.position.y * 2)
+                    pauseLabel.fontSize = 60
+                    pauseLabel.zPosition = 4
+                    pauseLabel.color = UIColor.black
+                    
+                    addChild(pauseLabel)
+                    //fundoPause.addChild(pauseLabel)
+                
+                    let image = UIImage(named: "continue")
+                    resumeButton.setImage(image, for: .normal)
+                    resumeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y)
+                    resumeButton.imageView?.contentMode = .scaleAspectFit
+                    resumeButton.frame.size = CGSize(width: 200, height: 90)
+                    resumeButton.addTarget(self, action: #selector(tirarPauseAction), for: UIControlEvents.touchUpInside)
+                    self.view?.addSubview(resumeButton)
+                
+                    
+                    let imageHome = UIImage(named: "homeButton")
+                    homeButton.setImage(imageHome, for: .normal)
+                    homeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y/1.5)
+                    homeButton.frame.size = CGSize(width: 200, height: 90)
+                    homeButton.imageView?.contentMode = .scaleAspectFit
+                    homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
+                    
+                    self.view?.addSubview(homeButton)
+                    
+                    playerNode.isPaused = true
+                    podeMovimentar = false
+                    self.view?.isPaused = true
+                    
+                     for enemy in placedEnemies {
+                        enemy.isPaused = true
+                    }
+  
+                }
+                
+               
+
                 if (HUDNode.blockButtonNode.frame.contains(location)) && attack == false && block == false && longBlock == false {
                     
                     block = true
@@ -649,7 +705,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         //Fazer a odessa andar até o centro da camera
         if (iniciou == true) {
             
-            playerNode.position.x += 2.6
+            joystick?.removeFromSuperview()
+            
+            HUDNode.attackButtonNode.isHidden = true
+            HUDNode.jumpButtonNode.isHidden = true
+            
+            playerNode.position.x += 4.5//2.6
             
             if (correndoFinal == false){
                 runOdessa()
@@ -660,6 +721,13 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 playerNode.removeAction(forKey: "runOdessa")
                 iniciou = false
                 podeMovimentar = true
+            
+                HUDNode.attackButtonNode.isHidden = false
+                HUDNode.jumpButtonNode.isHidden = false
+             
+                view?.addSubview(joystick!)
+                
+                
             }
         }
    

@@ -22,6 +22,8 @@ class HUD {
     var suporteNode = SKSpriteNode() // suporte
     public var pontosLabel: SKLabelNode! //label pontos
  //   public var levelLabel: SKLabelNode!
+    
+    var pauseButtonNode = SKSpriteNode()
    
     var moedaNode = SKSpriteNode()
     let playerHealthBar = SKSpriteNode() // hp da Odessa
@@ -103,6 +105,15 @@ class HUD {
         moedaNode.position = CGPoint(x:screenWidth*0.38, y: screenHeight*0.43) //0.45  //0.44
         moedaNode.zPosition = 2
         HUDNode.addChild(moedaNode)
+        
+        // pause
+        pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
+        pauseButtonNode.size.width = screenWidth*0.11
+        pauseButtonNode.size.height = screenWidth*0.11
+        pauseButtonNode.setScale(0.6)
+        pauseButtonNode.position = CGPoint(x:screenWidth*0.13, y: screenHeight*0.43) //0.45  //0.44
+        pauseButtonNode.zPosition = 2
+        HUDNode.addChild(pauseButtonNode)
         
 
         // Contador de Moedas
