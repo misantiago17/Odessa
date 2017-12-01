@@ -30,13 +30,19 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
     var posicoesHoplita : [CGPoint] = []
     
-    
+    //pause menu
     var homeButton =  UIButton()
     var fundoPause = UIView()
     var pauseLabel = UILabel()
 
   
-    
+    //parallax
+    var nuvem1 = SKSpriteNode()
+    var nuvem2 = SKSpriteNode()
+    var nuvem3 = SKSpriteNode()
+    var primeiraNuvem = [SKTexture]()
+    var segundaNuvem = [SKTexture]()
+    var terceiraNuvem = [SKTexture]()
     
     
     // Private
@@ -185,6 +191,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     //let bnb = SKSpriteNode(imageNamed: "expences-button-png-hi")
     
     override func sceneDidLoad(){
+        
+      //  setNuvens ()
+      //  runNuvensAnimation()
         
         
         numFase += 1
@@ -482,7 +491,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     let imageHome = UIImage(named: "homeButton")
                     homeButton.setImage(imageHome, for: .normal)
                     homeButton.alpha = 1.0
-                    homeButton.center = CGPoint(x: screenSize.midX, y: screenSize.midY - 10)
+                    print("posicao em x: \(screenSize.midX)")
+                     print("posicao em y: \(screenSize.midY)")
+                    homeButton.center = CGPoint(x: screenSize.midX, y: screenSize.midY )
                     homeButton.frame.size = CGSize(width: 370, height: 58)
                     homeButton.imageView?.contentMode = .scaleAspectFit
                     
@@ -620,10 +631,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
     //MARK: Funcoes botoes pause
-    
-    // or for Swift 3
+
     func resumeGame(_ sender:UITapGestureRecognizer){
-        print("view tapped")
         self.view?.isPaused = false
         playerNode.isPaused = false
         for enemy in placedEnemies {
@@ -1064,7 +1073,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            labelFinal.text = "\(numFase + 1)"
 //        }
         
-        if (playerNode.position.x > modulesInitialPositions.last! + 700 && derrotouTodosInimigos){
+        if (playerNode.position.x > modulesInitialPositions.last! + 700 /*&& derrotouTodosInimigos*/){
             
            // VictoryHandler()
             
@@ -1793,6 +1802,79 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
+    
+    //MARK: Parallax
+    
+    func setNuvens (){
+        
+        for i in 1...4 {
+            primeiraNuvem.append(SKTexture(imageNamed:("cloud1frame\(i)")))
+        }
+        
+        for i in 1...4 {
+            segundaNuvem.append(SKTexture(imageNamed:("cloud2frame\(i)")))
+        }
+        
+        for i in 1...4 {
+            terceiraNuvem.append(SKTexture(imageNamed:("cloud3frame\(i)")))
+        }
+        
+        nuvem1 = SKSpriteNode(texture: primeiraNuvem[0])
+        nuvem1.zPosition = 1.4
+        nuvem1.setScale(0.35)
+        //
+        nuvem2 = SKSpriteNode(texture: segundaNuvem[0])
+        nuvem2.zPosition = 1.4
+        nuvem2.setScale(0.35)
+        //
+        nuvem3 = SKSpriteNode(texture: terceiraNuvem[0])
+        nuvem3.zPosition = 1.4
+        nuvem3.setScale(0.35)
+        
+        nuvem1.position = CGPoint(x: screenWidth*0.01 - 100, y: screenHeight*0.8)
+        nuvem1.alpha = 0.85
+        nuvem2.position = CGPoint(x: screenWidth*0.22, y: screenHeight*0.85)
+        nuvem2.alpha = 0.85
+        nuvem3.position = CGPoint(x: screenWidth*0.65, y: screenHeight*0.75)
+        nuvem3.alpha = 0.85
+        
+        
+        
+        
+    }
+    
+    func runNuvensAnimation(){
+        
+        let mexerNuvem = SKAction.animate(with: primeiraNuvem, timePerFrame: 1, resize: true, restore: false)
+        let mexerNuvem2 = SKAction.animate(with: segundaNuvem, timePerFrame: 1, resize: true, restore: false)
+        let mexerNuvem3 = SKAction.animate(with: terceiraNuvem, timePerFrame: 1, resize: true, restore: false)
+
+        let nuvemAction = SKAction.repeatForever(mexerNuvem)
+        let mudarLadoNuvem = SKAction.scaleX(to: -0.35, duration: 0)
+        let moverNuvem = SKAction.moveTo(x: screenWidth*100 , duration: 240)
+        let groupNuvemAction = SKAction.group([nuvemAction, mudarLadoNuvem, moverNuvem])
+        
+        let nuvem2Action = SKAction.repeatForever(mexerNuvem2)
+        let moverNuvem2 = SKAction.moveTo(x: screenWidth*1.5, duration: 240)
+        let groupNuvem2Action = SKAction.group([nuvem2Action, mudarLadoNuvem, moverNuvem2])
+        
+        let nuvem3Action = SKAction.repeatForever(mexerNuvem3)
+        let moverNuvem3 = SKAction.moveTo(x: screenWidth*1.8, duration: 240)
+        let groupNuvem3Action = SKAction.group([nuvem3Action, mudarLadoNuvem, moverNuvem3])
+        
+        nuvem1.run(groupNuvemAction)
+        addChild(nuvem1)
+        
+        nuvem2.run(groupNuvem2Action)
+        addChild(nuvem2)
+        
+        nuvem3.run(groupNuvem3Action)
+        addChild(nuvem3)
+        
+        
+        
+    }
+
     //MARK: Level Label
     
     func setLevelLabel(position: CGPoint){
