@@ -336,7 +336,6 @@ class HomeScene: SKScene {
             if results.count > 0 {
 
                 naoTemSave = false
- 
             }
         }
         catch {
