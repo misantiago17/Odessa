@@ -42,6 +42,10 @@ class HomeScene: SKScene {
     var tapLabel = SKLabelNode()
     var isNewGame = false
     
+    var nFase = 0
+    var nCoin = 0
+    var temUser = false
+    
     override func sceneDidLoad() {
         
         context = appDelegate.persistentContainer.viewContext
@@ -247,10 +251,23 @@ class HomeScene: SKScene {
                 
             
             case continueButton:
-                removeAllActions()
-                removeAllChildren()
-                let nextScene = GameScene(size: frame.size)
-                self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+                
+                recoverData(context: context, completionHandler: {
+                    
+                    print("dkalhsfgmaljhdvfa;bnad")
+                    
+                    removeAllActions()
+                    removeAllChildren()
+                    
+                    let nextScene = GameScene(size: frame.size)
+                    nextScene.numFase = nFase
+                    nextScene.nFase = nFase
+                    nextScene.score = nCoin
+                    nextScene.nMoeda = nCoin
+                    nextScene.pontos = nCoin
+                    
+                    self.view?.presentScene(nextScene, transition: SKTransition.crossFade(withDuration: 1.0))
+                })
   
             default:
                 
@@ -315,6 +332,36 @@ class HomeScene: SKScene {
         }
         print("apagou")
         
+        
+    }
+    
+    func recoverData (context: NSManagedObjectContext, completionHandler: () -> ()){
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
+        do {
+            let results = try context.fetch(request)
+            
+            if results.count > 0 {
+                
+                for result in results as! [NSManagedObject] {
+                    if let moeda = result.value(forKey: "coins") as? Int {
+                        nCoin = moeda
+                        temUser = true
+                        
+                    }
+                    if let level = result.value(forKey: "level") as? Int{
+                        nFase = level
+                        
+                        completionHandler()
+                    }
+                    
+                }
+            }
+        }
+        catch {
+            print("erro")
+        }
         
     }
     
