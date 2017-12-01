@@ -496,11 +496,11 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     homeButton.center = CGPoint(x: screenSize.midX, y: screenSize.midY )
                     homeButton.frame.size = CGSize(width: 370, height: 58)
                     homeButton.imageView?.contentMode = .scaleAspectFit
-                    
                  
                     homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
                     
-                    fundoPause.addSubview(homeButton)
+                 //   fundoPause.addSubview(homeButton)
+                    self.view?.addSubview(homeButton)
              
                     playerNode.isPaused = true
                     podeMovimentar = false
