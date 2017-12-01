@@ -41,6 +41,7 @@ class HomeScene: SKScene {
     var title = SKSpriteNode()
     var tapLabel = SKLabelNode()
     var isNewGame = false
+    var naoTemSave = true
     
     var nFase = 0
     var nCoin = 0
@@ -48,7 +49,10 @@ class HomeScene: SKScene {
     
     override func sceneDidLoad() {
         
+       
+        
         context = appDelegate.persistentContainer.viewContext
+         recoverData (context: context)
         
         title = SKSpriteNode(imageNamed: "odessa")
         title.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -304,7 +308,12 @@ class HomeScene: SKScene {
                     continueButton.position = CGPoint(x: 0.5*screenWidth ,y: marginFromNewGame)
                     continueButton.zPosition = 2.5
                     continueButton.size = CGSize(width: screenWidth*0.56 , height: screenWidth*0.087)
-                    addChild(continueButton)
+                    
+                    if (naoTemSave == false){
+                        addChild(continueButton)
+                    }
+                    
+                   
                     
                     
                     isNewGame = true
@@ -320,7 +329,7 @@ class HomeScene: SKScene {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         request.returnsObjectsAsFaults = false
         do {
-            let results = try context.fetch(request)
+            var results = try context.fetch(request)
             if results.count > 0 {
                 for result in results as! [NSManagedObject] {
                     result.managedObjectContext?.delete(result)

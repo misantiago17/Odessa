@@ -30,12 +30,19 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
     var posicoesHoplita : [CGPoint] = []
     
-    
+    //pause menu
     var homeButton =  UIButton()
-    var resumeButton =  UIButton()
-    var fundoPause = SKSpriteNode()
-    var pauseLabel = SKLabelNode()
-    
+    var fundoPause = UIView()
+    var pauseLabel = UILabel()
+
+  
+    //parallax
+    var nuvem1 = SKSpriteNode()
+    var nuvem2 = SKSpriteNode()
+    var nuvem3 = SKSpriteNode()
+    var primeiraNuvem = [SKTexture]()
+    var segundaNuvem = [SKTexture]()
+    var terceiraNuvem = [SKTexture]()
     
     
     // Private
@@ -469,49 +476,47 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 //MARK: PAUSE
                 if (HUDNode.pauseButtonNode.frame.contains(location)){
                     
-                    fundoPause = SKSpriteNode(texture: SKTexture(imageNamed: "quadradoBranco"))
-                    fundoPause.size = CGSize(width: 600, height: 500)
-                    fundoPause.position = CGPoint(x: cam.position.x, y: cam.position.y)
-                    fundoPause.zPosition = 3
-                 //   addChild(fundoPause)
-                    
-                //    pauseLabel = SKLabelNode(fontNamed: "Arial")
-                    pauseLabel.horizontalAlignmentMode = .center
-                    pauseLabel.text = "Paused"
-                    pauseLabel.position = CGPoint(x: cam.position.x, y: cam.position.y * 2)
-                    pauseLabel.fontSize = 60
-                    pauseLabel.zPosition = 4
-                    pauseLabel.color = UIColor.black
-                    
-                    addChild(pauseLabel)
-                    //fundoPause.addChild(pauseLabel)
-                
-                    let image = UIImage(named: "continue")
-                    resumeButton.setImage(image, for: .normal)
-                    resumeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y)
-                    resumeButton.imageView?.contentMode = .scaleAspectFit
-                    resumeButton.frame.size = CGSize(width: 200, height: 90)
-                    resumeButton.addTarget(self, action: #selector(tirarPauseAction), for: UIControlEvents.touchUpInside)
-                    self.view?.addSubview(resumeButton)
-                
+                    fundoPause.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.6)
+                    fundoPause.frame.size = CGSize(width: screenSize.width, height: screenSize.height)
+                    fundoPause.center = (self.view?.center)!
+                    self.view?.addSubview(fundoPause)
+
+                    pauseLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+                    pauseLabel.text = "Tap to Leave"
+                    pauseLabel.textColor = UIColor.white
+                    pauseLabel.center = CGPoint(x: screenSize.midX, y: screenSize.midY + 50)
+                    pauseLabel.textAlignment = .center
+
+                    fundoPause.addSubview(pauseLabel)
+                   
+
                     
                     let imageHome = UIImage(named: "homeButton")
                     homeButton.setImage(imageHome, for: .normal)
-                    homeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y/1.5)
-                    homeButton.frame.size = CGSize(width: 200, height: 90)
+                    homeButton.alpha = 1.0
+                    print("posicao em x: \(screenSize.midX)")
+                     print("posicao em y: \(screenSize.midY)")
+                    homeButton.center = CGPoint(x: screenSize.midX, y: screenSize.midY )
+                    homeButton.frame.size = CGSize(width: 370, height: 58)
                     homeButton.imageView?.contentMode = .scaleAspectFit
+                 
                     homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
                     
+                 //   fundoPause.addSubview(homeButton)
                     self.view?.addSubview(homeButton)
-                    
+             
                     playerNode.isPaused = true
                     podeMovimentar = false
-                    self.view?.isPaused = true
+                   self.view?.isPaused = true
                     
                      for enemy in placedEnemies {
                         enemy.isPaused = true
                     }
-  
+                    
+                    let gesture = UITapGestureRecognizer(target: self, action: #selector(GameScene.resumeGame(_:)))
+                    _ = UITapGestureRecognizer(target: self, action:  #selector (self.resumeGame (_:)))
+                    self.fundoPause.addGestureRecognizer(gesture)
+ 
                 }
                 
                
@@ -629,24 +634,22 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
     
     //MARK: Funcoes botoes pause
-    
-    func tirarPauseAction(sender: UIButton!) { //pausar inimigos e odessa// fundo // botar background nos botoes// nao deixar mexer na hud
-        print("Button tapped")
+
+    func resumeGame(_ sender:UITapGestureRecognizer){
         self.view?.isPaused = false
         playerNode.isPaused = false
         for enemy in placedEnemies {
-            
+
             enemy.isPaused = false
-     
+
         }
         podeMovimentar = true
         homeButton.removeFromSuperview()
-        resumeButton.removeFromSuperview()
-        fundoPause.removeFromParent()
-        pauseLabel.removeFromParent()
+        pauseLabel.removeFromSuperview()
+        fundoPause.removeFromSuperview()
         
     }
-    
+
     func irPraHomeAction(sender: UIButton!){
         self.view?.isPaused = false
         print("vai pra home")
@@ -657,9 +660,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
         }
         homeButton.removeFromSuperview()
-        resumeButton.removeFromSuperview()
-        fundoPause.removeFromParent()
-        pauseLabel.removeFromParent()
+        fundoPause.removeFromSuperview()
+        pauseLabel.removeFromSuperview()
         
         joystick?.removeFromSuperview()
         
@@ -1060,7 +1062,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 //            labelFinal.text = "\(numFase + 1)"
 //        }
         
-        if (playerNode.position.x > modulesInitialPositions.last! + 700 && derrotouTodosInimigos){
+        if (playerNode.position.x > modulesInitialPositions.last! + 700 /*&& derrotouTodosInimigos*/){
             
            // VictoryHandler()
             
@@ -1833,6 +1835,79 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
+    
+    //MARK: Parallax
+    
+    func setNuvens (){
+        
+        for i in 1...4 {
+            primeiraNuvem.append(SKTexture(imageNamed:("cloud1frame\(i)")))
+        }
+        
+        for i in 1...4 {
+            segundaNuvem.append(SKTexture(imageNamed:("cloud2frame\(i)")))
+        }
+        
+        for i in 1...4 {
+            terceiraNuvem.append(SKTexture(imageNamed:("cloud3frame\(i)")))
+        }
+        
+        nuvem1 = SKSpriteNode(texture: primeiraNuvem[0])
+        nuvem1.zPosition = 1.4
+        nuvem1.setScale(0.35)
+        //
+        nuvem2 = SKSpriteNode(texture: segundaNuvem[0])
+        nuvem2.zPosition = 1.4
+        nuvem2.setScale(0.35)
+        //
+        nuvem3 = SKSpriteNode(texture: terceiraNuvem[0])
+        nuvem3.zPosition = 1.4
+        nuvem3.setScale(0.35)
+        
+        nuvem1.position = CGPoint(x: screenWidth*0.01 - 100, y: screenHeight*0.8)
+        nuvem1.alpha = 0.85
+        nuvem2.position = CGPoint(x: screenWidth*0.22, y: screenHeight*0.85)
+        nuvem2.alpha = 0.85
+        nuvem3.position = CGPoint(x: screenWidth*0.65, y: screenHeight*0.75)
+        nuvem3.alpha = 0.85
+        
+        
+        
+        
+    }
+    
+    func runNuvensAnimation(){
+        
+        let mexerNuvem = SKAction.animate(with: primeiraNuvem, timePerFrame: 1, resize: true, restore: false)
+        let mexerNuvem2 = SKAction.animate(with: segundaNuvem, timePerFrame: 1, resize: true, restore: false)
+        let mexerNuvem3 = SKAction.animate(with: terceiraNuvem, timePerFrame: 1, resize: true, restore: false)
+
+        let nuvemAction = SKAction.repeatForever(mexerNuvem)
+        let mudarLadoNuvem = SKAction.scaleX(to: -0.35, duration: 0)
+        let moverNuvem = SKAction.moveTo(x: screenWidth*100 , duration: 240)
+        let groupNuvemAction = SKAction.group([nuvemAction, mudarLadoNuvem, moverNuvem])
+        
+        let nuvem2Action = SKAction.repeatForever(mexerNuvem2)
+        let moverNuvem2 = SKAction.moveTo(x: screenWidth*1.5, duration: 240)
+        let groupNuvem2Action = SKAction.group([nuvem2Action, mudarLadoNuvem, moverNuvem2])
+        
+        let nuvem3Action = SKAction.repeatForever(mexerNuvem3)
+        let moverNuvem3 = SKAction.moveTo(x: screenWidth*1.8, duration: 240)
+        let groupNuvem3Action = SKAction.group([nuvem3Action, mudarLadoNuvem, moverNuvem3])
+        
+        nuvem1.run(groupNuvemAction)
+        addChild(nuvem1)
+        
+        nuvem2.run(groupNuvem2Action)
+        addChild(nuvem2)
+        
+        nuvem3.run(groupNuvem3Action)
+        addChild(nuvem3)
+        
+        
+        
+    }
+
     //MARK: Level Label
     
     func setLevelLabel(position: CGPoint){
