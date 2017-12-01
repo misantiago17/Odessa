@@ -49,10 +49,7 @@ class HomeScene: SKScene {
     
     override func sceneDidLoad() {
         
-       
-        
         context = appDelegate.persistentContainer.viewContext
-         recoverData (context: context)
         
         title = SKSpriteNode(imageNamed: "odessa")
         title.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -282,7 +279,7 @@ class HomeScene: SKScene {
                     
                 }
                 
-                else if isNewGame == false{
+                else if isNewGame == false {
                     
                     title.removeFromParent()
                     tapLabel.removeFromParent()
@@ -313,9 +310,6 @@ class HomeScene: SKScene {
                         addChild(continueButton)
                     }
                     
-                   
-                    
-                    
                     isNewGame = true
                     
                 }
@@ -324,6 +318,7 @@ class HomeScene: SKScene {
         }
         
     }
+    
     func resetData(context: NSManagedObjectContext){
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
@@ -353,6 +348,8 @@ class HomeScene: SKScene {
             
             if results.count > 0 {
                 
+                naoTemSave = false
+                
                 for result in results as! [NSManagedObject] {
                     if let moeda = result.value(forKey: "coins") as? Int {
                         nCoin = moeda
@@ -366,13 +363,13 @@ class HomeScene: SKScene {
                     }
                     
                 }
-            }
-        }
-        catch {
+                
+                }
+        } catch {
             print("erro")
         }
         
-    }
+        }
     
     
 }

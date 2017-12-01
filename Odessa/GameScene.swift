@@ -27,6 +27,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     var mapa: Mapa?
     var HUDNode = HUD()
     var movements = Movimentacao()
+    
+    var naoTemSave = true
+    var veioPause = false
 
     var posicoesHoplita : [CGPoint] = []
     
@@ -499,8 +502,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                     homeButton.center = CGPoint(x: screenSize.midX, y: screenSize.midY )
                     homeButton.frame.size = CGSize(width: 370, height: 58)
                     homeButton.imageView?.contentMode = .scaleAspectFit
-                 
-                    homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
+                    print("\(numFase)")
+                    
+                    self.homeButton.addTarget(self, action: #selector(self.irPraHomeAction), for: UIControlEvents.touchUpInside)
+                    
                     
                  //   fundoPause.addSubview(homeButton)
                     self.view?.addSubview(homeButton)
@@ -651,24 +656,61 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     }
 
     func irPraHomeAction(sender: UIButton!){
-        self.view?.isPaused = false
-        print("vai pra home")
-        playerNode.isPaused = false
-        for enemy in placedEnemies {
+        
+        if (numFase > 1) {
+
+             veioPause = true
             
-            enemy.isPaused = false
+            atualizaBanco(completion: {
+                
+                self.view?.isPaused = false
+                print("vai pra home")
+                self.playerNode.isPaused = false
+                for enemy in self.placedEnemies {
+                    
+                    enemy.isPaused = false
+                }
+                
+                self.homeButton.removeFromSuperview()
+                self.fundoPause.removeFromSuperview()
+                self.pauseLabel.removeFromSuperview()
+                
+                self.joystick?.removeFromSuperview()
+                
+                self.recoverData(context: self.context, completionHandler: {
+                    
+                    let homeScene:HomeScene = HomeScene(size: self.view!.bounds.size)
+                    let transition = SKTransition.fade(withDuration: 0.0)
+                    homeScene.scaleMode = SKSceneScaleMode.fill
+                    homeScene.naoTemSave = self.naoTemSave
+                    self.view!.presentScene(homeScene, transition: transition)
+                    
+                })
+                
+            })
             
+        } else {
+            print(numFase, "kd")
+            
+            self.view?.isPaused = false
+            print("vai pra home")
+            playerNode.isPaused = false
+            for enemy in placedEnemies {
+                
+                enemy.isPaused = false
+            }
+
+            homeButton.removeFromSuperview()
+            fundoPause.removeFromSuperview()
+            pauseLabel.removeFromSuperview()
+            
+            joystick?.removeFromSuperview()
+            
+            let homeScene:HomeScene = HomeScene(size: self.view!.bounds.size)
+            let transition = SKTransition.fade(withDuration: 0.0)
+            homeScene.scaleMode = SKSceneScaleMode.fill
+            self.view!.presentScene(homeScene, transition: transition)
         }
-        homeButton.removeFromSuperview()
-        fundoPause.removeFromSuperview()
-        pauseLabel.removeFromSuperview()
-        
-        joystick?.removeFromSuperview()
-        
-        let homeScene:HomeScene = HomeScene(size: self.view!.bounds.size)
-        let transition = SKTransition.fade(withDuration: 0.0)
-        homeScene.scaleMode = SKSceneScaleMode.fill
-        self.view!.presentScene(homeScene, transition: transition)
         
     }
     
@@ -1530,8 +1572,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     func odessaAttackedEnemy(odessa:SKSpriteNode, enemy:SKSpriteNode) {    // aconteceu colisão entre odessa e o inimigo
         
-        print(enemy.value(forAttributeNamed: "life")?.floatValue, "VIDA DO BICHO")
-        
         enemy.setValue(SKAttributeValue.init(float: (enemy.value(forAttributeNamed: "life")?.floatValue)! - 25), forAttribute: "life")
         
         let positionEnemy = enemy.position
@@ -1553,6 +1593,9 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 enemy.texture = SKTexture(imageNamed: "soldier_attack-frame1")
             }
             
+            self.pontos += 100
+            HUDNode.pontosLabel.text = "\(pontos)"
+            
             let trava = SKAction.moveTo(x: positionEnemy.x, duration: 1.0)
             
             let i = self.placedEnemies.index(of: enemy)
@@ -1570,8 +1613,6 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 enemy.removeAllActions()
                 enemy.removeAllChildren()
                 enemy.removeFromParent()
-                
-                self.pontos += 100
                 
             })
         } else {
@@ -1983,7 +2024,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
 
         score += pontos
        // numFase += 1
-        if (morreu == false){
+        if (morreu == false && veioPause == false ){
             numFase += 1
         }
 
@@ -2037,14 +2078,16 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
         do {
             try context.save()
+        
+            print("SAVED")
             
             completionHandler()
-
-            print("SAVED")
         }
         catch{
             print("NOT SAVED")
         }
+        
+        print("meu deus ta")
         
     }
     
@@ -2056,6 +2099,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             let results = try context.fetch(request)
             
             if results.count > 0 {
+                
+                naoTemSave = false
                
                 for result in results as! [NSManagedObject] {
                     if let moeda = result.value(forKey: "coins") as? Int {
@@ -2084,34 +2129,24 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         request.returnsObjectsAsFaults = false
         do {
             let results = try context.fetch(request)
+            
             if results.count > 0 {
                 
                 for result in results as! [NSManagedObject] {
                     if let moeda = result.value(forKey: "coins") as? Int {
-                        if (moeda < score){
-                            result.setValue(score, forKey: "coins")
-                            storeData(context: context, moeda: score, level: level, completionHandler: {
-                                print("atualizou")
-                                completionHandler()
-
-                            })
-                        }
-                       
-                    }
-                    
-                     if let nivel = result.value(forKey: "level") as? Int{
-                    
-                        if (nivel < level){
-                            
-                            result.setValue(level, forKey: "level")
-                            storeData(context: context, moeda: score, level: level, completionHandler: {
-                                print("atualizou")
-                                completionHandler()
-                            })
-                            
-                        }
                         
+                        result.setValue(score, forKey: "coins")
                         
+                        storeData(context: context, moeda: score, level: level, completionHandler: {
+                            
+                            if let nivel = result.value(forKey: "level") as? Int{
+                                
+                                result.setValue(level, forKey: "level")
+                                self.storeData(context: context, moeda: score, level: level, completionHandler: {
+                                    completionHandler()
+                                })
+                            }
+                        })
                     }
                 }
             }
@@ -2119,7 +2154,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         catch {
             
         }
-
+        
     }
     
     
