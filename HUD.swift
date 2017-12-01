@@ -110,8 +110,8 @@ class HUD {
         pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
         pauseButtonNode.size.width = screenWidth*0.11
         pauseButtonNode.size.height = screenWidth*0.11
-        pauseButtonNode.setScale(0.6)
-        pauseButtonNode.position = CGPoint(x:screenWidth*0.13, y: screenHeight*0.43) //0.45  //0.44
+        pauseButtonNode.setScale(0.3)
+        pauseButtonNode.position = CGPoint(x:screenWidth*0.31, y: screenHeight*0.43) //0.45  //0.44
         pauseButtonNode.zPosition = 2
         HUDNode.addChild(pauseButtonNode)
         

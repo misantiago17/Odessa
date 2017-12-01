@@ -32,9 +32,10 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     
     var homeButton =  UIButton()
-    var resumeButton =  UIButton()
-    var fundoPause = SKSpriteNode()
-    var pauseLabel = SKLabelNode()
+    var fundoPause = UIView()
+    var pauseLabel = UILabel()
+
+  
     
     
     
@@ -463,49 +464,45 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
                 //MARK: PAUSE
                 if (HUDNode.pauseButtonNode.frame.contains(location)){
                     
-                    fundoPause = SKSpriteNode(texture: SKTexture(imageNamed: "quadradoBranco"))
-                    fundoPause.size = CGSize(width: 600, height: 500)
-                    fundoPause.position = CGPoint(x: cam.position.x, y: cam.position.y)
-                    fundoPause.zPosition = 3
-                 //   addChild(fundoPause)
-                    
-                //    pauseLabel = SKLabelNode(fontNamed: "Arial")
-                    pauseLabel.horizontalAlignmentMode = .center
-                    pauseLabel.text = "Paused"
-                    pauseLabel.position = CGPoint(x: cam.position.x, y: cam.position.y * 2)
-                    pauseLabel.fontSize = 60
-                    pauseLabel.zPosition = 4
-                    pauseLabel.color = UIColor.black
-                    
-                    addChild(pauseLabel)
-                    //fundoPause.addChild(pauseLabel)
-                
-                    let image = UIImage(named: "continue")
-                    resumeButton.setImage(image, for: .normal)
-                    resumeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y)
-                    resumeButton.imageView?.contentMode = .scaleAspectFit
-                    resumeButton.frame.size = CGSize(width: 200, height: 90)
-                    resumeButton.addTarget(self, action: #selector(tirarPauseAction), for: UIControlEvents.touchUpInside)
-                    self.view?.addSubview(resumeButton)
-                
+                    fundoPause.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.6)
+                    fundoPause.frame.size = CGSize(width: screenSize.width, height: screenSize.height)
+                    fundoPause.center = (self.view?.center)!
+                    self.view?.addSubview(fundoPause)
+
+                    pauseLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+                    pauseLabel.text = "Tap to Leave"
+                    pauseLabel.textColor = UIColor.white
+                    pauseLabel.center = CGPoint(x: screenSize.midX, y: screenSize.midY + 50)
+                    pauseLabel.textAlignment = .center
+
+                    fundoPause.addSubview(pauseLabel)
+                   
+
                     
                     let imageHome = UIImage(named: "homeButton")
                     homeButton.setImage(imageHome, for: .normal)
-                    homeButton.frame.origin = CGPoint(x: cam.position.x/4, y: cam.position.y/1.5)
-                    homeButton.frame.size = CGSize(width: 200, height: 90)
+                    homeButton.alpha = 1.0
+                    homeButton.center = CGPoint(x: screenSize.midX, y: screenSize.midY - 10)
+                    homeButton.frame.size = CGSize(width: 370, height: 58)
                     homeButton.imageView?.contentMode = .scaleAspectFit
+                    
+                 
                     homeButton.addTarget(self, action: #selector(irPraHomeAction), for: UIControlEvents.touchUpInside)
                     
-                    self.view?.addSubview(homeButton)
-                    
+                    fundoPause.addSubview(homeButton)
+             
                     playerNode.isPaused = true
                     podeMovimentar = false
-                    self.view?.isPaused = true
+                   self.view?.isPaused = true
                     
                      for enemy in placedEnemies {
                         enemy.isPaused = true
                     }
-  
+                    
+                    let gesture = UITapGestureRecognizer(target: self, action: #selector(GameScene.resumeGame(_:)))
+                    _ = UITapGestureRecognizer(target: self, action:  #selector (self.resumeGame (_:)))
+                    self.fundoPause.addGestureRecognizer(gesture)
+ 
                 }
                 
                
@@ -624,23 +621,23 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     //MARK: Funcoes botoes pause
     
-    func tirarPauseAction(sender: UIButton!) { //pausar inimigos e odessa// fundo // botar background nos botoes// nao deixar mexer na hud
-        print("Button tapped")
+    // or for Swift 3
+    func resumeGame(_ sender:UITapGestureRecognizer){
+        print("view tapped")
         self.view?.isPaused = false
         playerNode.isPaused = false
         for enemy in placedEnemies {
-            
+
             enemy.isPaused = false
-     
+
         }
         podeMovimentar = true
         homeButton.removeFromSuperview()
-        resumeButton.removeFromSuperview()
-        fundoPause.removeFromParent()
-        pauseLabel.removeFromParent()
+        pauseLabel.removeFromSuperview()
+        fundoPause.removeFromSuperview()
         
     }
-    
+
     func irPraHomeAction(sender: UIButton!){
         self.view?.isPaused = false
         print("vai pra home")
@@ -651,9 +648,8 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             
         }
         homeButton.removeFromSuperview()
-        resumeButton.removeFromSuperview()
-        fundoPause.removeFromParent()
-        pauseLabel.removeFromParent()
+        fundoPause.removeFromSuperview()
+        pauseLabel.removeFromSuperview()
         
         joystick?.removeFromSuperview()
         
