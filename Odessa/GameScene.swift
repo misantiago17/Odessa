@@ -849,29 +849,24 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             let posAnterior = enemy.value(forAttributeNamed: "PosicaoAnterior")!.floatValue
             let inimigoAntes = Float(enemy.position.x + (enemy.size.height/2)/2)
             let inimigosDepois = Float(enemy.position.x - (enemy.size.height/2)/2)
-        
             
-            if (Float(enemy.position.x) <= posAnterior + 1.0 && Float(enemy.position.x) >= posAnterior - 1.0 && iniciou == false) && isTouchingEnemy == false && inimigoSendoTocado != enemy {
-                
+            let inimigoPos = Float(enemy.convert(enemy.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemy)!]/2)
+            let inimigoPosAntes = Float(enemy.convert(enemy.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemy)!]/2 + (enemy.size.height/2)/2)
+            let inimigoPosDepois = Float(enemy.convert(enemy.position, to: self).x/2 + PosInicialInimigo[placedEnemies.index(of: enemy)!]/2 - (enemy.size.height/2)/2)
+            let odessaPosAntes = Float(playerNode.position.x + playerNode.size.width/2*0.4/2)
+            let odessaPosDepois = Float(playerNode.position.x - playerNode.size.width/2*0.4/2)
+            
+            if (Float(enemy.position.x) <= posAnterior + 1.0 && Float(enemy.position.x) >= posAnterior - 1.0 && iniciou == false && isTouchingEnemy == false && inimigoSendoTocado != enemy && inimigoPosDepois >= odessaPosDepois) {
                 
                 if (enemy.value(forAttributeNamed: "jumping")?.floatValue == 0){
-                    jumpHoplita(enemy: enemy)
+                    jumpHoplita(enemy: enemy, entre: false)
                 }
-            
                 
-
-                /*
-                print("entrou aqui")
+            } else if (Float(enemy.position.x) <= posAnterior + 1.0 && Float(enemy.position.x) >= posAnterior - 1.0 && iniciou == false && isTouchingEnemy == false && inimigoSendoTocado != enemy && inimigoPosAntes <= odessaPosAntes){
                 
-                let tempoAntigo = enemy.value(forAttributeNamed: "tempoEspera")?.floatValue
-                enemy.setValue(SKAttributeValue.init(float: tempoAntigo! + 1), forAttribute: "tempoEspera")
-                
-                if (Double((enemy.value(forAttributeNamed: "tempoEspera")?.floatValue)!) >= 60.0){
-                    
-                    jumpHoplita(enemy: enemy)
-                    enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "tempoEspera")
-                }*/
-                
+                if (enemy.value(forAttributeNamed: "jumping")?.floatValue == 0){
+                    jumpHoplitaInvertido(enemy: enemy, entre: false)
+                }
             }
             enemy.setValue(SKAttributeValue.init(float: Float(enemy.position.x)), forAttribute: "PosicaoAnterior")
             
@@ -964,16 +959,27 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             // bnb.position.x = enemyPosition
             // bnb.position.y = enemy.position.y
             
-            enemy.convert(enemy.position, to: self)
+            //enemy.convert(enemy.position, to: self)
             
             distancia = enemyPosition - playerPosition
             
             // Odessa dá um bounce pra outro lado
-            if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) && (isTouchingEnemy && inimigoSendoTocado == enemy)) {
+            if (enemyPosition >= playerPosition - (playerNode.size.width*0.7/2) && enemyPosition <= playerPosition + (playerNode.size.width*0.7/2) && (isTouchingEnemy && inimigoSendoTocado == enemy)) {
+                
+                if (enemyPosition > playerPosition){
+                    if (enemy.value(forAttributeNamed: "jumping")?.floatValue == 0){
+                        jumpHoplita(enemy: enemy, entre: true)
+                    }
+                } else {
+                    if (enemy.value(forAttributeNamed: "jumping")?.floatValue == 0) {
+                        jumpHoplitaInvertido(enemy: enemy, entre: true)
+                    }
+                }
                 
                 // Odessa está em cima do inimigo 
                 
             }
+            
             
             if (enemyPosition >= playerPosition - (playerNode.size.width*0.4) && enemyPosition <= playerPosition + (playerNode.size.width*0.4/2) || (isTouchingEnemy && inimigoSendoTocado == enemy)){
                 
@@ -1971,7 +1977,7 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
     
     
     // Jump hoplita
-    func jumpHoplita(enemy: SKSpriteNode){
+    func jumpHoplita(enemy: SKSpriteNode, entre: Bool){
         
         enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "jumping")
         
@@ -1989,7 +1995,12 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
             puloBaixoArray.append(SKTextureAtlas(named: "Hoplita_Jump").textureNamed("hoplita-jump-frame\(i)"))
         }
         
-        let jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
+        let jumpUp: SKAction
+        if (entre){
+            jumpUp = SKAction.moveBy(x: -130, y: 100, duration: 0.3)
+        } else {
+            jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
+        }
         let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
         
         let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
@@ -2016,6 +2027,55 @@ class GameScene: SKScene,  SKPhysicsContactDelegate {
         
     }
     
+    func jumpHoplitaInvertido(enemy: SKSpriteNode, entre: Bool){
+        
+        enemy.setValue(SKAttributeValue.init(float: 1), forAttribute: "jumping")
+        
+        var impulsoArray = [SKTexture]()
+        var puloCimaArray = [SKTexture]()
+        var puloBaixoArray = [SKTexture]()
+        
+        for i in 1...2 {
+            impulsoArray.append(SKTextureAtlas(named: "Hoplita_Jump_Invertido").textureNamed("hoplita-jump-invertido-frame\(i)"))
+        }
+        
+        puloCimaArray.append(SKTextureAtlas(named: "Hoplita_Jump_Invertido").textureNamed("hoplita-jump-invertido-frame3"))
+        
+        for i in 4...6 {
+            puloBaixoArray.append(SKTextureAtlas(named: "Hoplita_Jump_Invertido").textureNamed("hoplita-jump-invertido-frame\(i)"))
+        }
+        
+        let jumpUp: SKAction
+        if (entre){
+            jumpUp = SKAction.moveBy(x: 130, y: 100, duration: 0.3)
+        } else {
+            jumpUp = SKAction.moveBy(x: 0, y: 240, duration: 0.3)
+        }
+        let fallBack = SKAction.moveBy(x: 0, y: 0, duration: 0.3)
+        
+        let impulso = SKAction.animate(with: impulsoArray, timePerFrame: 0.1)
+        let puloCima = SKAction.animate(with: puloCimaArray, timePerFrame: 0.05)
+        let puloBaixo = SKAction.animate(with: puloBaixoArray, timePerFrame: 0.10)
+        let group = SKAction.group([puloBaixo, fallBack])
+        
+        let endMoviment = SKAction.run({
+            
+            enemy.setValue(SKAttributeValue.init(float: 0), forAttribute: "jumping")
+            self.jump = false
+            enemy.removeAction(forKey: "jumpAction")
+            
+            if self.joystickInUse == true {
+                self.runOdessa()
+            }
+            
+        })
+        
+        let jumpAction = SKAction.sequence([impulso,puloCima, jumpUp, group, endMoviment])
+        
+        //self.playerNode.removeAction(forKey: "runOdessa")
+        enemy.run(jumpAction, withKey: "jumpAction")
+        
+    }
     
     
     //MARK: Core Data
